@@ -1360,7 +1360,10 @@ a.text-warning:hover {
 a.text-danger:hover {
     color: #843534
 }
-
+.bg{
+    background:url("../templates/bg.jpg") no-repeat center;
+    background-size:contain;
+}
 .bg-primary {
     color: #fff;
     background-color: #428bca

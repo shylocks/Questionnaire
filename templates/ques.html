@@ -17,10 +17,10 @@
                 <thead>
                 <tr>
                     <th>问卷名称</th>
-                    <th>参与用户</th>
-                    <th>参与人数</th>
+                    <th>访问者</th>
+                    <th>参与者</th>
                     <th>问卷选项</th>
-                    <th>调查地址</th>
+                    {# <th>调查地址</th>#}
                     <th>查看评分</th>
                     <th>操作</th>
 
@@ -32,11 +32,10 @@
 
                             <td><a href="">{{ form.title }}{{ questionnaire.title }}</a></td>
                             <td>{{ questionnaire.cls.title }}</td>
+                            <td>{{ questionnaire.cls.title }}</td>
                             <td>{{ questionnaire.stu_num }}/{{ questionnaire.cls.student_set.all.count }}</td>
                             <td><a href="/edit_questionnaire/{{ questionnaire.id }}/">编辑问卷</a></td>
-                            <td>
-                                <a href="/student/evaluate/{{ questionnaire.id }}/{{ questionnaire.cls.id }}/">/student/evaluate/{{ questionnaire.id }}/{{ questionnaire.cls.id }}/</a>
-                            </td>
+                            {#  <td><a href="/student/evaluate/{{ questionnaire.id }}/{{ questionnaire.cls.id }}/">/student/evaluate/{{ questionnaire.id }}/{{ questionnaire.cls.id }}/</a></td> #}
                             <td><a href="">查看评分</a></td>
                             <td>
                                 <a href="/delete_questionnaire/{{ questionnaire.id }}">删除</a></td>
