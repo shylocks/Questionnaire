@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    编辑问卷
+    <a href="/ques/">问卷管理</a>/编辑问卷
 {% endblock %}
-
+{% block ulcontent %}
+        <li><a href="">欢迎界面</a></li>
+        <li class="active"><a href="/ques/">问卷管理</a></li>
+        <li><a href="/member/">成员管理</a></li>
+{% endblock %}
 {% block content %}
     <div class="panel panel-body edit_ques">
     <p class="btn_style">

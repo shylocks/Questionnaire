@@ -14,15 +14,28 @@ from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm
 
 # Create your views here.
 def index(request):
-    questionnaire_list = models.Questionnaire.objects.all()
-
-    for i in questionnaire_list:
-        v = models.Answer.objects.filter(question__questionnaire=i).distinct().annotate(c = Count("user_id")).values("c").count()
-        print(v)
-
-        i.stu_num = v
-
     return render(request, 'index.html', locals())
+
+
+def questionnaires(request):
+    questionnaire_list = models.Questionnaire.objects.all()
+    for i in questionnaire_list:
+        v = models.Answer.objects.filter(question__questionnaire=i).distinct().annotate(c=Count("user_id")).values(
+            "c").count()
+        print(v)
+    i.stu_num = v
+    return render(request, 'ques.html', locals())
+
+
+def delete_questionnaire(request, pid):
+    models.Questionnaire.objects.filter(id=pid).delete()
+    questionnaire_list = models.Questionnaire.objects.all()
+    return render(request, 'ques.html', locals())
+
+
+def member(request):
+    Student_list = models.Student.objects.all()
+    return render(request, 'member.html', locals())
 
 
 def login(request):
@@ -56,11 +69,10 @@ def login(request):
         return HttpResponse(json.dumps(state))
 
 
-def add(request):
-
+def add_questionnaire(request):
     if request.method == "GET":
         form = QuestionnaireForm()
-        return render(request, 'add.html', {"form": form})
+        return render(request, 'add_questionnaire.html', {"form": form})
     else:
         form = QuestionnaireForm(request.POST)
         if form.is_valid():
@@ -68,9 +80,25 @@ def add(request):
             title = form.cleaned_data.get("title")
             cls = form.cleaned_data.get("cls")
             models.Questionnaire.objects.create(title=title, cls_id=int(cls), creator_id=request.session.get("id"))
-            return redirect("/index/")
+            return redirect("/ques/")
         else:
-            return render(request, 'add.html', {"form": form})
+            return render(request, 'add_questionnaire.html', {"form": form})
+
+
+def add_member(request):
+    Student_list = models.Student.objects.all()
+    return render(request, 'member.html', locals())
+
+
+def edit_member(request, uid):
+    Student_list = models.Student.objects.all()
+    return render(request, 'member.html', locals())
+
+
+def delete_member(request, uid):
+    models.Student.objects.filter(id=uid).delete()
+    Student_list = models.Student.objects.all()
+    return render(request, 'member.html', locals())
 
 
 def edit_questionnaire(request, pid):
@@ -155,38 +183,32 @@ def edit_questionnaire(request, pid):
     return HttpResponse("ok")
 
 
-
-
 def func(content):
-    if len(content)<15:
+    if len(content) < 15:
         raise ValidationError("长度不得少于15个字符")
 
 
-def score(request,ques_id,cls_id,):
-
-
-    stu_id = request.session.get("id") #从session中取出当前登录用户的ID
+def score(request, ques_id, cls_id, ):
+    stu_id = request.session.get("id")  # 从session中取出当前登录用户的ID
     if not stu_id:
         return redirect("/student_login/")
 
+    # 判断当前登录的用户是否是要答卷的班级的学生
 
-    #判断当前登录的用户是否是要答卷的班级的学生
-
-    stu_obj = models.Student.objects.filter(id=stu_id,cls_id=cls_id).count()
+    stu_obj = models.Student.objects.filter(id=stu_id, cls_id=cls_id).count()
 
     if not stu_obj:
         return HttpResponse("对不起，您不是本次问卷调查对象")
 
-    #判断是否已经提交过问卷答案
+    # 判断是否已经提交过问卷答案
 
-    has_join = models.Answer.objects.filter(user_id=stu_id,question__questionnaire_id=ques_id)
+    has_join = models.Answer.objects.filter(user_id=stu_id, question__questionnaire_id=ques_id)
     if has_join:
         return HttpResponse("对不起，您已经参与过本次问卷，不可重复参与")
 
-    #展示当前问卷下的所有问题
+    # 展示当前问卷下的所有问题
 
-
-    #获取当前问卷的所有问题
+    # 获取当前问卷的所有问题
     question_list = models.Question.objects.filter(questionnaire_id=ques_id)
     field_dict = {}
 
@@ -194,44 +216,43 @@ def score(request,ques_id,cls_id,):
 
         if que.ct == 1:
 
-            field_dict["val_%s"%que.id] = fields.ChoiceField(
+            field_dict["val_%s" % que.id] = fields.ChoiceField(
                 label=que.caption,
-                error_messages={"required":"必填"},
+                error_messages={"required": "必填"},
                 widget=widgets.RadioSelect,
-                choices=[(i, i)for i in range(1,11)]
+                choices=[(i, i) for i in range(1, 11)]
 
             )
         elif que.ct == 2:
-            field_dict["option_id_%s"%que.id] = fields.ChoiceField(
+            field_dict["option_id_%s" % que.id] = fields.ChoiceField(
                 label=que.caption,
                 error_messages={"required": "必填"},
-                widget= widgets.RadioSelect,
+                widget=widgets.RadioSelect,
                 ##这里数据表option中的score是不需要给用户看到的
-                choices=models.Option.objects.filter(question_id=que.id).values_list("id","name")
+                choices=models.Option.objects.filter(question_id=que.id).values_list("id", "name")
             )
         else:
-            field_dict["content_%s"%que.id] = fields.CharField(
+            field_dict["content_%s" % que.id] = fields.CharField(
                 label=que.caption,
                 error_messages={"required": "必填"},
-                widget=widgets.Textarea(attrs={"class":"form-control","rows":"2" ,"cols":"60"}),
-                validators = [func,] #这里可以写正则，也可以自定义函数放在这里
+                widget=widgets.Textarea(attrs={"class": "form-control", "rows": "2", "cols": "60"}),
+                validators=[func, ]  # 这里可以写正则，也可以自定义函数放在这里
             )
-    myForm = type("myTestForm",(Form,),field_dict)#动态生成类，参数分别是类名，继承的对象，字段
+    myForm = type("myTestForm", (Form,), field_dict)  # 动态生成类，参数分别是类名，继承的对象，字段
     if request.method == "GET":
         form = myForm()
-        return render(request,"score.html",{"question_list":question_list,"form":form})
+        return render(request, "score.html", {"question_list": question_list, "form": form})
     else:
         form = myForm(request.POST)
         if form.is_valid():
             obj_list = []
-            for key,v in form.cleaned_data.items():
-                print(key,v)
-                key,qid = key.rsplit("_",1)#从右边切，切一次
-                answer_dict = {"user_id":stu_id,"question_id":qid,key:v}
+            for key, v in form.cleaned_data.items():
+                print(key, v)
+                key, qid = key.rsplit("_", 1)  # 从右边切，切一次
+                answer_dict = {"user_id": stu_id, "question_id": qid, key: v}
                 print(answer_dict)
                 obj_list.append(models.Answer(**answer_dict))
-            models.Answer.objects.bulk_create(obj_list)#批量插入
+            models.Answer.objects.bulk_create(obj_list)  # 批量插入
             return HttpResponse("感谢您的参与")
-
 
         return render(request, "score.html", {"question_list": question_list, "form": form})

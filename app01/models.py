@@ -19,9 +19,10 @@ class Student(models.Model):
     '''
     学生表
     '''
-    name = models.CharField(verbose_name="学生姓名",max_length=16)
+    id = models.CharField(verbose_name="用户ID",max_length=16,primary_key=True)
+    name = models.CharField(verbose_name="用户姓名",max_length=16)
     pwd = models.CharField(verbose_name="密码",max_length=16)
-    cls = models.ForeignKey(verbose_name="所在班级",to="ClassList",on_delete=models.CASCADE)
+    cls = models.ForeignKey(verbose_name="用户组",to="ClassList",on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = "学生表"

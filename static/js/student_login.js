@@ -20,7 +20,7 @@ $("#subBtn").on("click", function () {
                 var dat = JSON.parse(data);
 
                 if (dat["state"] == "login_success") {
-                    location.href = "/"
+                    location.href = "/index/"
 
                 }
                 if (dat["state"] == "user_none") {

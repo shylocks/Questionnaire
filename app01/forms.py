@@ -22,7 +22,6 @@ class QuestionnaireForm(Form):
 
 
 
-
 class QuestionModelForm(ModelForm):
     class Meta:
         model = models.Question

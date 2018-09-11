@@ -13,17 +13,16 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    菜单列表
-                </div>
-            </div>
+            <ul class="nav nav-pills nav-stacked">
+            {% block ulcontent %}
+            {% endblock %}
+            </ul>
         </div>
         <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading"><a href="/">首页</a>/{% block page_title %}{% endblock %}</div>
-            {% block content %}
-            {% endblock %}
+                {% block content %}
+                {% endblock %}
             </div>
         </div>
 
@@ -33,6 +32,6 @@
 </div>
 
 <script src="/static/js/bootstrap.min.js"></script>
-<script src="/static/js/edit_ques.js"></script>
+<script src="/static/js/edit_questionnaire.js"></script>
 </body>
 </html>
