@@ -2,11 +2,6 @@
 {% block page_title %}
     欢迎页面
 {% endblock %}
-{% block ulcontent %}
-        <li class="active"><a href="/welcome/">欢迎界面</a></li>
-        <li><a href="/ques/">问卷管理</a></li>
-        <li><a href="/member/">成员管理</a></li>
-{% endblock %}
 {% block content %}
     <div class="panel-body ">
         <div>
@@ -19,4 +14,9 @@
             </div>
         </div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $("#welcome").addClass("active");
+        });
+    </script>
 {% endblock %}

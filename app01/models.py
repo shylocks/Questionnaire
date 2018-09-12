@@ -2,60 +2,75 @@
 from django.db import models
 
 # Create your models here.
-class UserInfo(models.Model):
+
+
+class Patient(models.Model):
     '''
-    员工表
+    病人表
     '''
-    username = models.CharField(max_length=16,verbose_name="用户名")
-    password = models.CharField(max_length=16,verbose_name="用户密码")
+    id = models.IntegerField(verbose_name="id", primary_key=True)
+    name = models.CharField(max_length=16,verbose_name="姓名")
+    sex = models.CharField(max_length=5, verbose_name="性别")
+    age = models.IntegerField(verbose_name="年龄")
+    idcard = models.CharField(verbose_name="身份证号", max_length=64)
+    nation = models.CharField(verbose_name="名族", max_length=64)
+    native_place = models.CharField(verbose_name="籍贯", max_length=64)
+    education = models.CharField(verbose_name="教育程度", max_length=64)
+    marriage = models.CharField(verbose_name="婚姻状况", max_length=64)
+    children = models.CharField(verbose_name="子女数", max_length=64)
+    longest_job = models.CharField(verbose_name="最长工作", default="", max_length=64)
+    family_medical_history = models.CharField(verbose_name="家族病史", default="", max_length=64)
 
     class Meta:
-        verbose_name_plural = "员工表"
+        verbose_name_plural = "病人表"
 
     def __str__(self):
-        return self.username
+        return self.name
 
-class Student(models.Model):
+
+class Admin(models.Model):
     '''
-    学生表
+    管理员表
     '''
     id = models.CharField(verbose_name="用户ID",max_length=16,primary_key=True)
     name = models.CharField(verbose_name="用户姓名",max_length=16)
     pwd = models.CharField(verbose_name="密码",max_length=16)
-    cls = models.ForeignKey(verbose_name="用户组",to="ClassList",on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name_plural = "学生表"
+        verbose_name_plural = "管理员表"
+
     def __str__(self):
         return self.name
 
-class ClassList(models.Model):
+
+class Doctor(models.Model):
     '''
-    班级表
+    管理员表
     '''
-    title = models.CharField(verbose_name="班级名",max_length=16)
+    id = models.CharField(verbose_name="用户ID", max_length=16,primary_key=True)
+    name = models.CharField(verbose_name="用户姓名", max_length=16)
+    pwd = models.CharField(verbose_name="密码", max_length=16)
 
     class Meta:
-        verbose_name_plural = "班级表"
+        verbose_name_plural = "医生表"
+
     def __str__(self):
-        return self.title
+        return self.name
+
 
 class Questionnaire(models.Model):
     '''
     问卷表
     '''
     title = models.CharField(verbose_name="问卷标题",max_length=128)
-    cls = models.ForeignKey(verbose_name="调查班级",to="ClassList",on_delete=models.CASCADE)
-    creator = models.ForeignKey(verbose_name="创建者",to="UserInfo",on_delete=models.CASCADE)
-    stu_num = models.IntegerField(verbose_name="参与人数",default=0)
-
-
+    finished_num = models.IntegerField(verbose_name="参与人数",default=0)
 
     class Meta:
         verbose_name_plural = "问卷表"
 
     def __str__(self):
         return self.title
+
 
 class Question(models.Model):
     '''
@@ -75,6 +90,7 @@ class Question(models.Model):
     def __str__(self):
         return self.caption
 
+
 class Option(models.Model):
     '''
    单选题的选项
@@ -85,19 +101,19 @@ class Option(models.Model):
 
     class Meta:
         verbose_name_plural = "单选题的选项"
+
     def __str__(self):
         return self.name
+
 
 class Answer(models.Model):
     '''
     答案
     '''
-    user = models.ForeignKey(to="Student",verbose_name="谁回答的",on_delete=models.CASCADE)
-    question = models.ForeignKey(to='Question',verbose_name="问题",on_delete=models.CASCADE)
-
-
+    user_id = models.ForeignKey(to="Patient",verbose_name="谁回答的",on_delete=models.CASCADE)
+    question_id = models.ForeignKey(to='Question',verbose_name="问题",on_delete=models.CASCADE)
     content = models.CharField(verbose_name="答案内容",max_length=255,null=True,blank=True)
-    option = models.ForeignKey(to="Option",null=True,blank=True,on_delete=models.CASCADE)
+    option_id = models.ForeignKey(to="Option",null=True,blank=True,on_delete=models.CASCADE)
     val = models.IntegerField(null=True,blank=True)
 
     class Meta:

@@ -20,8 +20,10 @@
     <div class="row">
         <div class="col-md-2">
             <ul class="nav nav-pills nav-stacked">
-            {% block ulcontent %}
-            {% endblock %}
+                <li id="welcome"><a href="/welcome/">欢迎界面</a></li>
+                <li id="ques"><a href="/ques/">问卷管理</a></li>
+                <li id="doctor"><a href="/doctor/">医生管理</a></li>
+                <li id="patient"><a href="/patient/">病人管理</a></li>
             </ul>
         </div>
         <div class="col-md-10">
@@ -35,7 +37,8 @@
 </div>
 
 
-<script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.2/css/bootstrap.min.css"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <script src="/static/js/edit_questionnaire.js"></script>
+
 </body>
 </html>

@@ -1,6 +1,3 @@
-/**
- * Created by haier on 2017-12-09.
- */
 $("#subBtn").on("click", function () {
 
     $.ajax(

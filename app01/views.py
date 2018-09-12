@@ -7,9 +7,9 @@ from django.forms import Form
 from django.db.models import Count
 from django.forms import fields
 from django.forms import widgets
-
+from urllib.parse import parse_qs
 from . import models
-from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm
+from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientForm
 
 
 # Create your views here.
@@ -18,24 +18,58 @@ def index(request):
 
 
 def questionnaires(request):
-    questionnaire_list = models.Questionnaire.objects.all()
-    for i in questionnaire_list:
-        v = models.Answer.objects.filter(question__questionnaire=i).distinct().annotate(c=Count("user_id")).values(
-            "c").count()
-        print(v)
-    i.stu_num = v
-    return render(request, 'ques.html', locals())
+    if request.method == "GET":
+        pars = parse_qs(request.GET.urlencode())
+        if pars.get('method'):
+            if pars['method'][0] == 'delete':
+                models.Questionnaire.objects.filter(id=pars['id'][0]).delete()
 
-
-def delete_questionnaire(request, pid):
-    models.Questionnaire.objects.filter(id=pid).delete()
     questionnaire_list = models.Questionnaire.objects.all()
     return render(request, 'ques.html', locals())
 
 
-def member(request):
-    Student_list = models.Student.objects.all()
-    return render(request, 'member.html', locals())
+def doctor(request):
+    if request.method == "GET":
+        pars = parse_qs(request.GET.urlencode())
+        if pars.get('method'):
+            if pars['method'][0] == 'delete':
+                models.Doctor.objects.filter(id=pars['id'][0]).delete()
+            if pars['method'][0] == 'reset':
+                models.Doctor.objects.filter(id=pars['id'][0]).update(pwd="123456")
+    Doctor_list = models.Doctor.objects.all()
+    return render(request, 'doctor.html', locals())
+
+
+def patient(request):
+    if request.method == "GET":
+        pars = parse_qs(request.GET.urlencode())
+        if pars.get('method'):
+            if pars['method'][0] == 'delete':
+                models.Patient.objects.filter(id=pars['id'][0]).delete()
+            elif pars['method'][0] == 'further':
+                Patient_list = models.Patient.objects.filter(id=pars['id'][0])
+                Patient = Patient_list[0]
+                return render(request, 'patient_info.html', locals())
+    elif request.is_ajax():
+        id = request.POST.get("id")
+        name = request.POST.get("name")
+        sex = request.POST.get("sex")
+        age = request.POST.get("age")
+        idcard = request.POST.get("idcard")
+        nation = request.POST.get("nation")
+        native_place = request.POST.get("native_place")
+        education = request.POST.get("education")
+        marriage = request.POST.get("marriage")
+        children = request.POST.get("children")
+        longest_job = request.POST.get("longest_job","无")
+        family_medical_history = request.POST.get("family_medical_history","无")
+        models.Patient.objects.filter(id=id).update(name=name, sex=sex, age=age, idcard=idcard,
+                                                    nation=nation, native_place=native_place,
+                                                    education=education, marriage=marriage,
+                                                    children=children, longest_job=longest_job,
+                                                    family_medical_history=family_medical_history)
+    Patient_list = models.Patient.objects.all()
+    return render(request, 'patient.html', locals())
 
 
 def login(request):
@@ -55,18 +89,43 @@ def login(request):
             state["state"] = "pwd_none"
             return HttpResponse(json.dumps(state))
 
-        user = models.Student.objects.filter(name=username, pwd=password).first()
+        user = models.Admin.objects.filter(name=username, pwd=password).first()
 
         if user:
             state["state"] = "login_success"
             request.session["username"] = user.name
             request.session["id"] = user.id
-
-
+            request.session["admin"] = "1"
         else:
             state["state"] = "failed"
 
         return HttpResponse(json.dumps(state))
+
+
+def add_patient(request):
+    if request.method == "GET":
+        patient = PatientForm()
+        return render(request, 'add_patient.html',{"Patient": patient})
+    else:
+        form = PatientForm(request.POST)
+        print(vars(form))
+    Patient_list = models.Patient.objects.all()
+    return render(request, 'patient.html', locals())
+
+
+def add_doctor(request):
+    if request.method == "GET":
+        form = DoctorForm()
+        return render(request, 'add_doctor.html', {"form": form})
+    else:
+        form = DoctorForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            id = 10000 + len(models.Doctor.objects.all())
+            models.Doctor.objects.create(id=id, name=name, pwd="123")
+            return redirect("/doctor/")
+        else:
+            return render(request, 'add_doctor.html', {"form": form})
 
 
 def add_questionnaire(request):
@@ -76,29 +135,16 @@ def add_questionnaire(request):
     else:
         form = QuestionnaireForm(request.POST)
         if form.is_valid():
-
             title = form.cleaned_data.get("title")
-            cls = form.cleaned_data.get("cls")
-            models.Questionnaire.objects.create(title=title, cls_id=int(cls), creator_id=request.session.get("id"))
+            models.Questionnaire.objects.create(title=title)
             return redirect("/ques/")
         else:
             return render(request, 'add_questionnaire.html', {"form": form})
 
 
-def add_member(request):
-    Student_list = models.Student.objects.all()
-    return render(request, 'member.html', locals())
-
-
-def edit_member(request, uid):
-    Student_list = models.Student.objects.all()
-    return render(request, 'member.html', locals())
-
-
-def delete_member(request, uid):
-    models.Student.objects.filter(id=uid).delete()
-    Student_list = models.Student.objects.all()
-    return render(request, 'member.html', locals())
+def edit_doctor(request, uid):
+    Doctor_list = models.Doctor.objects.all()
+    return render(request, 'doctor.html', locals())
 
 
 def edit_questionnaire(request, pid):
@@ -195,7 +241,7 @@ def score(request, ques_id, cls_id, ):
 
     # 判断当前登录的用户是否是要答卷的班级的学生
 
-    stu_obj = models.Student.objects.filter(id=stu_id, cls_id=cls_id).count()
+    stu_obj = models.doctor.objects.filter(id=stu_id, cls_id=cls_id).count()
 
     if not stu_obj:
         return HttpResponse("对不起，您不是本次问卷调查对象")
@@ -256,3 +302,9 @@ def score(request, ques_id, cls_id, ):
             return HttpResponse("感谢您的参与")
 
         return render(request, "score.html", {"question_list": question_list, "form": form})
+'''
+ for i in questionnaire_list:
+        v = models.Answer.objects.filter(question__questionnaire=i).distinct().annotate(c=Count("user_id")).values(
+            "c").count()
+        print(v)
+    i.stu_num = v'''

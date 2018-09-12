@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    病人管理
+{% endblock %}
+{% block content %}
+    <div class="panel-body">
+        <div>
+            <a href="/add_patient/">
+                <button class="btn btn-success">添加</button>
+            </a>
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>病人姓名</th>
+                    <th>身份证号</th>
+                    <th>详细信息</th>
+                    <th>问卷情况</th>
+                    <th>删除病人</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for Patient in Patient_list %}
+                    <tr>
+                        <td>{{ Patient.name }}</td>
+                        <td>{{ Patient.idcard }}</td>
+                        <td><a href="/patient/?method=further&id={{ Patient.id }}">详情</a></td>
+                        <td><a href="/patient/?method=ques&id={{ Patient.id }}">统计</a></td>
+                        <td><a href="/patient/?method=delete&id={{ Patient.id }}">删除</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#patient").addClass("active");
+        });
+    </script>
+{% endblock %}

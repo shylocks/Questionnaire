@@ -2,11 +2,6 @@
 {% block page_title %}
     问卷管理
 {% endblock %}
-{% block ulcontent %}
-    <li><a href="/welcome/">欢迎界面</a></li>
-    <li class="active"><a href="/ques/">问卷管理</a></li>
-    <li><a href="/member/">成员管理</a></li>
-{% endblock %}
 {% block content %}
     <div class="panel-body ">
         <div>
@@ -17,8 +12,6 @@
                 <thead>
                 <tr>
                     <th>问卷名称</th>
-                    <th>访问者</th>
-                    <th>参与者</th>
                     <th>问卷选项</th>
                     {# <th>调查地址</th>#}
                     <th>查看评分</th>
@@ -27,24 +20,23 @@
                 </tr>
                 </thead>
                 <tbody>
-                    {% for questionnaire in questionnaire_list %}
-                        <tr>
+                {% for questionnaire in questionnaire_list %}
+                    <tr>
 
-                            <td><a href="">{{ form.title }}{{ questionnaire.title }}</a></td>
-                            <td>{{ questionnaire.cls.title }}</td>
-                            <td>{{ questionnaire.cls.title }}</td>
-                            <td>{{ questionnaire.stu_num }}/{{ questionnaire.cls.student_set.all.count }}</td>
-                            <td><a href="/edit_questionnaire/{{ questionnaire.id }}/">编辑问卷</a></td>
-                            {#  <td><a href="/student/evaluate/{{ questionnaire.id }}/{{ questionnaire.cls.id }}/">/student/evaluate/{{ questionnaire.id }}/{{ questionnaire.cls.id }}/</a></td> #}
-                            <td><a href="">查看评分</a></td>
-                            <td>
-                                <a href="/delete_questionnaire/{{ questionnaire.id }}">删除</a></td>
-                            </td>
-                        </tr>
-                    {% endfor %}
+                        <td><a href="/ques/?method=view&id={{ questionnaire.id }}">{{ form.title }}{{ questionnaire.title }}</a></td>
+                        <td><a href="/edit_questionnaire/{{ questionnaire.id }}/">编辑问卷</a></td>
+                        <td><a href="">查看评分</a></td>
+                        <td><a href="/ques/?method=delete&id={{ questionnaire.id }}">删除</a></td>
+                    </tr>
+                {% endfor %}
 
                 </tbody>
             </table>
         </div>
     </div>
+    <script>
+        $(document).ready(function () {
+            $("#ques").addClass("active");
+        });
+    </script>
 {% endblock %}
