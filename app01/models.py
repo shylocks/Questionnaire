@@ -43,14 +43,30 @@ class Admin(models.Model):
         return self.name
 
 
+class Hospital(models.Model):
+    '''
+    医院表
+    '''
+    id = models.CharField(verbose_name="医院ID", max_length=16,primary_key=True)
+    name = models.CharField(verbose_name="医院名称", max_length=40)
+    description = models.CharField(verbose_name="描述", max_length=40)
+
+    class Meta:
+        verbose_name_plural = "医院表"
+
+    def __str__(self):
+        return self.name
+
+
 class Doctor(models.Model):
     '''
-    管理员表
+    医生表
     '''
     id = models.CharField(verbose_name="用户ID", max_length=16,primary_key=True)
     name = models.CharField(verbose_name="用户姓名", max_length=16)
     pwd = models.CharField(verbose_name="密码", max_length=16)
-
+    position = models.CharField(verbose_name="职位",max_length=16)
+    hospital = models.ForeignKey(verbose_name="医院ID",to="Hospital", on_delete=models.CASCADE)
     class Meta:
         verbose_name_plural = "医生表"
 
@@ -110,10 +126,10 @@ class Answer(models.Model):
     '''
     答案
     '''
-    user_id = models.ForeignKey(to="Patient",verbose_name="谁回答的",on_delete=models.CASCADE)
-    question_id = models.ForeignKey(to='Question',verbose_name="问题",on_delete=models.CASCADE)
+    user = models.ForeignKey(Patient,verbose_name="回答者",on_delete=models.CASCADE)
+    question = models.ForeignKey(to='Question',verbose_name="问题",on_delete=models.CASCADE)
     content = models.CharField(verbose_name="答案内容",max_length=255,null=True,blank=True)
-    option_id = models.ForeignKey(to="Option",null=True,blank=True,on_delete=models.CASCADE)
+    option = models.ForeignKey(to="Option",null=True,blank=True,on_delete=models.CASCADE)
     val = models.IntegerField(null=True,blank=True)
 
     class Meta:

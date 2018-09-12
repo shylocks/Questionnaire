@@ -12,14 +12,18 @@ urlpatterns = [
     url(r'^ques/', views.questionnaires),
     url(r'^add_questionnaire/$', views.add_questionnaire),
     url(r'^edit_questionnaire/(\d+)/$', views.edit_questionnaire),
-
+    url(r'^questionnaire/(\d+)/$', views.view_questionnaire),
     url(r'^doctor/', views.doctor),
     url(r'^add_doctor/$', views.add_doctor),
     url(r'^edit_doctor/(\d+)/$', views.edit_doctor),
+
+    url(r'^hospital/',views.hospital),
+    url(r'^add_hospital/',views.add_hospital),
 
     url(r'^patient/', views.patient),
     url(r'^add_patient/',views.add_patient),
     url(r'^login/$', views.login),
     url(r'^(student/evaluate/\d+)/(\d+)/$', views.score),
 
+    url(r'^test/',views.test)
 ]

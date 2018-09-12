@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block page_title %}
+    医生管理
+{% endblock %}
+
+{% block content %}
+    <div class="panel-body">
+        <div>
+
+            <a href="/add_hospital/">
+                <button class="btn btn-success">添加</button>
+            </a>
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>医院名称</th>
+                    <th>医院描述</th>
+                    <th>医院操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for Hospital in Hospital_list %}
+                    <tr>
+                        <td>{{ Hospital.name }}</td>
+                        <td>{{ Hospital.description }}</td>
+                        <td><a href="/hospital/?method=delete&id={{ Hospital.id }}">删除</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $("#hospital").addClass("active");
+        });
+    </script>
+{% endblock %}

@@ -1,40 +1,55 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    成员管理
+    医生管理
 {% endblock %}
 
 {% block content %}
     <div class="panel-body">
-        <div>
-            <a href="/add_doctor/">
-                <button class="btn btn-success">添加</button>
-            </a>
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>医生姓名</th>
-                    <th>医生密码</th>
-                    <th>密码操作</th>
-                    <th>用户操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for Doctor in Doctor_list %}
-                    <tr>
-                        <td>{{ Doctor.name }}</td>
-                        <td>{{ Doctor.pwd }}</td>
-                        <td><a href="/doctor/?method=reset&id={{ Doctor.id }}">重置密码</a></td>
-                        <td><a href="/doctor/?method=delete&id={{ Doctor.id }}">删除</a></td>
-                    </tr>
-                {% endfor %}
+     <div class="row clearfix">
+     </div>
+        {% for Doctor in Doctor_list %}
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="row clearfix">
+            {% endif %}
+        <div class="col-lg-6">
+            <section id="profile" class="well">
+                <h2 class="ra-well-title">医生编号: {{ Doctor.id }}</h2>
 
-                </tbody>
-            </table>
+                <div class="row">
+                    <div class="col-lg-5 col-sm-3">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH8AAAB/CAMAAADxY+0hAAAAZlBMVEX///9CQkE4ODeKioo9PTwwMC81NTTg4OBGRkXw8PDPz8/z8/MrKyozMzGioqL39/fp6enBwcHZ2dmzs7NbW1p5eXlhYWBwcG+srKuCgoIjIyLJyclOTk0bGxmSkpInJyWampkJCQSXXhkbAAADSElEQVRoge2ai9KiMAyFaWmLcpM7/MqK+/4vubiuiool0YSZnen3AqeX9CRN63kOh8PhcDj+H7KiTH3fT8tDsN2tLR6cWhlrI6U0Otaq8ctsRfVDs5dKTFBK76tuu4560egH8esYTOKvsQipmlP/ixEdu3yt36mfiduIV761yo9LULFGQZvY5YWQPeNhPC3KjwNo2eRDsyw/xkDOpd+/jfwpqmeSLxdi78rAswC7DUxeqJpFPx+A+mLD4oM1aPfPxCGDfAaWF0nKoJ/HYH2WAPAlXL9h0G/g668qeg/e9mB5IXr6LBgg5IUIyPUL+PaPB4D+AIaA1HdD0zswSj8p6fVBufeqTz//An78Rv0DuX4AzX5nZEGuH8GKjwscCRDlf/Ty3gkegPKHXj5C5B8h6P3Hfu953gDyEnSHmT2DAW8x9jNew8gNECUvDLkBthj/E4bcgEpM/hGKvAAKMPPnKAAxG6AZ+iAHuAEYhvrP21XgBajpy7+R9DdsAJo++f8DVgLEbF24GmTCCZe810FMmK39MR4BiL702fS3kACgTz13IB6k6GvPG5AOFN/2e162vAEctd+dn8UTGLO5z5lgqQemKt4G+FIEmiOrvHdY6EJpltQzwT5/ptbnhNLqgXuOzuMDO+v0ORpvT6SWQpS+7H7F6kFrPIRaLqKbFeS9/H0SWEXfZgHMr3/j7ne+pRGiqmPBGAJZWv3S0uZASu7FkakAKOrBqn1FDhXHCAIDbkEoyWCDAeICzOGDBfz9ZdwD8igMEf0/+jyY1Qmq/yEkZQxGqcC1v84roMge4fIe0/u7oRuSi2jQ7nFLf1+C+PsliI7xh+pnTP9lQZD3uL7jyxKYb3ohQf3N5C9Idfz0R0qaoKN+juSzkxBKVMfROgLTYf2wwBqOHdMfQ/AQoiJtJMnST0eQAD+ohT+bwVDO/YrSYjkQDtWnbgMhkXY/2NazX+sI0a3FlEN8mkEj1dsGRc49+Qv6TYOsxBQ43xDPduct1xpq5lYg49/6yQBek1K7pv7rA3G4X1F+DIGnHdihqlsCNo9eHK4V+1eeXqhgLwuEPN6QIsznJiKmRwD1uYWGhy8y6SDXZjhN9Dt/ffi/ijscDofD4ZjnD8RZLUX1NrC5AAAAAElFTkSuQmCC"
+                             class="ra-avatar img-responsive">
+                    </div>
+
+                    <div class="col-lg-7 col-sm-3">
+                        <span class="ra-last-name">{{ Doctor.name }}</span>
+                        <span class="ra-first-name">{{ Doctor.hospital.name }}</span>
+                        <div class="ra-position">{{ Doctor.position }}</div>
+                        <span class="ra-first-name">
+                                <a href="/doctor/?method=reset&id={{ Doctor.id }}">重置密码</a>
+                                <a href="/doctor/?method=delete&id={{ Doctor.id }}">删除</a>
+                            </span>
+                    </div>
+                </div>
+
+            </section>
+        </div>
+        {% if forloop.counter|divisibleby:2 %}
+            </div>
+        {% endif %}
+        {% endfor %}
+        <div class="col-lg-6">
+        <a href="/add_doctor/">
+            <button class="btn btn-success">添加</button>
+        </a>
+        <a href="">
+            <button type="button" class="btn btn-primary">批量导入</button>
+        </a>
         </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#doctor").addClass("active");
         });
     </script>

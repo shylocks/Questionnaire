@@ -9,7 +9,7 @@ from django.forms import fields
 from django.forms import widgets
 from urllib.parse import parse_qs
 from . import models
-from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientForm
+from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientForm, HospitalForm
 
 
 # Create your views here.
@@ -23,7 +23,6 @@ def questionnaires(request):
         if pars.get('method'):
             if pars['method'][0] == 'delete':
                 models.Questionnaire.objects.filter(id=pars['id'][0]).delete()
-
     questionnaire_list = models.Questionnaire.objects.all()
     return render(request, 'ques.html', locals())
 
@@ -37,14 +36,24 @@ def doctor(request):
             if pars['method'][0] == 'reset':
                 models.Doctor.objects.filter(id=pars['id'][0]).update(pwd="123456")
     Doctor_list = models.Doctor.objects.all()
+
     return render(request, 'doctor.html', locals())
 
+def hospital(request):
+    if request.method == "GET":
+        pars = parse_qs(request.GET.urlencode())
+        if pars.get('method'):
+            if pars['method'][0] == 'delete':
+                models.Hospital.objects.filter(id=pars['id'][0]).delete()
+    Hospital_list = models.Hospital.objects.all()
+    return render(request, 'hospital.html', locals())
 
 def patient(request):
     if request.method == "GET":
         pars = parse_qs(request.GET.urlencode())
         if pars.get('method'):
             if pars['method'][0] == 'delete':
+                print(pars['id'][0])
                 models.Patient.objects.filter(id=pars['id'][0]).delete()
             elif pars['method'][0] == 'further':
                 Patient_list = models.Patient.objects.filter(id=pars['id'][0])
@@ -69,6 +78,7 @@ def patient(request):
                                                     children=children, longest_job=longest_job,
                                                     family_medical_history=family_medical_history)
     Patient_list = models.Patient.objects.all()
+    print(Patient_list)
     return render(request, 'patient.html', locals())
 
 
@@ -106,7 +116,7 @@ def add_patient(request):
     if request.method == "GET":
         return render(request, 'add_patient.html')
     elif request.is_ajax():
-        id = len(models.Doctor.objects.all())+1
+        id = len(models.Patient.objects.all())+1
         name = request.POST.get("name")
         sex = request.POST.get("sex")
         age = request.POST.get("age")
@@ -118,7 +128,7 @@ def add_patient(request):
         children = request.POST.get("children")
         longest_job = request.POST.get("longest_job", "无")
         family_medical_history = request.POST.get("family_medical_history", "无")
-        models.Patient.objects.creat(id=id,name=name, sex=sex, age=age, idcard=idcard,
+        models.Patient.objects.create(id=id,name=name, sex=sex, age=age, idcard=idcard,
                                                     nation=nation, native_place=native_place,
                                                     education=education, marriage=marriage,
                                                     children=children, longest_job=longest_job,
@@ -126,6 +136,22 @@ def add_patient(request):
 
     Patient_list = models.Patient.objects.all()
     return render(request, 'patient.html', locals())
+
+
+def add_hospital(request):
+    if request.method == "GET":
+        form = HospitalForm()
+        return render(request, 'add_hospital.html', {"form": form})
+    else:
+        form = HospitalForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            description = form.cleaned_data.get("description")
+            id = 1 + len(models.Hospital.objects.all())
+            models.Hospital.objects.create(id=id, name=name, description=description)
+            return redirect("/hospital/")
+        else:
+            return render(request, 'add_hospital.html', {"form": form})
 
 
 def add_doctor(request):
@@ -137,10 +163,15 @@ def add_doctor(request):
         if form.is_valid():
             name = form.cleaned_data.get("name")
             id = 10001 + len(models.Doctor.objects.all())
-            models.Doctor.objects.create(id=id, name=name, pwd="123")
+            hospital = form.cleaned_data.get("hospital")
+            position = form.cleaned_data.get("position")
+            models.Doctor.objects.create(id=id, name=name, pwd="123456", hospital_id=hospital,position=position)
             return redirect("/doctor/")
         else:
             return render(request, 'add_doctor.html', {"form": form})
+
+def view_questionnaire(request,pid):
+    return render(request, 'questionnaire.html', locals())
 
 
 def add_questionnaire(request):
@@ -194,59 +225,46 @@ def edit_questionnaire(request, pid):
         return render(request, "edit_questionnaire.html", {"form_list": inner()})
 
     else:
-
-        data = json.loads(request.body.decode("utf-8"))
-
-        # 获取当前问卷的所有问题
-        question_list = models.Question.objects.filter(questionnaire_id=pid)
-
-        # 获取用户提交所有问题的id
-
-        post_id_list = [i.get("id") for i in data]
-
-        # 获取数据库中已有问题的ID
-
-        question_id_list = [str(i.id) for i in question_list]
-
-        # 利用集合去重获取需要删除的ID
-
-        del_id_list = set(question_id_list).difference(post_id_list)
-
+        data = json.loads(request.body.decode("utf-8"))  # 获取当前问卷的所有问题
+        question_list = models.Question.objects.filter(questionnaire_id=pid)  # 获取用户提交所有问题的id
+        post_id_list = [i.get("id") for i in data]  # 获取数据库中已有问题的ID
+        question_id_list = [str(i.id) for i in question_list]  # 获取数据库中已有问题的ID
+        del_id_list = set(question_id_list).difference(post_id_list)  # 利用集合去重获取需要删除的ID
+        for del_id in del_id_list:
+            models.Question.objects.filter(id=del_id).delete()
         for item in data:
-
             qid = item.get("id")
             caption = item.get("caption")
             ct = item.get("ct")
-
             options = item.get("options")
-
             # 如果用户传过来的id不在数据库原有id列表中的时候，表示要新增
             if qid not in question_id_list:
                 new_question_obj = models.Question.objects.create(caption=caption, ct=ct, questionnaire_id=pid)
-
                 if ct == 2:
                     for op in options:
                         models.Option.objects.create(question=new_question_obj, name=op.get("name"),
                                                      score=op.get("score"))
-
             # 否则表示要更新
             else:
                 models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, questionnaire_id=pid)
-
                 if not options:  # 如果没有选项表示要删除选项
                     models.Option.objects.filter(question_id=qid).delete()
                 else:
-
                     models.Option.objects.filter(question_id=qid).delete()
                     for op in options:
                         models.Option.objects.create(name=op.get("name"), score=op.get("score"), question_id=qid)
-
-    return HttpResponse("ok")
+        return HttpResponse("ok")
 
 
 def func(content):
     if len(content) < 15:
         raise ValidationError("长度不得少于15个字符")
+
+
+def test(request):
+    data = json.loads(request.body.decode("utf-8"))
+    print(data)
+    return HttpResponse("ok")
 
 
 def score(request, ques_id, cls_id, ):
@@ -256,7 +274,7 @@ def score(request, ques_id, cls_id, ):
 
     # 判断当前登录的用户是否是要答卷的班级的学生
 
-    stu_obj = models.doctor.objects.filter(id=stu_id, cls_id=cls_id).count()
+    stu_obj = models.Doctor.objects.filter(id=stu_id, cls_id=cls_id).count()
 
     if not stu_obj:
         return HttpResponse("对不起，您不是本次问卷调查对象")

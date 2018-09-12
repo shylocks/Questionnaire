@@ -1,15 +1,10 @@
 {% extends 'base.html' %}
 
 {% block page_title %}
-    <a href="/ques/">问卷管理</a>/编辑问卷
+    <a href="/ques/">问卷管理</a>/ 编辑问卷
 {% endblock %}
 {% block content %}
     <div class="panel panel-body edit_ques">
-        <p class="btn_style">
-            <button class="btn btn-success add_question ">添加</button>
-            &nbsp;&nbsp;
-            <button class="btn btn-primary btn_save">保存</button>
-        </p>
         <ol class="question_list">
             <form class="form-horizontal" method="post" novalidate>
                 {% csrf_token %}
@@ -55,7 +50,14 @@
                 {% endfor %}
             </form>
         </ol>
+        <p class="btn_style">
+            <button class="btn btn-success add_question ">添加</button>
+            &nbsp;&nbsp;
+            <input type="button" value="保存" class="btn btn-primary" id="subBtn">
+
+        </p>
     </div>
+    <script src="/static/js/new.js"></script>
     <script>
         $(document).ready(function () {
             $("#ques").addClass("active");

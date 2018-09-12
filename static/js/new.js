@@ -47,8 +47,8 @@ form_l.on("click", ".col_fork", function () {
 });
 
 
-$(".btn_save").click(function () {
-    var ajax_post_list = [];
+$("#subBtn").on("click", function () {
+        var ajax_post_list = [];
 
     $(".pk").each(function () {
 
@@ -83,7 +83,10 @@ $(".btn_save").click(function () {
         contentType: "application/json",
         headers: {"X-CSRFToken": $.cookie("csrftoken")},
         success: function (data) {
-            console.log(data)
+            if ( data == "ok") {
+                alert("保存成功!")
+                location.href = "/ques/"
+            }
         }
     })
 });

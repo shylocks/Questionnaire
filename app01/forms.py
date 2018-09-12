@@ -19,6 +19,22 @@ class DoctorForm(Form):
         "required": "姓名不能为空"
     },
                              widget=wid.TextInput(attrs={"class": "form-control"}))
+    hospital = fields.ChoiceField(required=True, error_messages={
+        "required": "医院不能为空"
+    },
+                             choices=models.Hospital.objects.values_list("id", "name"),
+                             widget=wid.Select(attrs={"class": "form-control"}))
+    position = fields.CharField(required=False,
+                                   widget=wid.TextInput(attrs={"class": "form-control"}))
+
+
+class HospitalForm(Form):
+    name = fields.CharField(required=True, error_messages={
+        "required": "医院名称不能为空"
+    },
+                             widget=wid.TextInput(attrs={"class": "form-control"}))
+    description = fields.CharField(required=False,
+                            widget=wid.TextInput(attrs={"class": "form-control"}))
 
 
 class PatientForm(Form):
