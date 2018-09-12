@@ -104,11 +104,26 @@ def login(request):
 
 def add_patient(request):
     if request.method == "GET":
-        patient = PatientForm()
-        return render(request, 'add_patient.html',{"Patient": patient})
-    else:
-        form = PatientForm(request.POST)
-        print(vars(form))
+        return render(request, 'add_patient.html')
+    elif request.is_ajax():
+        id = len(models.Doctor.objects.all())+1
+        name = request.POST.get("name")
+        sex = request.POST.get("sex")
+        age = request.POST.get("age")
+        idcard = request.POST.get("idcard")
+        nation = request.POST.get("nation")
+        native_place = request.POST.get("native_place")
+        education = request.POST.get("education")
+        marriage = request.POST.get("marriage")
+        children = request.POST.get("children")
+        longest_job = request.POST.get("longest_job", "无")
+        family_medical_history = request.POST.get("family_medical_history", "无")
+        models.Patient.objects.creat(id=id,name=name, sex=sex, age=age, idcard=idcard,
+                                                    nation=nation, native_place=native_place,
+                                                    education=education, marriage=marriage,
+                                                    children=children, longest_job=longest_job,
+                                                    family_medical_history=family_medical_history)
+
     Patient_list = models.Patient.objects.all()
     return render(request, 'patient.html', locals())
 
@@ -121,7 +136,7 @@ def add_doctor(request):
         form = DoctorForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get("name")
-            id = 10000 + len(models.Doctor.objects.all())
+            id = 10001 + len(models.Doctor.objects.all())
             models.Doctor.objects.create(id=id, name=name, pwd="123")
             return redirect("/doctor/")
         else:

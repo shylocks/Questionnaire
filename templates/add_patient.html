@@ -6,7 +6,7 @@
 {% block content %}
     <div id="example" class="container">
     <div class="panel-body">
-    <form method="post" novalidate>
+    <form method="post">
     {% csrf_token %}
         <section class="well">
                 <h2 class="ra-well-title">详情</h2>
@@ -15,14 +15,14 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="name">姓名</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.name }}
+                            <input id="name" value="" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="age">年龄</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.age }}
+                            <input id="age" type="number" value="" />
                         </div>
                     </div>
 
@@ -39,13 +39,13 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="nation">名族</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.nation }}
+                            <input id="nation" value="" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="age">子女数</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.children }}
+                            <input id="children" type="number" value="" />
                         </div>
                     </div>
                 </div>
@@ -54,14 +54,14 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="idcard">身份证</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.idcard }}
+                            <input id="idcard" value="" />
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="native_place">籍贯</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.native_place }}
+                            <input id="native_place" value="" />
                         </div>
                     </div>
 
@@ -97,7 +97,7 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="longest_job">最长工作</label>
                         <div class="col-sm-8 col-md-6">
-                           {{ Patient.longest_job }}
+                            <input id="longest_job" value="" />
                         </div>
                     </div>
                 </div>
@@ -105,13 +105,13 @@
                     <div class="form-group">
                         <label class="control-label col-sm-4" for="native_place">家族痴呆病史</label>
                         <div class="col-sm-8 col-md-6">
-                            {{ Patient.family_medical_history }}
+                            <input id="family_medical_history" value="" />
                         </div>
                     </div>
                 </div>
                 <div class="buttons-wrap">
                     <button class="k-button k-state-default">返回</button>
-                    <button class="k-button k-state-default" type="submit">确认</button>
+                    <button class="k-button k-state-default" type="submit" id="subBtn">确认</button>
                 </div>
 
             </section>
@@ -123,6 +123,7 @@
             $("#patient").addClass("active");
         });
     </script>
+    <script src="/static/js/add_patient.js"></script>
     <link rel="stylesheet" href="/static/css/styles.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2018.1.221/styles/kendo.common-bootstrap.min.css" />
     <link rel="stylesheet" href="/static/css/kendo.bootstrap.min.css" />
