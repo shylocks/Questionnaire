@@ -39,6 +39,7 @@ def doctor(request):
 
     return render(request, 'doctor.html', locals())
 
+
 def hospital(request):
     if request.method == "GET":
         pars = parse_qs(request.GET.urlencode())
@@ -47,6 +48,7 @@ def hospital(request):
                 models.Hospital.objects.filter(id=pars['id'][0]).delete()
     Hospital_list = models.Hospital.objects.all()
     return render(request, 'hospital.html', locals())
+
 
 def patient(request):
     if request.method == "GET":
@@ -170,7 +172,10 @@ def add_doctor(request):
         else:
             return render(request, 'add_doctor.html', {"form": form})
 
+
 def view_questionnaire(request,pid):
+    Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
+    print(Questionnaire.title)
     return render(request, 'questionnaire.html', locals())
 
 
