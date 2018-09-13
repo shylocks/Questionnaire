@@ -95,9 +95,10 @@ class Question(models.Model):
     caption = models.CharField(verbose_name="问题标题",max_length=64)
     question_type = (
         (1,"打分"),
-        (2,"单选"),
+        (2,"问答"),
         (3,"评价"),
     )
+    part_id = models.IntegerField(verbose_name="所属部分")
     ct = models.IntegerField(choices=question_type)
     questionnaire = models.ForeignKey(to="Questionnaire",on_delete=models.CASCADE)
 
@@ -117,6 +118,22 @@ class Option(models.Model):
 
     class Meta:
         verbose_name_plural = "单选题的选项"
+
+    def __str__(self):
+        return self.name
+
+
+class Part(models.Model):
+    '''
+   Part表
+    '''
+    id = models.IntegerField(verbose_name="partid",primary_key=True)
+    questionnaire = models.ForeignKey(to="Questionnaire",on_delete=models.CASCADE)
+    part_id = models.IntegerField(verbose_name="partid2")
+    description = models.CharField(verbose_name="描述",max_length=255)
+
+    class Meta:
+        verbose_name_plural = "Part表"
 
     def __str__(self):
         return self.name

@@ -85,8 +85,8 @@ class QuestionModelForm(ModelForm):
         }
         widgets = {
             "caption": wid.Textarea(attrs={"class":"form-control", "rows": "2" ,"cols": "60"}),
-            "ct": wid.Select(attrs={"class":"form-control"})
-
+            "ct": wid.Select(attrs={"class":"form-control"}),
+            "part_id": wid.Textarea( attrs={"class":"form-control", "rows": "1" ,"cols": "20"})
         }
 
 

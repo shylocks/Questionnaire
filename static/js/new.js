@@ -11,10 +11,14 @@ $('.add_question').click(function () {
         '<label for="id_caption" class="col-md-2 control-label">' +
         '问题名称：</label><div class="col-md-10"><textarea name="caption" cols="60" rows="2" ' +
         'class="form-control" maxlength="64" required="" id="id_caption"></textarea></div></div>' +
+        '<div class="form-group">' +
+        '<label for="id_part" class="col-md-2 control-label">' +
+        '所属部分：</label><div class="col-md-10"><textarea name="part_id" cols="20" rows="1" ' +
+        'class="form-control" maxlength="64" required="" id="id_caption"></textarea></div></div>' +
         '<div class="form-group"><label for="id_ct" class="col-md-2 control-label">问题类型：' +
         '</label><div class="col-md-3"><select name="ct" class="form-control" required="" id="id_ct">' +
         '<option value="" selected="">---------</option> <option value="1">打分</option> <option value="2">' +
-        '单选</option><option value="3">评价</option></select><ul></ul></div><div class="col -md-2">' +
+        '问答</option><option value="3">评价</option></select><ul></ul></div><div class="col -md-2">' +
         '<span style="font-size: 20px" class="add_choice"><a href="#add_choice" class="hide"> ' +
         '+添加选项</a></span></div></div><ul class="choice_list"></ul><span class="fork">×</span></div></li>';
 
@@ -48,13 +52,14 @@ form_l.on("click", ".col_fork", function () {
 
 
 $("#subBtn").on("click", function () {
-        var ajax_post_list = [];
+    var ajax_post_list = [];
 
     $(".pk").each(function () {
 
         var ajax_dict = {
             "id": $(this).attr("pk"),
             "caption": $(this).find("textarea[name=caption]").val(),
+            "part_id": $(this).find("textarea[name=part_id]").val(),
             "ct": Number($(this).find("select[name=ct]").val()),
             "options": []
         };
@@ -83,7 +88,7 @@ $("#subBtn").on("click", function () {
         contentType: "application/json",
         headers: {"X-CSRFToken": $.cookie("csrftoken")},
         success: function (data) {
-            if ( data == "ok") {
+            if (data == "ok") {
                 alert("保存成功!")
                 location.href = "/ques/"
             }

@@ -174,8 +174,16 @@ def add_doctor(request):
 
 
 def view_questionnaire(request,pid):
+    qid = int(pid)
     Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
-    print(Questionnaire.title)
+    question_list = models.Question.objects.filter(questionnaire_id=pid)
+    parts=[]
+    option_list = models.Option.objects.all()
+    for ques in question_list:
+        if ques.part_id not in parts:
+            parts.append(ques.part_id)
+    parts.sort()
+    part_list = models.Part.objects.all()
     return render(request, 'questionnaire.html', locals())
 
 
@@ -242,16 +250,17 @@ def edit_questionnaire(request, pid):
             caption = item.get("caption")
             ct = item.get("ct")
             options = item.get("options")
+            part_id = item.get("part_id")
             # 如果用户传过来的id不在数据库原有id列表中的时候，表示要新增
             if qid not in question_id_list:
-                new_question_obj = models.Question.objects.create(caption=caption, ct=ct, questionnaire_id=pid)
+                new_question_obj = models.Question.objects.create(caption=caption, ct=ct, questionnaire_id=pid, part_id=part_id)
                 if ct == 2:
                     for op in options:
                         models.Option.objects.create(question=new_question_obj, name=op.get("name"),
                                                      score=op.get("score"))
             # 否则表示要更新
             else:
-                models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, questionnaire_id=pid)
+                models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, questionnaire_id=pid, part_id=part_id)
                 if not options:  # 如果没有选项表示要删除选项
                     models.Option.objects.filter(question_id=qid).delete()
                 else:

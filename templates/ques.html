@@ -23,7 +23,7 @@
                 {% for questionnaire in questionnaire_list %}
                     <tr>
 
-                        <td><a href="/ques/?method=view&id={{ questionnaire.id }}">{{ form.title }}{{ questionnaire.title }}</a></td>
+                        <td><a href="/questionnaire/{{ questionnaire.id }}/">{{ form.title }}{{ questionnaire.title }}</a></td>
                         <td><a href="/edit_questionnaire/{{ questionnaire.id }}/">编辑问卷</a></td>
                         <td><a href="">查看评分</a></td>
                         <td><a href="/ques/?method=delete&id={{ questionnaire.id }}">删除</a></td>

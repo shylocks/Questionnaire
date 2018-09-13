@@ -13,14 +13,15 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
  */
  
- 
+
 body {
-  background-color: #FFFFFF;
-  color: #FFFFFF;
+  background-color: #E5E5E5;
+  color: #3C4858;
 }
 body.inverse {
-  background: #FFFFFF;
+  background: #333333;
 }
+
 body.inverse, body.inverse .form-control {
   color: #ffffff;
 }

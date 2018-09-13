@@ -18,6 +18,12 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="id_part" class="col-md-2 control-label">所属部分：</label>
+                                <div class="col-md-10">
+                                    {{ item.form.part_id }}{{ item.form.errors.caption.0 }}
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="id_ct" class="col-md-2 control-label">问题类型：</label>
                                 <div class="col-md-3 add_btn">
                                     {{ item.form.ct }}
