@@ -94,9 +94,9 @@ class Question(models.Model):
     '''
     caption = models.CharField(verbose_name="问题标题",max_length=64)
     question_type = (
-        (1,"打分"),
-        (2,"问答"),
-        (3,"评价"),
+        (1,"填空评分"),
+        (2,"问答评分"),
+        (3,"备用"),
     )
     part_id = models.IntegerField(verbose_name="所属部分")
     ct = models.IntegerField(choices=question_type)

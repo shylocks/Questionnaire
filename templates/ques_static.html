@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block page_title %}
+    <a href="/ques/">问卷管理</a> /查看统计
+{% endblock %}
+{% block content %}
+    <div class="panel-body ">
+        <div>
+
+            <table class="table table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>参与者</th>
+                    <th>得分情况</th>
+                    <th>操作</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for participant in participant_list %}
+                    <tr>
+                        <td>{{ participant.name }}</td>
+                        <td>{{ participant.score }}</td>
+                        <td><a href="">删除</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#ques").addClass("active");
+        });
+    </script>
+{% endblock %}

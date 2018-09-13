@@ -17,8 +17,8 @@ $('.add_question').click(function () {
         'class="form-control" maxlength="64" required="" id="id_caption"></textarea></div></div>' +
         '<div class="form-group"><label for="id_ct" class="col-md-2 control-label">问题类型：' +
         '</label><div class="col-md-3"><select name="ct" class="form-control" required="" id="id_ct">' +
-        '<option value="" selected="">---------</option> <option value="1">打分</option> <option value="2">' +
-        '问答</option><option value="3">评价</option></select><ul></ul></div><div class="col -md-2">' +
+        '<option value="" selected="">---------</option> <option value="1">填空评分</option> <option value="2">' +
+        '问答评分</option><option value="3">备用</option></select><ul></ul></div><div class="col -md-2">' +
         '<span style="font-size: 20px" class="add_choice"><a href="#add_choice" class="hide"> ' +
         '+添加选项</a></span></div></div><ul class="choice_list"></ul><span class="fork">×</span></div></li>';
 

@@ -30,6 +30,44 @@
 
                         </section>
                     </div>
+                    <div class="col-mg-8 ">
+                        <div class="k-tabstrip-wrapper" style="">
+                            <div id="tabstrip"
+                                 class="ra-section k-widget k-header k-tabstrip k-floatwrap k-tabstrip-top"
+                                 data-role="tabstrip" tabindex="0" role="tablist"
+                                 aria-activedescendant="tabstrip_ts_active">
+                                <ul class="k-tabstrip-items k-reset">
+                                    <li class="k-item k-state-default k-last k-tab-on-top k-state-active" role="tab"
+                                        aria-controls="tabstrip-1" aria-selected="true" style=""><span
+                                            class="k-loading k-complete"></span><span unselectable="on"
+                                                                                      class="k-link"><span
+                                            class="km-icon share"></span><span class="hidden-xs">问卷统计</span></span></li>
+                                </ul>
+                                <div class="k-content k-state-active" id="tabstrip-1" role="tabpanel"
+                                     aria-expanded="true" style="opacity: 1; display: block;">
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>问卷标题</th>
+                                            <th>得分情况</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for participant in participant_list %}
+                                            <tr>
+                                                <td>{{ participant.name }}</td>
+                                                <td>{{ participant.score }}</td>
+                                                <td><a href="">删除</a></td>
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <section class="well">
                     <h2 class="ra-well-title">详情</h2>

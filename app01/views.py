@@ -23,6 +23,41 @@ def questionnaires(request):
         if pars.get('method'):
             if pars['method'][0] == 'delete':
                 models.Questionnaire.objects.filter(id=pars['id'][0]).delete()
+            if pars['method'][0] == 'view_static':
+                ques = models.Questionnaire.objects.filter(id=pars['id'][0]).first()
+                question_list = models.Question.objects.filter(questionnaire_id=ques.id)
+                answer_list = models.Answer.objects.all()
+                question_id_list=[]
+                for question in question_list:
+                    question_id_list.append(question.id)
+                participant_id_list = []
+                for answer in answer_list:
+                    if answer.user_id not in participant_id_list:
+                        participant_id_list.append(answer.user_id)
+                score_list = []
+                for participant_id in participant_id_list:
+                    this_score = 0
+                    this_answer_list = models.Answer.objects.filter(user_id=participant_id)
+                    for answer in this_answer_list:
+                        if answer.question_id in question_id_list:
+                            tmp = models.Question.objects.filter(id=answer.question_id).first()
+                            if tmp.ct == 2:
+                                this_score += models.Option.objects.filter(id=answer.option_id).first().score
+                    score_list.append(this_score)
+
+                class ipart:
+                    name = ""
+                    score = 0
+
+                participant_list = []
+                for i in range(0,len(participant_id_list)):
+                    tmp = ipart()
+                    tmp.name = models.Patient.objects.filter(id=participant_id_list[i]).first().name
+                    print(tmp.name)
+                    tmp.score = score_list[i]
+                    participant_list.append(tmp)
+
+                return render(request, 'ques_static.html', locals())
     questionnaire_list = models.Questionnaire.objects.all()
     return render(request, 'ques.html', locals())
 
@@ -58,6 +93,36 @@ def patient(request):
                 print(pars['id'][0])
                 models.Patient.objects.filter(id=pars['id'][0]).delete()
             elif pars['method'][0] == 'further':
+                questionnaire_list = models.Questionnaire.objects.all()
+                questionnaire_name_list=[]
+                score_list = []
+                for ques in questionnaire_list:
+                    questionnaire_name_list.append(ques.title)
+                    question_list = models.Question.objects.filter(questionnaire_id=ques.id)
+                    answer_list = models.Answer.objects.all()
+                    question_id_list = []
+                    for question in question_list:
+                        question_id_list.append(question.id)
+                    this_score = 0
+                    this_answer_list = models.Answer.objects.filter(user_id=pars['id'][0])
+                    for answer in this_answer_list:
+                        if answer.question_id in question_id_list:
+                            tmp = models.Question.objects.filter(id=answer.question_id).first()
+                            if tmp.ct == 2:
+                                this_score += models.Option.objects.filter(id=answer.option_id).first().score
+                    score_list.append(this_score)
+
+                class ipart:
+                    name = ""
+                    score = 0
+
+                participant_list = []
+                for i in range(0, len(questionnaire_name_list)):
+                    tmp = ipart()
+                    tmp.name = questionnaire_name_list[i]
+                    print(tmp.name)
+                    tmp.score = score_list[i]
+                    participant_list.append(tmp)
                 Patient_list = models.Patient.objects.filter(id=pars['id'][0])
                 Patient = Patient_list[0]
                 return render(request, 'patient_info.html', locals())

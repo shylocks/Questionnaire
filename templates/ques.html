@@ -13,8 +13,7 @@
                 <tr>
                     <th>问卷名称</th>
                     <th>问卷选项</th>
-                    {# <th>调查地址</th>#}
-                    <th>查看评分</th>
+                    <th>统计情况</th>
                     <th>操作</th>
 
                 </tr>
@@ -25,7 +24,7 @@
 
                         <td><a href="/questionnaire/{{ questionnaire.id }}/">{{ form.title }}{{ questionnaire.title }}</a></td>
                         <td><a href="/edit_questionnaire/{{ questionnaire.id }}/">编辑问卷</a></td>
-                        <td><a href="">查看评分</a></td>
+                        <td><a href="/ques/?method=view_static&id={{ questionnaire.id }}">查看统计</a></td>
                         <td><a href="/ques/?method=delete&id={{ questionnaire.id }}">删除</a></td>
                     </tr>
                 {% endfor %}
