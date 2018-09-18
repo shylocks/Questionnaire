@@ -53,7 +53,6 @@ def questionnaires(request):
                 for i in range(0,len(participant_id_list)):
                     tmp = ipart()
                     tmp.name = models.Patient.objects.filter(id=participant_id_list[i]).first().name
-                    print(tmp.name)
                     tmp.score = score_list[i]
                     participant_list.append(tmp)
 
@@ -90,7 +89,6 @@ def patient(request):
         pars = parse_qs(request.GET.urlencode())
         if pars.get('method'):
             if pars['method'][0] == 'delete':
-                print(pars['id'][0])
                 models.Patient.objects.filter(id=pars['id'][0]).delete()
             elif pars['method'][0] == 'further':
                 questionnaire_list = models.Questionnaire.objects.all()
@@ -120,7 +118,6 @@ def patient(request):
                 for i in range(0, len(questionnaire_name_list)):
                     tmp = ipart()
                     tmp.name = questionnaire_name_list[i]
-                    print(tmp.name)
                     tmp.score = score_list[i]
                     participant_list.append(tmp)
                 Patient_list = models.Patient.objects.filter(id=pars['id'][0])
@@ -145,7 +142,6 @@ def patient(request):
                                                     children=children, longest_job=longest_job,
                                                     family_medical_history=family_medical_history)
     Patient_list = models.Patient.objects.all()
-    print(Patient_list)
     return render(request, 'patient.html', locals())
 
 
@@ -239,10 +235,24 @@ def add_doctor(request):
 
 
 def view_questionnaire(request,pid):
+    if request.method == "GET":
+        pars = parse_qs(request.GET.urlencode())
+        if pars.get("method"):
+            if pars['method'][0] == 'delete':
+                questionID = pars['QuestionID'][0]
+                models.Question.objects.filter(id=questionID).delete()
+            if pars['method'][0] == 'viewPart':
+                partID = pars['PartID'][0]
+                part = models.Part.objects.filter(id=partID).first()
+                return render(request, 'PartModel.html', locals())
+    elif request.is_ajax():
+        item = json.loads(request.body.decode("utf-8"))
+        print(item.get("id"))
+        models.Part.objects.filter(id=item.get("id")).update(description=item.get("description"))
     qid = int(pid)
     Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
     question_list = models.Question.objects.filter(questionnaire_id=pid)
-    parts=[]
+    parts = []
     option_list = models.Option.objects.all()
     for ques in question_list:
         if ques.part_id not in parts:
@@ -341,9 +351,32 @@ def func(content):
 
 
 def test(request):
-    data = json.loads(request.body.decode("utf-8"))
-    print(data)
-    return HttpResponse("ok")
+    return render(request, "test.html", )
+
+
+def question(request):
+    if request.method == "GET":
+        pars = parse_qs(request.GET.urlencode())
+        if pars['method'][0] == 'view':
+            questionID = pars['QuestionID'][0]
+            question = models.Question.objects.filter(id=questionID).first()
+            optionlist = models.Option.objects.filter(question_id=questionID)
+            return render(request, "QuestionModel.html",locals())
+    elif request.is_ajax():
+        item = json.loads(request.body.decode("utf-8"))
+        print(item)
+        qid = item.get("id")
+        caption = item.get("caption")
+        ct = item.get("ct")
+        options = item.get("options")
+        part_id = item.get("part_id")
+        models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, part_id=part_id)
+        models.Option.objects.filter(question_id=qid).delete()
+        for op in options:
+            #id = len(models.Patient.objects.all()) + 1
+            models.Option.objects.create(name=op.get("name"), score=op.get("score"), question_id=qid)
+        return HttpResponse("ok")
+    return render(request, "QuestionModel.html", )
 
 
 def score(request, ques_id, cls_id, ):

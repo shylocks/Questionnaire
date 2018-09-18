@@ -1,0 +1,132 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form class="form-horizontal" method="post" novalidate>
+            {% csrf_token %}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">编辑试题</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-3 control-label">问题名称：</label>
+                    <div class="col-sm-9">
+                        <input type="text" name="caption" value="{{ question.caption }}" class="form-control"
+                               placeholder="" required>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-3 control-label">所属部分：</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="part_id" value="{{ question.part_id }}" class="form-control"
+                               placeholder="" required>
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-3 control-label">问题类型：</label>
+                    <div class="col-sm-3">
+                        <select id="{{ question.ct }}" name="ct" class="form-control" required>
+                                <option value="1">填空评分</option>
+                                <option value="2">问答评分</option>
+                                <option value="3">备用</option>
+                        </select>
+
+                    </div>
+                    {% ifequal  question.ct 1 %}
+
+                    {% endifequal %}
+                    {% ifequal que pars %}
+
+                    {% endifequal %}
+
+                    <div class="col-sm-4">
+                                <span style="font-size: 16px" class="add_choice"><a href="#add_choice"
+                                                                                    class="">✚添加选项</a></span>
+                    </div>
+                </div>
+                {% ifnotequal question.ct 3 %}
+                    <ul class="optionlist">
+                        {% for option in optionlist %}
+                            <div id="{{ option.id }}">
+                                <div class="form-group">
+                                    <label for="id_name" class="col-sm-3 control-label">●选项:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="name" value="{{ option.name }}" class="form-control"
+                                               maxlength="32" required id="id_name">
+                                    </div>
+                                    <label for="id_score" class="col-sm-3 control-label">分值：</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" name="score" value="{{ option.score }}" class="form-control"
+                                               id="id_score" required>
+                                    </div>
+                                    <label class="fork"><img
+                                            src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDIxLjkgMjEuOSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjEuOSAyMS45IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8cGF0aCBkPSJNMTQuMSwxMS4zYy0wLjItMC4yLTAuMi0wLjUsMC0wLjdsNy41LTcuNWMwLjItMC4yLDAuMy0wLjUsMC4zLTAuN3MtMC4xLTAuNS0wLjMtMC43bC0xLjQtMS40QzIwLDAuMSwxOS43LDAsMTkuNSwwICBjLTAuMywwLTAuNSwwLjEtMC43LDAuM2wtNy41LDcuNWMtMC4yLDAuMi0wLjUsMC4yLTAuNywwTDMuMSwwLjNDMi45LDAuMSwyLjYsMCwyLjQsMFMxLjksMC4xLDEuNywwLjNMMC4zLDEuN0MwLjEsMS45LDAsMi4yLDAsMi40ICBzMC4xLDAuNSwwLjMsMC43bDcuNSw3LjVjMC4yLDAuMiwwLjIsMC41LDAsMC43bC03LjUsNy41QzAuMSwxOSwwLDE5LjMsMCwxOS41czAuMSwwLjUsMC4zLDAuN2wxLjQsMS40YzAuMiwwLjIsMC41LDAuMywwLjcsMC4zICBzMC41LTAuMSwwLjctMC4zbDcuNS03LjVjMC4yLTAuMiwwLjUtMC4yLDAuNywwbDcuNSw3LjVjMC4yLDAuMiwwLjUsMC4zLDAuNywwLjNzMC41LTAuMSwwLjctMC4zbDEuNC0xLjRjMC4yLTAuMiwwLjMtMC41LDAuMy0wLjcgIHMtMC4xLTAuNS0wLjMtMC43TDE0LjEsMTEuM3oiIGZpbGw9IiMwMGJjZDQiLz4KPC9zdmc+Cg=="/></label>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                {% endifnotequal %}
+
+            </div>
+            <div class="modal-footer btn-group">
+                <button type="button" class="btn btn-default" value="no" data-dismiss="modal">关闭</button>
+                <input type="button" class="btn btn-primary" value="提交更改" id="subBtn">
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+<script>
+     $(document).ready(function () {
+            var option = $(".modal-content").find("select[name=ct]")    ;
+            var idd = option.attr("id");
+            var temp = option.find("option[value="+idd+"]");
+            temp.attr("selected","true");
+        });
+    var form_l = $("form.form-horizontal");
+    form_l.on("click", ".add_choice", function () {
+        tt = '<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDIxLjkgMjEuOSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjEuOSAyMS45IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8cGF0aCBkPSJNMTQuMSwxMS4zYy0wLjItMC4yLTAuMi0wLjUsMC0wLjdsNy41LTcuNWMwLjItMC4yLDAuMy0wLjUsMC4zLTAuN3MtMC4xLTAuNS0wLjMtMC43bC0xLjQtMS40QzIwLDAuMSwxOS43LDAsMTkuNSwwICBjLTAuMywwLTAuNSwwLjEtMC43LDAuM2wtNy41LDcuNWMtMC4yLDAuMi0wLjUsMC4yLTAuNywwTDMuMSwwLjNDMi45LDAuMSwyLjYsMCwyLjQsMFMxLjksMC4xLDEuNywwLjNMMC4zLDEuN0MwLjEsMS45LDAsMi4yLDAsMi40ICBzMC4xLDAuNSwwLjMsMC43bDcuNSw3LjVjMC4yLDAuMiwwLjIsMC41LDAsMC43bC03LjUsNy41QzAuMSwxOSwwLDE5LjMsMCwxOS41czAuMSwwLjUsMC4zLDAuN2wxLjQsMS40YzAuMiwwLjIsMC41LDAuMywwLjcsMC4zICBzMC41LTAuMSwwLjctMC4zbDcuNS03LjVjMC4yLTAuMiwwLjUtMC4yLDAuNywwbDcuNSw3LjVjMC4yLDAuMiwwLjUsMC4zLDAuNywwLjNzMC41LTAuMSwwLjctMC4zbDEuNC0xLjRjMC4yLTAuMiwwLjMtMC41LDAuMy0wLjcgIHMtMC4xLTAuNS0wLjMtMC43TDE0LjEsMTEuM3oiIGZpbGw9IiMwMGJjZDQiLz4KPC9zdmc+Cg=="/>'
+        s = '<div><div class="form-group">' +
+            '<label for="id_name" class="col-sm-3 control-label">●选项:' +
+            '</label> <div class="col-sm-2"> <input type="text" name="name" value=""' +
+            ' class="form-control" maxlength="32" required id="id_name"> </div> ' +
+            '<label for="id_score" class="col-sm-3 control-label">分值：</label> ' +
+            '<div class="col-sm-2"> <input type="text" name="score" value="" ' +
+            'class="form-control" required id="id_score"></div><label class="col_fork">'+tt+'</label></div></div>';
+        $('.optionlist').append(s);
+    });
+    $(".optionlist").on("click", ".fork", function () {
+        $(this).parent().parent().remove()
+    });
+    $("#subBtn").on("click", function () {
+        var modal = $(".modal-content");
+        var ajax_dict = {
+            "id": {{ questionID }},
+            "caption": modal.find("input[name=caption]").val(),
+            "part_id": modal.find("input[name=part_id]").val(),
+            "ct": Number(modal.find("select[name=ct]").val()),
+            "options": []
+        };
+        if (ajax_dict["ct"] == 2) {
+            modal.find("ul[class=optionlist]").children().each(function () {
+
+                ajax_dict["options"].push({
+                    "id": $(this).attr("id"),
+                    "name": $(this).find("input[name=name]").val(),
+                    "score": $(this).find("input[name=score]").val()
+                })
+
+            })
+        }
+        $.ajax({
+            type: "post",
+            url: "/question/",
+            data: JSON.stringify(ajax_dict),
+            contentType: "application/json",
+            dataType: "json",
+            headers: {"X-CSRFToken": $.cookie("csrftoken")},
+        })
+        alert("保存成功");
+        location.href = location.pathname;
+    });
+</script>

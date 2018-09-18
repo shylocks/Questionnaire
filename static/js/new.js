@@ -89,8 +89,8 @@ $("#subBtn").on("click", function () {
         headers: {"X-CSRFToken": $.cookie("csrftoken")},
         success: function (data) {
             if (data == "ok") {
-                alert("保存成功!")
-                location.href = "/ques/"
+                alert("保存成功!");
+                location.href = "/ques/";
             }
         }
     })
