@@ -103,7 +103,7 @@
                                                                 src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTguMS4xLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDMyIDMyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAzMiAzMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8Zz4KCTxnIGlkPSJ0cmFzaCI+CgkJPHBhdGggZD0iTTI5Ljk4LDYuODE4Yy0wLjA5Ni0xLjU3LTEuMzg3LTIuODE2LTIuOTgtMi44MTZoLTN2LTFWM2MwLTEuNjU3LTEuMzQ0LTMtMy0zSDExICAgIEM5LjM0MywwLDgsMS4zNDMsOCwzdjAuMDAxdjFINWMtMS41OTUsMC0yLjg4NSwxLjI0Ni0yLjk4MSwyLjgxNkgyVjh2MWMwLDEuMTA0LDAuODk2LDIsMiwybDAsMHYxN2MwLDIuMjA5LDEuNzkxLDQsNCw0aDE2ICAgIGMyLjIwOSwwLDQtMS43OTEsNC00VjExbDAsMGMxLjEwNCwwLDItMC44OTYsMi0yVjhWNi44MThIMjkuOTh6IE0xMCwzLjAwMWMwLTAuNTUzLDAuNDQ3LTEsMS0xaDEwYzAuNTUzLDAsMSwwLjQ0NywxLDF2MUgxMCAgICBWMy4wMDF6IE0yNiwyOC4wMDFjMCwxLjEwMi0wLjg5OCwyLTIsMkg4Yy0xLjEwMywwLTItMC44OTgtMi0ydi0xN2gyMFYyOC4wMDF6IE0yOCw4djFINFY4VjcuMDAxYzAtMC41NTMsMC40NDctMSwxLTFoMjIgICAgYzAuNTUzLDAsMSwwLjQ0NywxLDFWOHoiIGZpbGw9IiMwMGJjZDQiLz4KCQk8cGF0aCBkPSJNOSwyOC4wMDVoMmMwLjU1MywwLDEtMC40NDcsMS0xdi0xM2MwLTAuNTUzLTAuNDQ3LTEtMS0xSDljLTAuNTUzLDAtMSwwLjQ0Ny0xLDF2MTMgICAgQzgsMjcuNTU4LDguNDQ3LDI4LjAwNSw5LDI4LjAwNXogTTksMTQuMDA0aDJ2MTNIOVYxNC4wMDR6IiBmaWxsPSIjMDBiY2Q0Ii8+CgkJPHBhdGggZD0iTTE1LDI4LjAwNWgyYzAuNTUzLDAsMS0wLjQ0NywxLTF2LTEzYzAtMC41NTMtMC40NDctMS0xLTFoLTJjLTAuNTUzLDAtMSwwLjQ0Ny0xLDF2MTMgICAgQzE0LDI3LjU1OCwxNC40NDcsMjguMDA1LDE1LDI4LjAwNXogTTE1LDE0LjAwNGgydjEzaC0yVjE0LjAwNHoiIGZpbGw9IiMwMGJjZDQiLz4KCQk8cGF0aCBkPSJNMjEsMjguMDA1aDJjMC41NTMsMCwxLTAuNDQ3LDEtMXYtMTNjMC0wLjU1My0wLjQ0Ny0xLTEtMWgtMmMtMC41NTMsMC0xLDAuNDQ3LTEsMXYxMyAgICBDMjAsMjcuNTU4LDIwLjQ0NywyOC4wMDUsMjEsMjguMDA1eiBNMjEsMTQuMDA0aDJ2MTNoLTJWMTQuMDA0eiIgZmlsbD0iIzAwYmNkNCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="/></a>
                                                         <script>
                                                             var showModal{{ question.id }} = function () {
-                                                                $("#MyModalBody").load("/question?method=view&QuestionID={{ question.id }} ", function () {
+                                                                $("#MyModalBody").load("/question?method=view&QuestionnaireID={{ questionnaire_id }}&QuestionID={{ question.id }} ", function () {
                                                                     $("#MyModalBody").modal('show');
                                                                 })
                                                             }
@@ -113,9 +113,17 @@
                                             {% endifequal %}
                                         {% endfor %}
                                         <div class="col-sm-5 col-sm-offset-1">
-                                            <a href="">
+                                            <a data-toggle="modal" data-target="#AddModal"
+                                               onclick="showAddModal{{ i }}()">
                                                 <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQyIDQyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0MiA0MjsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8cG9seWdvbiBwb2ludHM9IjQyLDIwIDIyLDIwIDIyLDAgMjAsMCAyMCwyMCAwLDIwIDAsMjIgMjAsMjIgMjAsNDIgMjIsNDIgMjIsMjIgNDIsMjIgIiBmaWxsPSIjMDBiY2Q0Ii8+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="/>
                                             </a>
+                                            <script>
+                                                var showAddModal{{ i }} = function () {
+                                                    $("#MyModalBody").load("/question/?method=add&PartID={{ i }}&QuestionnaireID={{ questionnaire_id }} ", function () {
+                                                        $("#MyModalBody").modal('show');
+                                                    })
+                                                }
+                                            </script>
                                         </div>
                                     </div>
                                 </div>

@@ -8,52 +8,43 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="firstname" class="col-sm-3 control-label">问题名称：</label>
+                    <label class="col-sm-3 control-label">问题名称：</label>
                     <div class="col-sm-9">
-                        <input type="text" name="caption" value="{{ question.caption }}" class="form-control"
-                               placeholder="" required>
+                        {{ item.form.caption }}
                     </div>
 
                 </div>
                 <div class="form-group">
-                    <label for="firstname" class="col-sm-3 control-label">所属部分：</label>
+                    <label class="col-sm-3 control-label">所属部分：</label>
                     <div class="col-sm-4">
-                        <input type="text" name="part_id" value="{{ question.part_id }}" class="form-control"
-                               placeholder="" required>
+                         {{ item.form.part_id }}
                     </div>
 
                 </div>
                 <div class="form-group">
-                    <label for="firstname" class="col-sm-3 control-label">问题类型：</label>
+                    <label class="col-sm-3 control-label">问题类型：</label>
                     <div class="col-sm-3">
-                        <select id="{{ question.ct }}" name="ct" class="form-control" required>
-                            <option value="1">填空评分</option>
-                            <option value="2">问答评分</option>
-                            <option value="3">备用</option>
-                        </select>
-
+                        {{ item.form.ct }}
                     </div>
-                    {% ifnotequal  question.ct 3 %}
+                    {% ifnotequal  que.ct 3 %}
                         <div class="col-sm-4">
                                 <span style="font-size: 16px" class="add_choice"><a href="#"
                                                                                     class="">✚添加选项</a></span>
                     </div>
                     {% endifnotequal %}
                 </div>
-                {% ifnotequal question.ct 3 %}
+                {% ifnotequal que.ct 3 %}
                     <ul class="optionlist">
-                        {% for option in optionlist %}
-                            <div id="{{ option.id }}">
+                        {% for v in item.options %}
+                            <div id="{{ v.obj.id }}">
                                 <div class="form-group">
                                     <label for="id_name" class="col-sm-3 control-label">●选项:</label>
                                     <div class="col-sm-2">
-                                        <input type="text" name="name" value="{{ option.name }}" class="form-control"
-                                               maxlength="32" required id="id_name">
+                                        {{ v.form.name }}
                                     </div>
                                     <label for="id_score" class="col-sm-3 control-label">分值：</label>
                                     <div class="col-sm-2">
-                                        <input type="text" name="score" value="{{ option.score }}" class="form-control"
-                                               id="id_score" required>
+                                        {{ v.form.score }}
                                     </div>
                                     <label class="fork"><img
                                             src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDIxLjkgMjEuOSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjEuOSAyMS45IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8cGF0aCBkPSJNMTQuMSwxMS4zYy0wLjItMC4yLTAuMi0wLjUsMC0wLjdsNy41LTcuNWMwLjItMC4yLDAuMy0wLjUsMC4zLTAuN3MtMC4xLTAuNS0wLjMtMC43bC0xLjQtMS40QzIwLDAuMSwxOS43LDAsMTkuNSwwICBjLTAuMywwLTAuNSwwLjEtMC43LDAuM2wtNy41LDcuNWMtMC4yLDAuMi0wLjUsMC4yLTAuNywwTDMuMSwwLjNDMi45LDAuMSwyLjYsMCwyLjQsMFMxLjksMC4xLDEuNywwLjNMMC4zLDEuN0MwLjEsMS45LDAsMi4yLDAsMi40ICBzMC4xLDAuNSwwLjMsMC43bDcuNSw3LjVjMC4yLDAuMiwwLjIsMC41LDAsMC43bC03LjUsNy41QzAuMSwxOSwwLDE5LjMsMCwxOS41czAuMSwwLjUsMC4zLDAuN2wxLjQsMS40YzAuMiwwLjIsMC41LDAuMywwLjcsMC4zICBzMC41LTAuMSwwLjctMC4zbDcuNS03LjVjMC4yLTAuMiwwLjUtMC4yLDAuNywwbDcuNSw3LjVjMC4yLDAuMiwwLjUsMC4zLDAuNywwLjNzMC41LTAuMSwwLjctMC4zbDEuNC0xLjRjMC4yLTAuMiwwLjMtMC41LDAuMy0wLjcgIHMtMC4xLTAuNS0wLjMtMC43TDE0LjEsMTEuM3oiIGZpbGw9IiMwMGJjZDQiLz4KPC9zdmc+Cg=="/></label>
@@ -72,12 +63,6 @@
     </div>
 </div>
 <script>
-    $(document).ready(function () {
-        var option = $(".modal-content").find("select[name=ct]");
-        var idd = option.attr("id");
-        var temp = option.find("option[value=" + idd + "]");
-        temp.attr("selected", "true");
-    });
     var form_l = $("form.form-horizontal");
     form_l.on("click", ".add_choice", function () {
         tt = '<img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDIxLjkgMjEuOSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjEuOSAyMS45IiB3aWR0aD0iMTZweCIgaGVpZ2h0PSIxNnB4Ij4KICA8cGF0aCBkPSJNMTQuMSwxMS4zYy0wLjItMC4yLTAuMi0wLjUsMC0wLjdsNy41LTcuNWMwLjItMC4yLDAuMy0wLjUsMC4zLTAuN3MtMC4xLTAuNS0wLjMtMC43bC0xLjQtMS40QzIwLDAuMSwxOS43LDAsMTkuNSwwICBjLTAuMywwLTAuNSwwLjEtMC43LDAuM2wtNy41LDcuNWMtMC4yLDAuMi0wLjUsMC4yLTAuNywwTDMuMSwwLjNDMi45LDAuMSwyLjYsMCwyLjQsMFMxLjksMC4xLDEuNywwLjNMMC4zLDEuN0MwLjEsMS45LDAsMi4yLDAsMi40ICBzMC4xLDAuNSwwLjMsMC43bDcuNSw3LjVjMC4yLDAuMiwwLjIsMC41LDAsMC43bC03LjUsNy41QzAuMSwxOSwwLDE5LjMsMCwxOS41czAuMSwwLjUsMC4zLDAuN2wxLjQsMS40YzAuMiwwLjIsMC41LDAuMywwLjcsMC4zICBzMC41LTAuMSwwLjctMC4zbDcuNS03LjVjMC4yLTAuMiwwLjUtMC4yLDAuNywwbDcuNSw3LjVjMC4yLDAuMiwwLjUsMC4zLDAuNywwLjNzMC41LTAuMSwwLjctMC4zbDEuNC0xLjRjMC4yLTAuMiwwLjMtMC41LDAuMy0wLjcgIHMtMC4xLTAuNS0wLjMtMC43TDE0LjEsMTEuM3oiIGZpbGw9IiMwMGJjZDQiLz4KPC9zdmc+Cg=="/>'
@@ -100,10 +85,11 @@
     $("#subBtn").on("click", function () {
         var modal = $(".modal-content");
         var ajax_dict = {
-            "id": {{ questionID }},
+            "id": "{{ questionID }}",
             "caption": modal.find("input[name=caption]").val(),
             "part_id": modal.find("input[name=part_id]").val(),
             "ct": Number(modal.find("select[name=ct]").val()),
+            "questionnaire_id":"{{ questionnaireID }}",
             "options": []
         };
         if (ajax_dict["ct"] == 2) {

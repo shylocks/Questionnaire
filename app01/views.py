@@ -243,7 +243,6 @@ def view_questionnaire(request,pid):
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
         models.Part.objects.filter(id=item.get("id")).update(description=item.get("description"))
-    qid = int(pid)
     Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
     question_list = models.Question.objects.filter(questionnaire_id=pid)
     parts = []
@@ -253,6 +252,7 @@ def view_questionnaire(request,pid):
             parts.append(ques.part_id)
     parts.sort()
     part_list = models.Part.objects.all()
+    questionnaire_id = pid
     return render(request, 'questionnaire.html', locals())
 
 
@@ -337,22 +337,43 @@ def test(request):
 def question(request):
     if request.method == "GET":
         pars = parse_qs(request.GET.urlencode())
+        if pars['method'][0] == 'add':
+            questionnaireID = pars['QuestionnaireID'][0]
+            form = QuestionModelForm()
+            item = {'form': form, 'obj': None, 'options_cls': 'hide', 'options': None}
+            return render(request, "models/QuestionModel.html", locals())
         if pars['method'][0] == 'view':
             questionID = pars['QuestionID'][0]
-            question = models.Question.objects.filter(id=questionID).first()
-            optionlist = models.Option.objects.filter(question_id=questionID)
+            que = models.Question.objects.filter(id=questionID).first()
+            form = QuestionModelForm(instance=que)
+            item = {"form": form, "obj": que, "options": None}
+            if que.ct == 2 or que.ct == 1:
+                item["options_cls"] = ""
+                # 获取当前问题的所有选项
+
+                def inner_lop(xxx):
+                    option_list = models.Option.objects.filter(question=xxx)
+                    for v in option_list:
+                        yield {"form": OptionModelForm(instance=v), "obj": v}
+                item["options"] = inner_lop(que)
+            print(item)
             return render(request, "models/QuestionModel.html", locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
+        print(item)
         qid = item.get("id")
         caption = item.get("caption")
         ct = item.get("ct")
         options = item.get("options")
         part_id = item.get("part_id")
-        models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, part_id=part_id)
+        pid = item.get("questionnaire_id")
+        print(pid)
+        if qid == "":
+            models.Question.objects.create(caption=caption, ct=ct, part_id=part_id, questionnaire_id=pid)
+        else:
+            models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, part_id=part_id)
         models.Option.objects.filter(question_id=qid).delete()
         for op in options:
-            #id = len(models.Patient.objects.all()) + 1
             models.Option.objects.create(name=op.get("name"), score=op.get("score"), question_id=qid)
         return HttpResponse("ok")
     return render(request, "models/QuestionModel.html", )
