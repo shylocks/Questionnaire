@@ -23,6 +23,8 @@ def questionnaires(request):
         if pars.get('method'):
             if pars['method'][0] == 'delete':
                 models.Questionnaire.objects.filter(id=pars['id'][0]).delete()
+            if pars['method'][0] == 'add':
+                return render(request, 'models/QuestionnaireModel.html', )
             if pars['method'][0] == 'view_static':
                 ques = models.Questionnaire.objects.filter(id=pars['id'][0]).first()
                 question_list = models.Question.objects.filter(questionnaire_id=ques.id)
@@ -57,6 +59,9 @@ def questionnaires(request):
                     participant_list.append(tmp)
 
                 return render(request, 'ques_static.html', locals())
+    elif request.is_ajax():
+        data = json.loads(request.body.decode("utf-8"))
+        models.Questionnaire.objects.create(title=data.get("title"))
     questionnaire_list = models.Questionnaire.objects.all()
     return render(request, 'ques.html', locals())
 
@@ -69,8 +74,20 @@ def doctor(request):
                 models.Doctor.objects.filter(id=pars['id'][0]).delete()
             if pars['method'][0] == 'reset':
                 models.Doctor.objects.filter(id=pars['id'][0]).update(pwd="123456")
+            if pars['method'][0] == 'add':
+                print(1)
+                form = DoctorForm()
+                return render(request, 'models/DoctorModel.html', {"form": form})
+    else:
+        form = DoctorForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            id = 10001 + len(models.Doctor.objects.all())
+            hospital = form.cleaned_data.get("hospital")
+            position = form.cleaned_data.get("position")
+            models.Doctor.objects.create(id=id, name=name, pwd="123456", hospital_id=hospital,position=position)
+            return redirect("/doctor/")
     Doctor_list = models.Doctor.objects.all()
-
     return render(request, 'doctor.html', locals())
 
 
@@ -80,6 +97,17 @@ def hospital(request):
         if pars.get('method'):
             if pars['method'][0] == 'delete':
                 models.Hospital.objects.filter(id=pars['id'][0]).delete()
+            if pars['method'][0] == 'add':
+                form = HospitalForm()
+                return render(request, 'models/HospitalModel.html', {"form": form})
+    else:
+        form = HospitalForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            description = form.cleaned_data.get("description")
+            id = 1 + len(models.Hospital.objects.all())
+            models.Hospital.objects.create(id=id, name=name, description=description)
+            return redirect("/hospital/")
     Hospital_list = models.Hospital.objects.all()
     return render(request, 'hospital.html', locals())
 
@@ -201,39 +229,6 @@ def add_patient(request):
     return render(request, 'patient.html', locals())
 
 
-def add_hospital(request):
-    if request.method == "GET":
-        form = HospitalForm()
-        return render(request, 'add_hospital.html', {"form": form})
-    else:
-        form = HospitalForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get("name")
-            description = form.cleaned_data.get("description")
-            id = 1 + len(models.Hospital.objects.all())
-            models.Hospital.objects.create(id=id, name=name, description=description)
-            return redirect("/hospital/")
-        else:
-            return render(request, 'add_hospital.html', {"form": form})
-
-
-def add_doctor(request):
-    if request.method == "GET":
-        form = DoctorForm()
-        return render(request, 'add_doctor.html', {"form": form})
-    else:
-        form = DoctorForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data.get("name")
-            id = 10001 + len(models.Doctor.objects.all())
-            hospital = form.cleaned_data.get("hospital")
-            position = form.cleaned_data.get("position")
-            models.Doctor.objects.create(id=id, name=name, pwd="123456", hospital_id=hospital,position=position)
-            return redirect("/doctor/")
-        else:
-            return render(request, 'add_doctor.html', {"form": form})
-
-
 def view_questionnaire(request,pid):
     if request.method == "GET":
         pars = parse_qs(request.GET.urlencode())
@@ -244,10 +239,9 @@ def view_questionnaire(request,pid):
             if pars['method'][0] == 'viewPart':
                 partID = pars['PartID'][0]
                 part = models.Part.objects.filter(id=partID).first()
-                return render(request, 'PartModel.html', locals())
+                return render(request, 'models/PartModel.html', locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
-        print(item.get("id"))
         models.Part.objects.filter(id=item.get("id")).update(description=item.get("description"))
     qid = int(pid)
     Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
@@ -260,20 +254,6 @@ def view_questionnaire(request,pid):
     parts.sort()
     part_list = models.Part.objects.all()
     return render(request, 'questionnaire.html', locals())
-
-
-def add_questionnaire(request):
-    if request.method == "GET":
-        form = QuestionnaireForm()
-        return render(request, 'add_questionnaire.html', {"form": form})
-    else:
-        form = QuestionnaireForm(request.POST)
-        if form.is_valid():
-            title = form.cleaned_data.get("title")
-            models.Questionnaire.objects.create(title=title)
-            return redirect("/ques/")
-        else:
-            return render(request, 'add_questionnaire.html', {"form": form})
 
 
 def edit_doctor(request, uid):
@@ -361,10 +341,9 @@ def question(request):
             questionID = pars['QuestionID'][0]
             question = models.Question.objects.filter(id=questionID).first()
             optionlist = models.Option.objects.filter(question_id=questionID)
-            return render(request, "QuestionModel.html",locals())
+            return render(request, "models/QuestionModel.html", locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
-        print(item)
         qid = item.get("id")
         caption = item.get("caption")
         ct = item.get("ct")
@@ -376,7 +355,7 @@ def question(request):
             #id = len(models.Patient.objects.all()) + 1
             models.Option.objects.create(name=op.get("name"), score=op.get("score"), question_id=qid)
         return HttpResponse("ok")
-    return render(request, "QuestionModel.html", )
+    return render(request, "models/QuestionModel.html", )
 
 
 def score(request, ques_id, cls_id, ):

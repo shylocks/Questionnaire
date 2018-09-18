@@ -5,6 +5,13 @@
 {% endblock %}
 {% block content %}
     <div class="panel-body">
+    <div class="col-lg-6">
+            <a href="/add_patient/">
+                <button class="btn btn-success">添加</button>
+            </a>
+        </div>
+    </div>
+    <div class="panel-body">
         {% for Patient in Patient_list %}
             {% if forloop.counter|divisibleby:2 %}
                 <div class="row clearfix">
@@ -29,18 +36,13 @@
                             </span>
                     </div>
                 </div>
-
             </section>
         </div>
         {% if forloop.counter|divisibleby:2 %}
             </div>
         {% endif %}
         {% endfor %}
-        <div class="col-lg-6">
-            <a href="/add_patient/">
-                <button class="btn btn-success">添加</button>
-            </a>
-        </div>
+
     </div>
     <script>
         $(document).ready(function () {

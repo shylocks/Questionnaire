@@ -6,8 +6,22 @@
 
 {% block content %}
     <div class="panel-body">
-     <div class="row clearfix">
-     </div>
+        <div class="col-lg-6">
+            <a data-toggle="modal" data-target="#MyModal"
+               onclick="showModal()">
+                <button class="btn btn-success">添加</button>
+            </a>
+            <a href="">
+                <button type="button" class="btn btn-primary">批量导入</button>
+            </a>
+        </div>
+    </div>
+    <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
+                 aria-hidden="true">
+            </div>
+    <div class="panel-body">
+        <div class="row clearfix">
+        </div>
         {% for Doctor in Doctor_list %}
             {% if forloop.counter|divisibleby:2 %}
                 <div class="row clearfix">
@@ -39,16 +53,14 @@
             </div>
         {% endif %}
         {% endfor %}
-        <div class="col-lg-6">
-        <a href="/add_doctor/">
-            <button class="btn btn-success">添加</button>
-        </a>
-        <a href="">
-            <button type="button" class="btn btn-primary">批量导入</button>
-        </a>
-        </div>
+
     </div>
     <script>
+        var showModal = function () {
+            $("#MyModalBody").load("/doctor/?method=add", function () {
+                $("#MyModalBody").modal('show');
+            })
+        };
         $(document).ready(function () {
             $("#doctor").addClass("active");
         });

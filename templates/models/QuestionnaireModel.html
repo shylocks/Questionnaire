@@ -1,0 +1,43 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form class="form-horizontal" method="post" novalidate>
+            {% csrf_token %}
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">问卷管理</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-3 control-label">问卷名称：</label>
+                    <div class="col-sm-6">
+                        <input type="text" name="title" value="" class="form-control"
+                               placeholder="" required>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" value="no" data-dismiss="modal">关闭</button>
+                <input type="button" class="btn btn-primary" value="提交" id="subBtn">
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $("#subBtn").on("click", function () {
+        var modal = $(".modal-content");
+        var ajax_dict = {
+            "title": modal.find("input[name=title]").val()
+        };
+        $.ajax({
+            type: "post",
+            url: "/ques/",
+            data: JSON.stringify(ajax_dict),
+            contentType: "application/json",
+            dataType: "json",
+            headers: {"X-CSRFToken": $.cookie("csrftoken")},
+        })
+        alert("保存成功");
+        location.href = location.pathname;
+    });
+</script>
