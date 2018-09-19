@@ -12,7 +12,7 @@ urlpatterns = [
      url(r'^ques/', views.questionnaires),
      url(r'^edit_questionnaire/(\d+)/$', views.edit_questionnaire),
      url(r'^questionnaire/(\d+)/$', views.view_questionnaire),
-
+     url(r'^status/(\d+)/$', views.status),
      url(r'^doctor/', views.doctor),
 
      url(r'^hospital/',views.hospital),

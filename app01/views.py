@@ -10,11 +10,58 @@ from django.forms import widgets
 from urllib.parse import parse_qs
 from . import models
 from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientForm, HospitalForm
-
-
+import random
+import pandas as pd
+pd.options.display.max_colwidth = 100
+import re
+from wordcloud import WordCloud
+import jieba
 # Create your views here.
+
+
 def index(request):
-    return render(request, 'index.html', locals())
+    return render(request, 'index.html', )
+
+
+def status(request, questionnaire_id):
+    question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id)
+
+    def inner():
+        for que in question_list:
+            temp = {"obj": que, "options_cls": "hide", "options": None}
+            if not que.ct == 3:
+                temp["options_cls"] = ""
+
+                def inner_lop(xxx):
+                    answer_list = models.Answer.objects.filter(question_id=xxx)
+                    df = pd.DataFrame(
+                        {'OptionID': [w.option_id for w in answer_list],
+                         'PatientID': [w.patient_id for w in answer_list]})
+                    answerDF = df.groupby('OptionID').agg({'PatientID': 'count'}).reset_index().sort_values(
+                        by='OptionID')
+                    OptionIDList = answerDF['OptionID'].values.tolist()
+                    PatientIDList = answerDF['PatientID'].values.tolist()
+                    for i in range(0, len(OptionIDList)):
+                        yield {"Option": models.Option.objects.filter(id=OptionIDList[i]).first().name, "Count": PatientIDList[i]}
+                temp["options"] = inner_lop(que.id)
+            yield temp
+
+    #questionList = [w.id for w in question_list]
+    #print(df.groupby('Question').agg({'Answer': 'count'}).reset_index().sort_values(by='Name', ascending=False)[:10])
+    return render(request, 'status.html', {"form_list": inner()})
+
+
+def fake_data(questionnaire_id, patient_id, doctor_id):
+    import time
+    import datetime
+    time_stamp = time.mktime(datetime.datetime.now().timetuple())
+    models.Res.objects.create(time_stamp=time_stamp,patient_id=patient_id, doctor_id=doctor_id)
+    res_id = models.Res.objects.filter(time_stamp=time_stamp).first().id
+    question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id)
+    for question in question_list:
+        option_list = models.Option.objects.filter(question_id=question.id)
+        option_id_list = [w.id for w in option_list]
+        models.Answer.objects.create(option_id=option_id_list[random.randint(0, len(option_id_list)-1)], question_id=question.id, patient_id=patient_id, res_id=res_id)
 
 
 def questionnaires(request):
@@ -34,12 +81,12 @@ def questionnaires(request):
                     question_id_list.append(question.id)
                 participant_id_list = []
                 for answer in answer_list:
-                    if answer.user_id not in participant_id_list:
-                        participant_id_list.append(answer.user_id)
+                    if answer.patient_id not in participant_id_list:
+                        participant_id_list.append(answer.patient_id)
                 score_list = []
                 for participant_id in participant_id_list:
                     this_score = 0
-                    this_answer_list = models.Answer.objects.filter(user_id=participant_id)
+                    this_answer_list = models.Answer.objects.filter(patient_id=participant_id)
                     for answer in this_answer_list:
                         if answer.question_id in question_id_list:
                             tmp = models.Question.objects.filter(id=answer.question_id).first()
@@ -58,7 +105,7 @@ def questionnaires(request):
                     tmp.score = score_list[i]
                     participant_list.append(tmp)
 
-                return render(request, 'ques_static.html', locals())
+                return render(request, 'status.html', locals())
     elif request.is_ajax():
         data = json.loads(request.body.decode("utf-8"))
         models.Questionnaire.objects.create(title=data.get("title"))
@@ -119,6 +166,7 @@ def patient(request):
             if pars['method'][0] == 'delete':
                 models.Patient.objects.filter(id=pars['id'][0]).delete()
             elif pars['method'][0] == 'further':
+                '''
                 questionnaire_list = models.Questionnaire.objects.all()
                 questionnaire_name_list=[]
                 score_list = []
@@ -130,7 +178,7 @@ def patient(request):
                     for question in question_list:
                         question_id_list.append(question.id)
                     this_score = 0
-                    this_answer_list = models.Answer.objects.filter(user_id=pars['id'][0])
+                    this_answer_list = models.Answer.objects.filter(patient_id=pars['id'][0])
                     for answer in this_answer_list:
                         if answer.question_id in question_id_list:
                             tmp = models.Question.objects.filter(id=answer.question_id).first()
@@ -147,9 +195,8 @@ def patient(request):
                     tmp = ipart()
                     tmp.name = questionnaire_name_list[i]
                     tmp.score = score_list[i]
-                    participant_list.append(tmp)
-                Patient_list = models.Patient.objects.filter(id=pars['id'][0])
-                Patient = Patient_list[0]
+                    participant_list.append(tmp)'''
+                Patient = models.Patient.objects.filter(id=pars['id'][0]).first()
                 return render(request, 'patient_info.html', locals())
     elif request.is_ajax():
         id = request.POST.get("id")
@@ -368,7 +415,7 @@ def question(request):
                     for v in option_list:
                         yield {"form": OptionModelForm(instance=v), "obj": v}
                 item["options"] = inner_lop(que)
-
+            print(item)
             return render(request, "models/QuestionModel.html", locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))

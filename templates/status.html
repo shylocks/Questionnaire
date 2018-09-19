@@ -9,18 +9,21 @@
             <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>参与者</th>
-                    <th>得分情况</th>
-                    <th>操作</th>
-
+                    <th>问题名称</th>
+                    <th>选择情况</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for participant in participant_list %}
+                {% for form in form_list %}
                     <tr>
-                        <td>{{ participant.name }}</td>
-                        <td>{{ participant.score }}</td>
-                        <td><a href="">删除</a></td>
+                        <td>{{ form.obj.caption}}</td>
+                        <td>
+                            {% for v in form.options %}
+                                {{ v.Option }}
+                                {{ v.Count }}
+                                {{ v.idd }}
+                            {% endfor %}
+                        </td>
                     </tr>
                 {% endfor %}
 
