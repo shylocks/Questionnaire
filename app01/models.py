@@ -101,7 +101,7 @@ class Question(models.Model):
     part_id = models.IntegerField(verbose_name="所属部分")
     ct = models.IntegerField(choices=question_type)
     questionnaire = models.ForeignKey(to="Questionnaire",on_delete=models.CASCADE)
-
+    picture = models.BinaryField(verbose_name="图片数据")
     class Meta:
         verbose_name_plural = "问题表"
     def __str__(self):

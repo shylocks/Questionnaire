@@ -92,7 +92,7 @@
             "questionnaire_id":"{{ questionnaireID }}",
             "options": []
         };
-        if (ajax_dict["ct"] == 2) {
+        if (ajax_dict["ct"] != 3) {
             modal.find("ul[class=optionlist]").children().each(function () {
 
                 ajax_dict["options"].push({

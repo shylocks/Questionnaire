@@ -75,7 +75,7 @@ def doctor(request):
             if pars['method'][0] == 'reset':
                 models.Doctor.objects.filter(id=pars['id'][0]).update(pwd="123456")
             if pars['method'][0] == 'add':
-                print(1)
+
                 form = DoctorForm()
                 return render(request, 'models/DoctorModel.html', {"form": form})
     else:
@@ -229,7 +229,7 @@ def add_patient(request):
     return render(request, 'patient.html', locals())
 
 
-def view_questionnaire(request,pid):
+def view_questionnaire(request, pid):
     if request.method == "GET":
         pars = parse_qs(request.GET.urlencode())
         if pars.get("method"):
@@ -238,11 +238,11 @@ def view_questionnaire(request,pid):
                 models.Question.objects.filter(id=questionID).delete()
             if pars['method'][0] == 'viewPart':
                 partID = pars['PartID'][0]
-                part = models.Part.objects.filter(id=partID).first()
+                part = models.Part.objects.filter(id=partID, questionnaire_id=pid).first()
                 return render(request, 'models/PartModel.html', locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
-        models.Part.objects.filter(id=item.get("id")).update(description=item.get("description"))
+        models.Part.objects.filter(part_id=item.get("id"), questionnaire_id=pid).update(description=item.get("description"))
     Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
     question_list = models.Question.objects.filter(questionnaire_id=pid)
     parts = []
@@ -250,9 +250,20 @@ def view_questionnaire(request,pid):
     for ques in question_list:
         if ques.part_id not in parts:
             parts.append(ques.part_id)
+    partTemp = models.Part.objects.filter(questionnaire_id=pid)
+    for part in partTemp: #防止出现新问卷没有问题的情况
+        if part.part_id not in parts:
+            parts.append(part.part_id)
     parts.sort()
-    part_list = models.Part.objects.all()
+    qid = int(pid)
     questionnaire_id = pid
+    if not len(parts):
+        models.Part.objects.create(questionnaire_id=questionnaire_id, part_id=1)
+        parts.append(1)
+    for part in parts:
+        if not models.Part.objects.filter(questionnaire_id=questionnaire_id,part_id=part).first():
+            models.Part.objects.create(questionnaire_id=questionnaire_id,part_id=part)
+    part_list = models.Part.objects.all()
     return render(request, 'questionnaire.html', locals())
 
 
@@ -294,6 +305,7 @@ def edit_questionnaire(request, pid):
 
     else:
         data = json.loads(request.body.decode("utf-8"))  # 获取当前问卷的所有问题
+
         question_list = models.Question.objects.filter(questionnaire_id=pid)  # 获取用户提交所有问题的id
         post_id_list = [i.get("id") for i in data]  # 获取数据库中已有问题的ID
         question_id_list = [str(i.id) for i in question_list]  # 获取数据库中已有问题的ID
@@ -356,7 +368,7 @@ def question(request):
                     for v in option_list:
                         yield {"form": OptionModelForm(instance=v), "obj": v}
                 item["options"] = inner_lop(que)
-            print(item)
+
             return render(request, "models/QuestionModel.html", locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
@@ -367,14 +379,15 @@ def question(request):
         options = item.get("options")
         part_id = item.get("part_id")
         pid = item.get("questionnaire_id")
-        print(pid)
         if qid == "":
             models.Question.objects.create(caption=caption, ct=ct, part_id=part_id, questionnaire_id=pid)
+            qid = models.Question.objects.last().id
         else:
             models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, part_id=part_id)
-        models.Option.objects.filter(question_id=qid).delete()
+            models.Option.objects.filter(question_id=qid).delete()
         for op in options:
             models.Option.objects.create(name=op.get("name"), score=op.get("score"), question_id=qid)
+
         return HttpResponse("ok")
     return render(request, "models/QuestionModel.html", )
 
