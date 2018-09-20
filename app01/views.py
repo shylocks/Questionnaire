@@ -24,8 +24,7 @@ def index(request):
 
 
 def status(request, questionnaire_id):
-    question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id)
-
+    question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id).order_by('part_id')
     def inner():
         for que in question_list:
             temp = {"obj": que, "options_cls": "hide", "options": None}
@@ -41,13 +40,12 @@ def status(request, questionnaire_id):
                         by='OptionID')
                     OptionIDList = answerDF['OptionID'].values.tolist()
                     PatientIDList = answerDF['PatientID'].values.tolist()
+                    temp = len(answer_list)
                     for i in range(0, len(OptionIDList)):
-                        yield {"Option": models.Option.objects.filter(id=OptionIDList[i]).first().name, "Count": PatientIDList[i]}
+                        yield {"Option": models.Option.objects.filter(id=OptionIDList[i]).first().name,
+                               "Count": PatientIDList[i], "Proportion": '%.2f' % (PatientIDList[i]/temp * 100)}
                 temp["options"] = inner_lop(que.id)
             yield temp
-
-    #questionList = [w.id for w in question_list]
-    #print(df.groupby('Question').agg({'Answer': 'count'}).reset_index().sort_values(by='Name', ascending=False)[:10])
     return render(request, 'status.html', {"form_list": inner()})
 
 

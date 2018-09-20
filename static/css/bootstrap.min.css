@@ -3981,6 +3981,13 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
     color: #fff;
     background-color: #428bca
 }
+.nav-pills .nav-link {
+    border-radius: .25rem
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #007bff
 
 .nav-stacked > li {
     float: none
@@ -6654,6 +6661,38 @@ button.close {
 
 .visible-print-inline-block {
     display: none !important
+}
+.table .thead-dark th {
+    color: #fff;
+    background-color: #212529;
+    border-color: #32383e
+}
+
+.table .thead-light th {
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: #dee2e6
+}
+
+.table-dark {
+    color: #fff;
+    background-color: #212529
+}
+
+.table-dark td, .table-dark th, .table-dark thead th {
+    border-color: #32383e
+}
+
+.table-dark.table-bordered {
+    border: 0
+}
+
+.table-dark.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, .05)
+}
+
+.table-dark.table-hover tbody tr:hover {
+    background-color: rgba(255, 255, 255, .075)
 }
 
 @media print {
