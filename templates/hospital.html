@@ -1,24 +1,22 @@
 {% extends 'base.html' %}
-
 {% block page_title %}
     医院管理
 {% endblock %}
-
 {% block content %}
-
-
-    <div class="panel-body">
-        <a data-toggle="modal" data-target="#MyModal"
-           onclick="showModal()">
-            <button class="btn btn-success">添加</button>
-        </a>
-        <a href="">
-            <button type="button" class="btn btn-primary">批量导入</button>
-        </a>
-
+    <div class="card-body">
+        <div class="card-title col-6">
+            <a data-toggle="modal" data-target="#MyModal"
+               onclick="showModal()">
+                <button class="btn btn-success">添加</button>
+            </a>
+            <a href="">
+                <button type="button" class="btn btn-primary">批量导入</button>
+            </a>
+        </div>
         <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
              aria-hidden="true">
         </div>
+    <div class="col-6">
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -32,12 +30,12 @@
                 <tr>
                     <td>{{ Hospital.name }}</td>
                     <td>{{ Hospital.description }}</td>
-                    <td><a href="/hospital/?method=delete&id={{ Hospital.id }}">删除</a></td>
+                    <td><a href="/hospital/?method=delete&id={{ Hospital.id }}" class="btn btn-outline-danger">删除</a></td>
                 </tr>
             {% endfor %}
 
             </tbody>
-        </table>
+        </table></div>
     </div>
     <script>
         var showModal = function () {

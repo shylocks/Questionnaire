@@ -18,9 +18,7 @@ urlpatterns = [
      url(r'^hospital/',views.hospital),
 
      url(r'^patient/', views.patient),
-     url(r'^add_patient/', views.add_patient),
      url(r'^login/$', views.login),
-     url(r'^(student/evaluate/\d+)/(\d+)/$', views.score),
 
      url(r'^test/',views.test),
      url(r'^question/',views.question)

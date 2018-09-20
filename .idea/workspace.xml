@@ -3,9 +3,36 @@
   <component name="ChangeListManager">
     <list default="true" id="ff032898-35cb-44e4-abad-57c98c1962d1" name="默认" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app01/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app01/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app01/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/question/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/question/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/models/QuestionModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/models/QuestionModel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/kendo.bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/kendo.common-bootstrap.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/morries.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/add_patient.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/jquery-1.9.1.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/kendo.all.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/kendo.timezones.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/update_patient.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_hospital.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/add_patient.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/doctor.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/doctor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/edit_questionnaire.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/edit_questionnaire.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/hospital.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/hospital.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/models/DoctorModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/models/DoctorModel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/models/HospitalModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/models/HospitalModel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/models/PartModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/models/PartModel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/models/QuestionnaireModel.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/models/QuestionnaireModel.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/patient.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/patient.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/patient_info.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/ques.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/ques.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/score.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/status.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/status.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -87,40 +114,40 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="css" value="27" />
+          <entry key="css" value="33" />
           <entry key="css22" value="1" />
           <entry key="gitattributes" value="1" />
-          <entry key="html" value="235" />
-          <entry key="js" value="59" />
-          <entry key="py" value="149" />
+          <entry key="html" value="311" />
+          <entry key="js" value="69" />
+          <entry key="py" value="161" />
           <entry key="txt" value="1" />
           <entry key="vm" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="CSS" value="27" />
-          <entry key="HTML" value="235" />
-          <entry key="JavaScript" value="59" />
+          <entry key="CSS" value="33" />
+          <entry key="HTML" value="311" />
+          <entry key="JavaScript" value="69" />
           <entry key="PLAIN_TEXT" value="4" />
-          <entry key="Python" value="149" />
+          <entry key="Python" value="161" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Django Console" value="14" />
           <entry key="css" value="200" />
-          <entry key="html" value="9238" />
-          <entry key="js" value="540" />
-          <entry key="py" value="12517" />
+          <entry key="html" value="10466" />
+          <entry key="js" value="553" />
+          <entry key="py" value="14114" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="CSS" value="201" />
-          <entry key="HTML" value="9238" />
-          <entry key="JavaScript" value="539" />
-          <entry key="Python" value="12531" />
+          <entry key="HTML" value="10466" />
+          <entry key="JavaScript" value="552" />
+          <entry key="Python" value="14128" />
         </counts>
       </usages-collector>
     </session>
@@ -130,32 +157,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app01/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="55" column="73" selection-start-line="55" selection-start-column="73" selection-end-line="55" selection-end-column="73" />
+            <state relative-caret-position="270">
+              <caret line="207" column="39" selection-start-line="207" selection-start-column="39" selection-end-line="207" selection-end-column="39" />
               <folding>
                 <element signature="e#24#35#0" expanded="true" />
-                <marker date="1537407675667" expanded="true" signature="703:2066" ph="..." />
-                <marker date="1537407675667" expanded="true" signature="826:835" ph="..." />
-                <marker date="1537407675667" expanded="true" signature="2064:2066" ph="..." />
+                <element signature="e#7546#9048#1" />
+                <marker date="1537441724461" expanded="true" signature="708:2072" ph="..." />
+                <marker date="1537441724461" expanded="true" signature="832:841" ph="..." />
+                <marker date="1537441724461" expanded="true" signature="2070:2072" ph="..." />
+                <marker date="1537441724461" expanded="true" signature="9500:9509" ph="..." />
+                <marker date="1537441724461" expanded="true" signature="16438:16440" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/status.html">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/models/QuestionnaireModel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-101">
-              <caret line="211" column="41" selection-start-line="211" selection-start-column="41" selection-end-line="211" selection-end-column="41" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="277">
+              <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -163,44 +187,61 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app01/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1026">
-              <caret line="149" column="22" selection-start-line="149" selection-start-column="22" selection-end-line="149" selection-end-column="22" />
+            <state relative-caret-position="432">
+              <caret line="114" column="35" lean-forward="true" selection-start-line="114" selection-start-column="35" selection-end-line="114" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/question/urls.py">
+        <entry file="file://$PROJECT_DIR$/app01/forms.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+            <state relative-caret-position="501">
+              <caret line="56" column="64" lean-forward="true" selection-start-line="56" selection-start-column="64" selection-end-line="56" selection-end-column="64" />
+              <folding>
+                <element signature="e#72#120#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app01/admin.py">
+        <entry file="file://$PROJECT_DIR$/templates/models/QuestionModel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="14" column="32" selection-start-line="14" selection-start-column="32" selection-end-line="14" selection-end-column="32" />
+            <state relative-caret-position="2673">
+              <caret line="108" column="31" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="31" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/ques.html">
+        <entry file="file://$PROJECT_DIR$/templates/models/PatientModel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="783">
-              <caret line="29" column="64" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
+            <state relative-caret-position="243">
+              <caret line="9" column="95" selection-start-line="9" selection-start-column="95" selection-end-line="9" selection-end-column="95" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app01/apps.py">
+        <entry file="file://$PROJECT_DIR$/templates/models/HospitalModel.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="108">
-              <caret line="4" column="18" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+            <state relative-caret-position="216">
+              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/css/styles.css">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="189">
+              <caret line="7" column="55" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
             </state>
           </provider>
         </entry>
@@ -218,20 +259,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>json.loads</find>
-      <find>HttpResponseHttpResponse</find>
-      <find>myModalBody</find>
-      <find>caption</find>
-      <find>count</find>
-      <find>blue</find>
-      <find>container</find>
-      <find>Model.html</find>
-      <find>do</find>
-      <find>edit_doctor</find>
-      <find>hospital</find>
-      <find>qid</find>
-      <find>alert</find>
-      <find>part</find>
       <find>question</find>
       <find>edit</find>
       <find>edit_</find>
@@ -248,6 +275,20 @@
       <find>nav-pills</find>
       <find>thead-light</find>
       <find>Highcharts</find>
+      <find>word</find>
+      <find>panel</find>
+      <find>PatientForm</find>
+      <find>patient_info</find>
+      <find>OptionModelForm</find>
+      <find>QuestionModelForm</find>
+      <find>----</find>
+      <find>sex</find>
+      <find>Form</find>
+      <find>instance=</find>
+      <find>func</find>
+      <find>hiddlen</find>
+      <find>delete</find>
+      <find>id</find>
     </findStrings>
     <replaceStrings>
       <replace>00bcd4</replace>
@@ -264,22 +305,16 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/member.html" />
-        <option value="$PROJECT_DIR$/templates/index.html" />
-        <option value="$PROJECT_DIR$/static/js/kendo.all.min.js" />
-        <option value="$PROJECT_DIR$/static/js/jquery-1.9.1.min.js" />
         <option value="$PROJECT_DIR$/templates/index2.html" />
         <option value="$PROJECT_DIR$/static/js/login.js" />
         <option value="$PROJECT_DIR$/static/js/student_login.js" />
         <option value="$PROJECT_DIR$/static/js/update_patient.js" />
         <option value="$PROJECT_DIR$/templates/add_questionnaire.html" />
-        <option value="$PROJECT_DIR$/static/js/add_patient.js" />
         <option value="$PROJECT_DIR$/question/settings.py" />
         <option value="$PROJECT_DIR$/templates/add_patient.html" />
         <option value="$PROJECT_DIR$/static/js/edit_questionnaire.js" />
         <option value="$PROJECT_DIR$/static/css/edit_questionnaire.css" />
         <option value="$PROJECT_DIR$/templates/doctor2.html" />
-        <option value="$PROJECT_DIR$/templates/login.html" />
         <option value="$PROJECT_DIR$/templates/add_hospital.html" />
         <option value="$PROJECT_DIR$/templates/add_doctor.html" />
         <option value="$PROJECT_DIR$/templates/questionnarie.html" />
@@ -288,33 +323,39 @@
         <option value="$PROJECT_DIR$/templates/test.html" />
         <option value="$PROJECT_DIR$/templates/tmp.html" />
         <option value="$PROJECT_DIR$/static/js/new.js" />
-        <option value="$PROJECT_DIR$/templates/edit_questionnaire.html" />
         <option value="$PROJECT_DIR$/static/css/material-bootstrap-wizard.css" />
-        <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/PartModel.html" />
         <option value="$PROJECT_DIR$/templates/QuestionModel.html" />
         <option value="$PROJECT_DIR$/templates/QuestionnaireModel.html" />
-        <option value="$PROJECT_DIR$/templates/doctor.html" />
-        <option value="$PROJECT_DIR$/templates/models/DoctorModel.html" />
-        <option value="$PROJECT_DIR$/templates/models/HospitalModel.html" />
-        <option value="$PROJECT_DIR$/templates/hospital.html" />
-        <option value="$PROJECT_DIR$/templates/patient.html" />
-        <option value="$PROJECT_DIR$/templates/models/QuestionnaireModel.html" />
-        <option value="$PROJECT_DIR$/app01/forms.py" />
         <option value="$PROJECT_DIR$/templates/questionnaire.html" />
         <option value="$PROJECT_DIR$/app01/data.py" />
         <option value="$PROJECT_DIR$/app01/admin.py" />
         <option value="$PROJECT_DIR$/app01/apps.py" />
         <option value="$PROJECT_DIR$/templates/static.html" />
-        <option value="$PROJECT_DIR$/question/urls.py" />
-        <option value="$PROJECT_DIR$/templates/ques.html" />
-        <option value="$PROJECT_DIR$/app01/models.py" />
         <option value="$PROJECT_DIR$/templates/patient_info.html" />
         <option value="$PROJECT_DIR$/static/css/bootstrap.min.css" />
         <option value="$PROJECT_DIR$/static/js/highcharts.js" />
-        <option value="$PROJECT_DIR$/app01/views.py" />
         <option value="$PROJECT_DIR$/templates/models/QuestionModel.html" />
+        <option value="$PROJECT_DIR$/templates/edit_questionnaire.html" />
+        <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/templates/status.html" />
+        <option value="$PROJECT_DIR$/templates/models/QuestionnaireModel.html" />
+        <option value="$PROJECT_DIR$/templates/models/PartModel.html" />
+        <option value="$PROJECT_DIR$/templates/ques.html" />
+        <option value="$PROJECT_DIR$/templates/hospital.html" />
+        <option value="$PROJECT_DIR$/templates/doctor.html" />
+        <option value="$PROJECT_DIR$/templates/login.html" />
+        <option value="$PROJECT_DIR$/templates/patient_info2.html" />
+        <option value="$PROJECT_DIR$/static/js/add_patient.js" />
+        <option value="$PROJECT_DIR$/question/urls.py" />
+        <option value="$PROJECT_DIR$/templates/base.html" />
+        <option value="$PROJECT_DIR$/templates/patient.html" />
+        <option value="$PROJECT_DIR$/templates/models/DoctorModel.html" />
+        <option value="$PROJECT_DIR$/templates/models/HospitalModel.html" />
+        <option value="$PROJECT_DIR$/app01/models.py" />
+        <option value="$PROJECT_DIR$/app01/forms.py" />
+        <option value="$PROJECT_DIR$/templates/models/PatientModel.html" />
+        <option value="$PROJECT_DIR$/app01/views.py" />
       </list>
     </option>
   </component>
@@ -325,10 +366,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1315" />
-    <option name="y" value="-25" />
-    <option name="width" value="2400" />
-    <option name="height" value="1285" />
+    <option name="x" value="172" />
+    <option name="y" value="251" />
+    <option name="width" value="2418" />
+    <option name="height" value="1458" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -357,6 +398,12 @@
               <item name="Questionnaire" type="b2602c69:ProjectViewProjectNode" />
               <item name="Questionnaire" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Questionnaire" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Questionnaire" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="css" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Questionnaire" type="b2602c69:ProjectViewProjectNode" />
@@ -391,13 +438,13 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="G:\Github\Questionnaire\templates\models" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="G:\Github\Questionnaire\templates\models" />
       <recent name="G:\Github\Questionnaire\templates" />
       <recent name="G:\Github\Questionnaire\static\js" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\Github\Questionnaire\templates\models" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -493,13 +540,12 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.8113879" visible="true" weight="0.1492016" />
-      <window_info id="Structure" order="1" sideWeight="0.1886121" side_tool="true" visible="true" weight="0.1492016" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.3036723" visible="true" weight="0.1492016" />
+      <window_info id="Structure" order="1" sideWeight="0.6963277" side_tool="true" visible="true" weight="0.1492016" />
       <window_info id="Favorites" order="2" sideWeight="0.4409938" side_tool="true" weight="0.15618762" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.62474847" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.498004" weight="0.27665997" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.84517425" weight="0.36820924" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
@@ -508,9 +554,9 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49865952" weight="0.11971831" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" sideWeight="0.49865952" weight="0.32839313" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5033512" side_tool="true" weight="0.5141643" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.501996" side_tool="true" weight="0.27665997" />
       <window_info anchor="bottom" id="调试" order="11" />
-      <window_info anchor="bottom" id="Terminal" order="12" sideWeight="0.4966488" visible="true" weight="0.15191147" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.4966488" visible="true" weight="0.28772637" />
       <window_info anchor="bottom" id="Python Console" order="13" sideWeight="0.49932975" weight="0.5472837" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -562,66 +608,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/theme-chooser.js" />
-    <entry file="file://$PROJECT_DIR$/question/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-442">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app01/middlewares/middle.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/add_patient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
-          <caret line="12" column="43" lean-forward="true" selection-start-line="12" selection-start-column="43" selection-end-line="12" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/update_patient.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="10" selection-start-column="4" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/kendo.timezones.min.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/jquery-1.9.1.min.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/jquery-3.2.1.min.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/edit_questionnaire.js" />
-    <entry file="file://$PROJECT_DIR$/templates/add_patient.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-972">
-          <caret line="99" column="61" lean-forward="true" selection-start-line="99" selection-start-column="61" selection-end-line="99" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="19" column="45" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/css/edit_questionnaire.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1038">
@@ -629,20 +616,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/material-bootstrap-wizard.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/bootstrap.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="297">
           <caret line="15" column="23" selection-start-line="15" selection-start-column="23" selection-end-line="15" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/score.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="14" column="33" selection-start-line="14" selection-start-column="33" selection-end-line="14" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -660,114 +637,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="21" column="17" lean-forward="true" selection-start-line="21" selection-start-column="17" selection-end-line="21" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/questionnaire2.html" />
-    <entry file="file://$PROJECT_DIR$/templates/test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/add_questionnaire.html" />
     <entry file="file://$PROJECT_DIR$/templates/add_doctor.html" />
-    <entry file="file://$PROJECT_DIR$/templates/models/DoctorModel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="25" column="60" selection-start-line="25" selection-start-column="60" selection-end-line="25" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/add_hospital.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="14" column="86" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/doctor.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="62" column="10" lean-forward="true" selection-start-line="58" selection-start-column="8" selection-end-line="62" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/hospital.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/models/HospitalModel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="351">
-          <caret line="13" column="62" selection-start-line="13" selection-start-column="62" selection-end-line="13" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/models/PartModel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="62" selection-start-line="6" selection-start-column="58" selection-end-line="6" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/doctor2.html" />
-    <entry file="file://$PROJECT_DIR$/templates/patient.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="11" selection-start-line="11" selection-end-line="11" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/js/new.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="918">
-          <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/models/QuestionnaireModel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app01/data.py" />
     <entry file="file://$PROJECT_DIR$/app01/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/questionnaire.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-135">
-          <caret line="84" column="48" selection-start-line="84" selection-start-column="48" selection-end-line="84" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app01/forms.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="764">
-          <caret line="87" column="21" lean-forward="true" selection-start-line="87" selection-start-column="21" selection-end-line="87" selection-end-column="21" />
-          <folding>
-            <element signature="e#72#120#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/patient_info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1169">
-          <caret line="352" column="20" selection-start-line="352" selection-start-column="20" selection-end-line="352" selection-end-column="20" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/static/css/bootstrap.min.css22">
       <provider selected="true" editor-type-id="text-editor">
@@ -783,31 +659,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/edit_questionnaire.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="41" column="65" selection-start-line="41" selection-start-column="48" selection-end-line="41" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/question/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/static/js/highcharts.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-675">
           <caret line="21" column="19" lean-forward="true" selection-start-line="21" selection-start-column="19" selection-end-line="21" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="8" column="35" lean-forward="true" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -818,13 +673,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/ques.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="29" column="64" selection-start-line="29" selection-start-column="64" selection-end-line="29" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app01/admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="324">
@@ -832,42 +680,249 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app01/views.py">
+    <entry file="file://$PROJECT_DIR$/templates/edit_questionnaire.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="55" column="73" selection-start-line="55" selection-start-column="73" selection-end-line="55" selection-end-column="73" />
-          <folding>
-            <element signature="e#24#35#0" expanded="true" />
-            <marker date="1537407675667" expanded="true" signature="703:2066" ph="..." />
-            <marker date="1537407675667" expanded="true" signature="826:835" ph="..." />
-            <marker date="1537407675667" expanded="true" signature="2064:2066" ph="..." />
-          </folding>
+        <state relative-caret-position="189">
+          <caret line="7" column="25" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app01/models.py">
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="149" column="22" selection-start-line="149" selection-start-column="22" selection-end-line="149" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/models/QuestionModel.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="108" column="31" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="31" />
+        <state relative-caret-position="189">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/status.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-101">
-          <caret line="211" column="41" selection-start-line="211" selection-start-column="41" selection-end-line="211" selection-end-column="41" />
+        <state relative-caret-position="378">
+          <caret line="26" column="50" selection-start-line="26" selection-start-column="50" selection-end-line="26" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/add_hospital.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="14" column="86" selection-start-line="14" selection-start-column="64" selection-end-line="14" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/hospital.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="32" column="91" selection-start-line="32" selection-start-column="91" selection-end-line="32" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ques.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="34" column="105" lean-forward="true" selection-start-line="34" selection-start-column="96" selection-end-line="34" selection-end-column="105" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/material-bootstrap-wizard.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="60" column="10" lean-forward="true" selection-start-line="60" selection-start-column="10" selection-end-line="60" selection-end-column="10" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#3;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#4;n#div#0;n#div#0;n#div#0;n#div#0;n#main#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/score.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="12" column="28" lean-forward="true" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/add_patient.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="129" column="28" selection-start-line="129" selection-start-column="28" selection-end-line="129" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="14" column="11" selection-start-line="14" selection-start-column="11" selection-end-line="14" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/doctor.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1269">
+          <caret line="47" column="10" lean-forward="true" selection-start-line="47" selection-start-column="10" selection-end-line="47" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/patient_info2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="11" column="44" lean-forward="true" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/add_patient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="10" column="22" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/patient_info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3672">
+          <caret line="254" column="24" selection-start-line="254" selection-start-column="24" selection-end-line="254" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/morries.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="1" column="33" selection-start-line="1" selection-start-column="33" selection-end-line="1" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="55" selection-start-line="7" selection-start-column="55" selection-end-line="7" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/kendo.timezones.min.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1026">
+          <caret line="38" column="69" selection-start-line="38" selection-start-column="69" selection-end-line="38" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/new.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="918">
+          <caret line="34" column="42" selection-start-line="34" selection-start-column="42" selection-end-line="34" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/question/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="19" column="38" selection-start-line="19" selection-start-column="38" selection-end-line="19" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/patient.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="574">
+          <caret line="33" column="72" selection-start-line="33" selection-start-column="72" selection-end-line="33" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/js/update_patient.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/custom-style.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/styles.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/questionnaire.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1917">
+          <caret line="71" column="96" selection-start-line="70" selection-start-column="60" selection-end-line="71" selection-end-column="96" />
+          <folding>
+            <element signature="n#src#0;n#img#0;n#a#0;n#h4#0;n#div#0;n#div#0;n#div#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/models/DoctorModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/models/PartModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/models/QuestionModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2673">
+          <caret line="108" column="31" selection-start-line="108" selection-start-column="31" selection-end-line="108" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/models/HospitalModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/models/PatientModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="9" column="95" selection-start-line="9" selection-start-column="95" selection-end-line="9" selection-end-column="95" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/models/QuestionnaireModel.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="34" column="39" selection-start-line="34" selection-start-column="39" selection-end-line="34" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app01/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="114" column="35" lean-forward="true" selection-start-line="114" selection-start-column="35" selection-end-line="114" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app01/forms.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="501">
+          <caret line="56" column="64" lean-forward="true" selection-start-line="56" selection-start-column="64" selection-end-line="56" selection-end-column="64" />
+          <folding>
+            <element signature="e#72#120#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app01/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="207" column="39" selection-start-line="207" selection-start-column="39" selection-end-line="207" selection-end-column="39" />
+          <folding>
+            <element signature="e#24#35#0" expanded="true" />
+            <element signature="e#7546#9048#1" />
+            <marker date="1537441724461" expanded="true" signature="708:2072" ph="..." />
+            <marker date="1537441724461" expanded="true" signature="832:841" ph="..." />
+            <marker date="1537441724461" expanded="true" signature="2070:2072" ph="..." />
+            <marker date="1537441724461" expanded="true" signature="9500:9509" ph="..." />
+            <marker date="1537441724461" expanded="true" signature="16438:16440" ph="..." />
           </folding>
         </state>
       </provider>

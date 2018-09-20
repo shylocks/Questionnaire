@@ -1,0 +1,108 @@
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <form class="form-horizontal" method="post" novalidate>
+            {% csrf_token %}
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">病人管理</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group"><input  type="number" name="idd"  class="form-control" hidden="true" value="{{ idd }}"></div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">姓名</span>
+                        </div>
+                        {{ form.name }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">性别</span>
+                        </div>
+                        {{ form.gender }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">年龄</span>
+                        </div>
+                        {{ form.age }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">身份证号</span>
+                        </div>
+                        {{ form.idcard }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">名族</span>
+                        </div>
+                        {{ form.nation }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">籍贯</span>
+                        </div>
+                        {{ form.native_place }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">教育程度</span>
+                        </div>
+                        {{ form.education }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">婚姻状况</span>
+                        </div>
+                        {{ form.marriage }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">子女数</span>
+                        </div>
+                        {{ form.children }}
+                    </div>
+                </div>
+                <h6>选填项</h6>
+                <hr class="my-2">
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">最长工作</span>
+                        </div>
+                        {{ form.longest_job }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">家族病史</span>
+                        </div>
+                        {{ form.family_medical_history }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" value="no" data-dismiss="modal">关闭</button>
+                <button type="submit" class="btn btn-primary" value="ok" id="submit">提交</button>
+            </div>
+        </form>
+    </div>
+</div>

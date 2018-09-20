@@ -9,7 +9,7 @@ from django.forms import fields
 from django.forms import widgets
 from urllib.parse import parse_qs
 from . import models
-from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientForm, HospitalForm
+from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientModelForm, HospitalForm
 import random
 import pandas as pd
 pd.options.display.max_colwidth = 100
@@ -25,6 +25,7 @@ def index(request):
 
 def status(request, questionnaire_id):
     question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id).order_by('part_id')
+
     def inner():
         for que in question_list:
             temp = {"obj": que, "options_cls": "hide", "options": None}
@@ -194,26 +195,43 @@ def patient(request):
                     tmp.name = questionnaire_name_list[i]
                     tmp.score = score_list[i]
                     participant_list.append(tmp)'''
-                Patient = models.Patient.objects.filter(id=pars['id'][0]).first()
-                return render(request, 'patient_info.html', locals())
-    elif request.is_ajax():
-        id = request.POST.get("id")
-        name = request.POST.get("name")
-        sex = request.POST.get("sex")
-        age = request.POST.get("age")
-        idcard = request.POST.get("idcard")
-        nation = request.POST.get("nation")
-        native_place = request.POST.get("native_place")
-        education = request.POST.get("education")
-        marriage = request.POST.get("marriage")
-        children = request.POST.get("children")
-        longest_job = request.POST.get("longest_job","无")
-        family_medical_history = request.POST.get("family_medical_history","无")
-        models.Patient.objects.filter(id=id).update(name=name, sex=sex, age=age, idcard=idcard,
-                                                    nation=nation, native_place=native_place,
-                                                    education=education, marriage=marriage,
-                                                    children=children, longest_job=longest_job,
-                                                    family_medical_history=family_medical_history)
+                form = PatientModelForm(instance=models.Patient.objects.filter(id=pars['id'][0]).first())
+                idd = pars['id'][0]
+                return render(request, 'models/PatientModel.html', locals())
+            elif pars['method'][0] == 'add':
+                form = PatientModelForm()
+                #print(form)
+                return render(request, 'models/PatientModel.html',locals())
+    elif request.method == "POST":
+        form = PatientModelForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            gender = form.cleaned_data.get("gender")
+            age = form.cleaned_data.get("age")
+            idcard = form.cleaned_data.get("idcard")
+            nation = form.cleaned_data.get("nation")
+            native_place = request.POST.get("native_place")
+            education = form.cleaned_data.get("education")
+            marriage = form.cleaned_data.get("marriage")
+            children = form.cleaned_data.get("children")
+            longest_job = form.cleaned_data.get("longest_job", "无")
+            family_medical_history = form.cleaned_data.get("family_medical_history", "无")
+            if request.POST.get("idd"):
+                models.Patient.objects.filter(id=request.POST.get("idd")).update(name=name, gender=gender, age=age, idcard=idcard,
+                                              nation=nation, native_place=native_place,
+                                              education=education, marriage=marriage,
+                                              children=children, longest_job=longest_job,
+                                              family_medical_history=family_medical_history)
+            else:
+                models.Patient.objects.create(name=name, gender=gender, age=age, idcard=idcard,
+                                          nation=nation, native_place=native_place,
+                                          education=education, marriage=marriage,
+                                          children=children, longest_job=longest_job,
+                                          family_medical_history=family_medical_history)
+        else:
+            print(form.errors)
+
+
     Patient_list = models.Patient.objects.all()
     return render(request, 'patient.html', locals())
 
@@ -246,32 +264,6 @@ def login(request):
             state["state"] = "failed"
 
         return HttpResponse(json.dumps(state))
-
-
-def add_patient(request):
-    if request.method == "GET":
-        return render(request, 'add_patient.html')
-    elif request.is_ajax():
-        id = len(models.Patient.objects.all())+1
-        name = request.POST.get("name")
-        sex = request.POST.get("sex")
-        age = request.POST.get("age")
-        idcard = request.POST.get("idcard")
-        nation = request.POST.get("nation")
-        native_place = request.POST.get("native_place")
-        education = request.POST.get("education")
-        marriage = request.POST.get("marriage")
-        children = request.POST.get("children")
-        longest_job = request.POST.get("longest_job", "无")
-        family_medical_history = request.POST.get("family_medical_history", "无")
-        models.Patient.objects.create(id=id,name=name, sex=sex, age=age, idcard=idcard,
-                                                    nation=nation, native_place=native_place,
-                                                    education=education, marriage=marriage,
-                                                    children=children, longest_job=longest_job,
-                                                    family_medical_history=family_medical_history)
-
-    Patient_list = models.Patient.objects.all()
-    return render(request, 'patient.html', locals())
 
 
 def view_questionnaire(request, pid):
@@ -310,11 +302,6 @@ def view_questionnaire(request, pid):
             models.Part.objects.create(questionnaire_id=questionnaire_id,part_id=part)
     part_list = models.Part.objects.all()
     return render(request, 'questionnaire.html', locals())
-
-
-def edit_doctor(request, uid):
-    Doctor_list = models.Doctor.objects.all()
-    return render(request, 'doctor.html', locals())
 
 
 def edit_questionnaire(request, pid):
@@ -376,15 +363,9 @@ def edit_questionnaire(request, pid):
                 if not options:  # 如果没有选项表示要删除选项
                     models.Option.objects.filter(question_id=qid).delete()
                 else:
-                    models.Option.objects.filter(question_id=qid).delete()
                     for op in options:
-                        models.Option.objects.create(name=op.get("name"), score=op.get("score"), question_id=qid)
+                        models.Option.objects.filter(question_id=qid).update(name=op.get("name"), score=op.get("score"), question_id=qid)
         return HttpResponse("ok")
-
-
-def func(content):
-    if len(content) < 15:
-        raise ValidationError("长度不得少于15个字符")
 
 
 def test(request):
@@ -435,79 +416,3 @@ def question(request):
 
         return HttpResponse("ok")
     return render(request, "models/QuestionModel.html", )
-
-
-def score(request, ques_id, cls_id, ):
-    stu_id = request.session.get("id")  # 从session中取出当前登录用户的ID
-    if not stu_id:
-        return redirect("/student_login/")
-
-    # 判断当前登录的用户是否是要答卷的班级的学生
-
-    stu_obj = models.Doctor.objects.filter(id=stu_id, cls_id=cls_id).count()
-
-    if not stu_obj:
-        return HttpResponse("对不起，您不是本次问卷调查对象")
-
-    # 判断是否已经提交过问卷答案
-
-    has_join = models.Answer.objects.filter(user_id=stu_id, question__questionnaire_id=ques_id)
-    if has_join:
-        return HttpResponse("对不起，您已经参与过本次问卷，不可重复参与")
-
-    # 展示当前问卷下的所有问题
-
-    # 获取当前问卷的所有问题
-    question_list = models.Question.objects.filter(questionnaire_id=ques_id)
-    field_dict = {}
-
-    for que in question_list:
-
-        if que.ct == 1:
-
-            field_dict["val_%s" % que.id] = fields.ChoiceField(
-                label=que.caption,
-                error_messages={"required": "必填"},
-                widget=widgets.RadioSelect,
-                choices=[(i, i) for i in range(1, 11)]
-
-            )
-        elif que.ct == 2:
-            field_dict["option_id_%s" % que.id] = fields.ChoiceField(
-                label=que.caption,
-                error_messages={"required": "必填"},
-                widget=widgets.RadioSelect,
-                ##这里数据表option中的score是不需要给用户看到的
-                choices=models.Option.objects.filter(question_id=que.id).values_list("id", "name")
-            )
-        else:
-            field_dict["content_%s" % que.id] = fields.CharField(
-                label=que.caption,
-                error_messages={"required": "必填"},
-                widget=widgets.Textarea(attrs={"class": "form-control", "rows": "2", "cols": "60"}),
-                validators=[func, ]  # 这里可以写正则，也可以自定义函数放在这里
-            )
-    myForm = type("myTestForm", (Form,), field_dict)  # 动态生成类，参数分别是类名，继承的对象，字段
-    if request.method == "GET":
-        form = myForm()
-        return render(request, "score.html", {"question_list": question_list, "form": form})
-    else:
-        form = myForm(request.POST)
-        if form.is_valid():
-            obj_list = []
-            for key, v in form.cleaned_data.items():
-                print(key, v)
-                key, qid = key.rsplit("_", 1)  # 从右边切，切一次
-                answer_dict = {"user_id": stu_id, "question_id": qid, key: v}
-                print(answer_dict)
-                obj_list.append(models.Answer(**answer_dict))
-            models.Answer.objects.bulk_create(obj_list)  # 批量插入
-            return HttpResponse("感谢您的参与")
-
-        return render(request, "score.html", {"question_list": question_list, "form": form})
-'''
- for i in questionnaire_list:
-        v = models.Answer.objects.filter(question__questionnaire=i).distinct().annotate(c=Count("user_id")).values(
-            "c").count()
-        print(v)
-    i.stu_num = v'''

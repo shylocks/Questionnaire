@@ -4,39 +4,45 @@
     病人管理
 {% endblock %}
 {% block content %}
-    <div class="panel-body">
-    <div class="col-lg-6">
-            <a href="/add_patient/">
+    <div class="card-body">
+        <div class="card-title col-lg-6">
+            <a data-toggle="modal" data-target="#MyModal"
+               onclick="showaddModal()">
                 <button class="btn btn-success">添加</button>
             </a>
+            <a href="">
+                <button type="button" class="btn btn-primary">批量导入</button>
+            </a>
         </div>
-    </div>
-    <div class="panel-body">
+        <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
+             aria-hidden="true"></div>
+    <!--<hr class="my-4">-->
         {% for Patient in Patient_list %}
-            {% if forloop.counter|divisibleby:2 %}
-                <div class="row clearfix">
+            {% if forloop.counter0|divisibleby:2 %}
+                <div class="row col-12">
             {% endif %}
-        <div class="col-lg-6">
-            <section id="profile" class="well">
-                <h2 class="ra-well-title">病人编号: {{ Patient.id }}</h2>
-
-                <div class="row">
-                    <div class="col-lg-5 col-sm-3">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAH8AAAB/CAMAAADxY+0hAAAAZlBMVEX///9CQkE4ODeKioo9PTwwMC81NTTg4OBGRkXw8PDPz8/z8/MrKyozMzGioqL39/fp6enBwcHZ2dmzs7NbW1p5eXlhYWBwcG+srKuCgoIjIyLJyclOTk0bGxmSkpInJyWampkJCQSXXhkbAAADSElEQVRoge2ai9KiMAyFaWmLcpM7/MqK+/4vubiuiool0YSZnen3AqeX9CRN63kOh8PhcDj+H7KiTH3fT8tDsN2tLR6cWhlrI6U0Otaq8ctsRfVDs5dKTFBK76tuu4560egH8esYTOKvsQipmlP/ixEdu3yt36mfiduIV761yo9LULFGQZvY5YWQPeNhPC3KjwNo2eRDsyw/xkDOpd+/jfwpqmeSLxdi78rAswC7DUxeqJpFPx+A+mLD4oM1aPfPxCGDfAaWF0nKoJ/HYH2WAPAlXL9h0G/g668qeg/e9mB5IXr6LBgg5IUIyPUL+PaPB4D+AIaA1HdD0zswSj8p6fVBufeqTz//An78Rv0DuX4AzX5nZEGuH8GKjwscCRDlf/Ty3gkegPKHXj5C5B8h6P3Hfu953gDyEnSHmT2DAW8x9jNew8gNECUvDLkBthj/E4bcgEpM/hGKvAAKMPPnKAAxG6AZ+iAHuAEYhvrP21XgBajpy7+R9DdsAJo++f8DVgLEbF24GmTCCZe810FMmK39MR4BiL702fS3kACgTz13IB6k6GvPG5AOFN/2e162vAEctd+dn8UTGLO5z5lgqQemKt4G+FIEmiOrvHdY6EJpltQzwT5/ptbnhNLqgXuOzuMDO+v0ORpvT6SWQpS+7H7F6kFrPIRaLqKbFeS9/H0SWEXfZgHMr3/j7ne+pRGiqmPBGAJZWv3S0uZASu7FkakAKOrBqn1FDhXHCAIDbkEoyWCDAeICzOGDBfz9ZdwD8igMEf0/+jyY1Qmq/yEkZQxGqcC1v84roMge4fIe0/u7oRuSi2jQ7nFLf1+C+PsliI7xh+pnTP9lQZD3uL7jyxKYb3ohQf3N5C9Idfz0R0qaoKN+juSzkxBKVMfROgLTYf2wwBqOHdMfQ/AQoiJtJMnST0eQAD+ohT+bwVDO/YrSYjkQDtWnbgMhkXY/2NazX+sI0a3FlEN8mkEj1dsGRc49+Qv6TYOsxBQ43xDPduct1xpq5lYg49/6yQBek1K7pv7rA3G4X1F+DIGnHdihqlsCNo9eHK4V+1eeXqhgLwuEPN6QIsznJiKmRwD1uYWGhy8y6SDXZjhN9Dt/ffi/ijscDofD4ZjnD8RZLUX1NrC5AAAAAElFTkSuQmCC"
-                             class="ra-avatar img-responsive">
-                    </div>
-
-                    <div class="col-lg-7 col-sm-3">
-                        <span class="ra-last-name">{{ Patient.name }}</span>
-                        <span class="ra-first-name">{{ Patient.sex }} / {{ Patient.age }}岁</span>
-                        <div class="ra-position">{{ Patient.native_place }}</div>
-                        <span class="ra-first-name">
-                                <a href="/patient/?method=further&id={{ Patient.id }}">详情</a>
-                                <a href="/patient/?method=delete&id={{ Patient.id }}">删除</a>
-                            </span>
-                    </div>
+        <div class="col-sm-6" style="padding-bottom: 2rem;">
+            <div class="card">
+                <div class="card-header">病人编号:{{ Patient.id }}</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ Patient.name }}</h5>
+                    <p class="card-text">{{ Patient.get_gender_display }}/{{ Patient.age }}岁<br>
+                    <p class="font-weight-light">{{ Patient.native_place }}</p>
                 </div>
-            </section>
+                <div class="card-footer">
+                    <a data-toggle="modal" data-target="#PartModal" onclick="showModal{{ Patient.id }}()">
+                        <button class="btn btn-outline-info">详情</button></a>
+                    <a href="/patient/?method=delete&id={{ Patient.id }}" class="btn btn-outline-danger">删除</a>
+                    <script>
+                        var showModal{{ Patient.id }} = function () {
+                                                                    $("#MyModalBody").load("/patient/?method=further&id={{ Patient.id }}", function () {
+                                                                        $("#MyModalBody").modal('show');
+                                                                    })
+                                                                }
+                    </script>
+                </div>
+
+            </div>
         </div>
         {% if forloop.counter|divisibleby:2 %}
             </div>
@@ -45,6 +51,11 @@
 
     </div>
     <script>
+        var showaddModal = function () {
+            $("#MyModalBody").load("/patient/?method=add", function () {
+                $("#MyModalBody").modal('show');
+            })
+        };
         $(document).ready(function () {
             $("#patient").addClass("active");
         });

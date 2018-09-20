@@ -4,7 +4,8 @@
     <a href="/ques/">问卷管理</a>/ 编辑问卷
 {% endblock %}
 {% block content %}
-    <div class="panel panel-body edit_ques">
+        <link rel="stylesheet" href="/static/css/edit_questionnaire.css">
+    <div class="card card-body edit_ques">
         <ol class="question_list">
             <form class="form-horizontal" method="post" novalidate>
                 {% csrf_token %}

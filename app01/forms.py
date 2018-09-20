@@ -37,42 +37,37 @@ class HospitalForm(Form):
                                    widget=wid.TextInput(attrs={"class": "form-control"}))
 
 
-class PatientForm(Form):
-    name = fields.CharField(required=True, error_messages={
-        "required": "姓名不能为空"
-    },
-                            widget=wid.TextInput(attrs={"class": "form-control"}))
+class PatientModelForm(ModelForm):
+    class Meta:
+        model = models.Patient
+        fields = "__all__"
+        error_messages = {
+            "id": {"required": "系统错误"},
+            "name": {"required": "姓名不能为空"},
+            "gender": {"required": "性别不能为空"},
+            "age": {"required": "年龄不能为空"},
+            "idcard": {"required": "身份证号不能为空"},
+            "nation": {"required": "名族不能为空"},
+            "native_place": {"required": "籍贯不能为空"},
+            "education": {"required": "教育经历不能为空"},
+            "marriage": {"required": "婚姻经历不能为空"},
+            "children": {"required": "子女数不能为空"}
+        }
+        widgets = {
+            "id": wid.TextInput(attrs={"class": "form-control", 'type': "number", "required": "false", "hidden": "true"}),
+            "name": wid.TextInput(attrs={"class": "form-control", 'type': "text", "required": "true"}),
+            "gender": wid.Select(attrs={"class": "form-control", "required": "true"}),
+            "age": wid.TextInput(attrs={"class": "form-control", "type": "number", "required": "true"}),
+            "idcard": wid.TextInput(attrs={"class": "form-control", "required": "true"}),
+            "nation": wid.Select(attrs={"class": "form-control", "required": "true"}),
+            "native_place": wid.TextInput(attrs={"class": "form-control", "required": "true"}),
+            "education": wid.Select(attrs={"class": "form-control", "required": "true"}),
+            "marriage": wid.Select(attrs={"class": "form-control", "required": "true"}),
+            "children": wid.Select(attrs={"class": "form-control", "required": "true"}),
+            "longest_job": wid.TextInput(attrs={"class": "form-control", "required": "false"}),
+            "family_medical_history": wid.TextInput(attrs={"class": "form-control", "required": "false"})
 
-    age = fields.CharField(required=True, error_messages={
-        "required": "姓名不能为空"
-    },
-                           widget=wid.TextInput(attrs={"class": "form-control"}))
-    idcard = fields.CharField(required=True, error_messages={
-        "required": "身份证不能为空"
-    },
-                              widget=wid.TextInput(attrs={"class": "form-control"}))
-    nation = fields.CharField(required=True, error_messages={
-        "required": "名族不能为空"
-    },
-                              widget=wid.TextInput(attrs={"class": "form-control"}))
-    native_place = fields.CharField(required=True, error_messages={
-        "required": "籍贯不能为空"
-    },
-                                    widget=wid.TextInput(attrs={"class": "form-control"}))
-    education = fields.CharField(required=True, error_messages={
-        "required": "学历不能为空"
-    },
-                                 widget=wid.Select(attrs={"class": "form-control"}))
-
-    marriage = fields.CharField(required=True, error_messages={
-        "required": "婚姻状况不能为空"
-    },
-                                widget=wid.TextInput(attrs={"class": "form-control"}))
-
-    children = fields.CharField(required=True, widget=wid.Select(attrs={"class": "form-control"}))
-
-    longest_job = fields.CharField(required=False, widget=wid.TextInput(attrs={"class": "form-control"}))
-    family_medical_history = fields.CharField(required=False, widget=wid.TextInput(attrs={"class": "form-control"}))
+        }
 
 
 class QuestionModelForm(ModelForm):

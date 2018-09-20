@@ -3,37 +3,44 @@
     问卷管理
 {% endblock %}
 {% block content %}
-    <div class="panel-body ">
-        <a data-toggle="modal" data-target="#MyModal"
-           onclick="showModal()">
-            <button class="btn btn-success">添加</button>
-        </a>
+    <div class="card-body">
+        <div class="card-title col-6">
+            <a data-toggle="modal" data-target="#MyModal"
+               onclick="showModal()">
+                <button class="btn btn-success">添加</button>
+            </a>
+            <a href="">
+                <button type="button" class="btn btn-primary">批量导入</button>
+            </a>
+        </div>
         <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
              aria-hidden="true">
         </div>
-        <table class="table table-bordered table-hover">
-            <thead>
-            <tr>
-                <th>问卷名称</th>
-                <th>问卷选项</th>
-                <th>统计情况</th>
-                <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for questionnaire in questionnaire_list %}
+        <div class="col-6">
+            <table class="table table-bordered table-hover">
+                <thead>
                 <tr>
-
-                    <td><a href="/questionnaire/{{ questionnaire.id }}/">
-                        {{ form.title }}{{ questionnaire.title }}</a></td>
-                    <td><a href="/edit_questionnaire/{{ questionnaire.id }}/">旧版编辑问卷</a></td>
-                    <td><a href="/status/{{ questionnaire.id }}/">查看统计</a></td>
-                    <td><a href="/ques/?method=delete&id={{ questionnaire.id }}">删除</a></td>
+                    <th>问卷名称</th>
+                    <th>问卷选项</th>
+                    <th>统计情况</th>
+                    <th>操作</th>
                 </tr>
-            {% endfor %}
+                </thead>
+                <tbody>
+                {% for questionnaire in questionnaire_list %}
+                    <tr>
 
-            </tbody>
-        </table>
+                        <td><a href="/questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-primary">
+                            {{ form.title }}{{ questionnaire.title }}</a></td>
+                        <td><a href="/edit_questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-warning">旧版编辑问卷</a></td>
+                        <td><a href="/status/{{ questionnaire.id }}/" class="btn btn-outline-info">查看统计</a></td>
+                        <td><a href="/ques/?method=delete&id={{ questionnaire.id }}" class="btn btn-outline-danger">删除</a></td>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
     </div>
     <script>
         var showModal = function () {
