@@ -104,7 +104,7 @@ class Patient(models.Model):
     age = models.IntegerField(verbose_name="年龄")
     idcard = models.CharField(verbose_name="身份证号", max_length=64)
     nation = models.IntegerField(choices=nation_type, verbose_name="名族")
-    native_place = models.CharField(verbose_name="籍贯", max_length=64)
+    native_place = models.CharField(verbose_name="籍贯",max_length=64)
     education = models.IntegerField(choices=education_type, verbose_name="教育程度")
     marriage = models.IntegerField(choices=marriage_type, verbose_name="婚姻状况")
     children = models.IntegerField(choices=children_type, verbose_name="子女数")
@@ -156,6 +156,9 @@ class Res(models.Model):
     time_stamp = models.CharField(verbose_name="UNIX时间戳", max_length=64)
     patient = models.ForeignKey(to="Patient", verbose_name="病人ID", on_delete=None)
     doctor = models.ForeignKey(to="Doctor", verbose_name="医生ID", on_delete=None)
+    questionnaire = models.ForeignKey(to="Questionnaire", verbose_name="问卷ID", on_delete=None)
+    score = models.IntegerField(verbose_name="得分")
+
 
     class Meta:
         verbose_name_plural = "回答表"

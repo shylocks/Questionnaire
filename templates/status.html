@@ -1,272 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.v4.css">
-    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
-    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="/static/js/highcharts.js"></script>
-    <style type="text/css">
-        body {
-            padding-top: 5rem;
-        }
-        .starter-template {
-            padding: 3rem 1.5rem;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
-
-<main role="main" class="container">
-    <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <!--<p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
-            mostly barebones HTML document.</p>-->
-        {% for form in form_list %}
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title"><strong>第{{ forloop.counter }}题：</strong>{{ form.obj.caption }}</h5>
-                    <!--<h6 class="card-subtitle mb-2 text-muted"></h6><!--
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>-->
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="TableShow{{ form.obj.id }}" role="tabpanel"
-                             aria-labelledby="Table-tab">
-                            <table class="table table-bordered" id="Table{{ form.obj.id }}">
-                                <thead class="thead-light">
-                                <tr>
-                                    <th>评分</th>
-                                    <th>小计</th>
-                                    <th>所占比率</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="tab-pane fade" id="PieChart{{ form.obj.id }}" role="tabpanel"
-                             aria-labelledby="PieChart-tab">
-                            <div id="PieChartShow{{ form.obj.id }}"
-                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
-                        </div>
-                        <div class="tab-pane fade" id="RingChart{{ form.obj.id }}" role="tabpanel"
-                             aria-labelledby="RingChart-tab">
-                            <div id="RingChartShow{{ form.obj.id }}"
-                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
-                        </div>
-                        <div class="tab-pane fade" id="Histogram{{ form.obj.id }}" role="tabpanel"
-                             aria-labelledby="Histogram-tab">
-                            <div id="HistogramChartShow{{ form.obj.id }}"
-                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
-                        </div>
-                        <div class="tab-pane fade" id="BarChart{{ form.obj.id }}" role="tabpanel"
-                             aria-labelledby="BarChart-tab">
-                            <div id="BarChartShow{{ form.obj.id }}"
-                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
-                        </div>
-                        <script language="JavaScript">
-                            $(document).ready(function () {
-                                /* 绘制表格 */
-                                var tableRef = document.getElementById('Table{{ form.obj.id }}').getElementsByTagName('tbody')[0];
-                                var arr = [
-                                    {% for v in form.options %}
-                                        [
-                                            '{{ v.Option }}', {{ v.Count }}, {{ v.Proportion }}
-                                        ],
-                                    {% endfor %}
-                                ];
-                                var arr2 = [];
-                                for (var i = 0; i < arr.length; ++i) {
-                                    arr2[i] = [arr[i][0], arr[i][2]];
-                                    var newRow = tableRef.insertRow(tableRef.rows.length);
-                                    for (var j = 0; j < 3; ++j) {
-                                        var newCell = newRow.insertCell(j);
-                                        var newText = document.createTextNode(arr[i][j]);
-                                        newCell.appendChild(newText);
-                                    }
-                                }
-                                /* 绘制表格结束 */
-
-                                /* 绘制饼状图 */
-                                var chart = {
-                                    plotBackgroundColor: null,
-                                    plotBorderWidth: null,
-                                    plotShadow: false
-                                };
-                                var title = {
-                                    text: '{{ form.obj.caption }}'
-                                };
-                                var tooltip = {
-                                    pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
-                                };
-                                var plotOptions = {
-                                    pie: {
-                                        allowPointSelect: true,
-                                        cursor: 'pointer',
-                                        dataLabels: {
-                                            enabled: true,
-                                            format: '<b>{point.name}%</b>: {point.percentage:.2f} %',
-                                            style: {
-                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                                            }
-                                        }
-                                    }
-                                };
-                                var series = [{
-                                    type: 'pie',
-                                    name: '比率',
-                                    data: arr2,
-                                }];
-                                var json = {};
-                                json.chart = chart;
-                                json.title = title;
-                                json.tooltip = tooltip;
-                                json.series = series;
-                                json.plotOptions = plotOptions;
-                                $('#PieChartShow{{ form.obj.id }}').highcharts(json);
-                                /* 绘制饼状图结束 */
-
-                                /* 绘制圆环图 */
-                                series = [{
-                                    type: 'pie',
-                                    name: '选择比率',
-                                    size: '80%',
-                                    innerSize: '60%',
-                                    data: arr2,
-                                }];
-                                json.series = series;
-                                $('#RingChartShow{{ form.obj.id }}').highcharts(json);
-                                /* 绘制圆环图结束 */
-
-                                /* 绘制柱状图 */
-                                json = {};
-                                chart = {
-                                    type: 'column'
-                                };
-                                var xAxis = {
-                                    categories: ['人数'],
-                                    crosshair: true
-                                };
-                                var yAxis = {
-                                    min: 0,
-                                    title: {
-                                        text: '人数'
-                                    }
-                                };
-                                series = [];
-                                for (i = 0; i < arr.length; ++i) {
-                                    series[i] = {
-                                        name: arr[i][0],
-                                        data: [arr[i][1]]
-                                    }
-                                }
-                                plotOptions = {
-                                    column: {
-                                        pointPadding: 0.2,
-                                        borderWidth: 0
-                                    }
-                                };
-                                json.chart = chart;
-                                json.title = title;
-                                json.plotOptions = plotOptions;
-                                json.yAxis = yAxis;
-                                json.series = series;
-                                json.xAxis = xAxis;
-                                $('#HistogramChartShow{{ form.obj.id }}').highcharts(json);
-                                /* 绘制柱状图结束 */
-
-                                /* 绘制条形图开始 */
-                                chart = {
-                                    type: 'bar'
-                                };
-                                tooltip = {
-                                    valueSuffix: ' 人'
-                                };
-                                yAxis = {
-                                    min: 0,
-                                    title: {
-                                        text: '人数',
-                                        align: 'high'
-                                    },
-                                    labels: {
-                                        overflow: 'justify'
-                                    }
-                                };
-                                plotOptions = {
-                                    bar: {
-                                        dataLabels: {
-                                            enabled: true
-                                        }
-                                    }
-                                };
-                                var legend = {
-                                    layout: 'vertical',
-                                    align: 'right',
-                                    verticalAlign: 'top',
-                                    x: -100,
-                                    y: 10,
-                                    floating: true,
-                                    borderWidth: 1,
-                                    backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
-                                    shadow: true
-                                };
-                                json.chart = chart;
-                                json.tooltip = tooltip;
-                                json.xAxis = xAxis;
-                                json.yAxis = yAxis;
-                                json.series = series;
-                                json.plotOptions = plotOptions;
-                                json.legend = legend;
-                                $('#BarChartShow{{ form.obj.id }}').highcharts(json);
-                                /* 绘制条形图结束 */
-                            });
-
-                        </script>
+{% extends 'base.html' %}
+{% block page_title %}
+    问卷分析
+{% endblock %}
+{% block content %}
+    <div class="card-body">
+        <div class="accordion" id="accordionExample">
+            {% for form in form_list %}
+                <div class="card">
+                    <div class="card-header" id="heading{{ forloop.counter }}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-outline-info" type="button" data-toggle="collapse"
+                                    data-target="#collapse{{ forloop.counter }}"
+                                    aria-expanded="true" aria-controls="collapse{{ forloop.counter }}">
+                                {{ form.obj.title }}
+                            </button>
+                        </h5>
                     </div>
-                    <ul class="nav nav-pills mb-5 justify-content-end" id="pills-tab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="pills-Table-tab{{ form.obj.id }}" data-toggle="pill"
-                               href="#TableShow{{ form.obj.id }}"
-                               role="tab"
-                               aria-controls="pills-Table" aria-selected="true">表格</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-PieChart-tab" data-toggle="pill"
-                               href="#PieChart{{ form.obj.id }}"
-                               role="tab"
-                               aria-controls="pills-PieChart" aria-selected="false">饼状图</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill"
-                               href="#RingChart{{ form.obj.id }}"
-                               role="tab"
-                               aria-controls="pills-contact" aria-selected="false">圆环图</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-Histogram-tab" data-toggle="pill"
-                               href="#Histogram{{ form.obj.id }}"
-                               role="tab"
-                               aria-controls="pills-Histogram" aria-selected="false">柱状图</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="pills-BarChart-tab" data-toggle="pill"
-                               href="#BarChart{{ form.obj.id }}"
-                               role="tab"
-                               aria-controls="pills-BarChart" aria-selected="false">条形图</a>
-                        </li>
-                    </ul>
-                    <!--<a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>-->
+
+                    <div id="collapse{{ forloop.counter }}" class="collapse"
+                         aria-labelledby="heading{{ forloop.counter }}"
+                         data-parent="#accordionExample">
+                        <div class="card-body">
+
+                            <div class="alert alert-primary col-sm-2" role="alert">
+                                有效问卷：{{ form.status.sum }}
+                            </div>
+                            <div class="alert alert-danger col-sm-2" role="alert">
+                                最高分: {{ form.status.max }}
+                            </div>
+                            <div class="alert alert-secondary col-sm-2" role="alert">
+                                最低分: {{ form.status.min }}
+                            </div>
+                            <div class="alert alert-success col-sm-2" role="alert">
+                                平均分: {{ form.status.mean }}
+                            </div>
+                            <div class="btn-group">
+                            <a href="/status/?method=fake&questionnaire_id={{ form.obj.id }}"
+                               class="btn btn-outline-primary">随机生成</a>
+                            <a href="/analysis/{{ form.obj.id }}/" class="btn btn-outline-success">各题统计</a>
+                            <a href="/analysis2/{{ form.obj.id }}/" class="btn btn-outline-danger">完整统计</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</main>
-</body>
-</html>
-
-
+    <script>
+        $(document).ready(function () {
+            $("#status").addClass("active");
+            $("#collapse1").addClass("show");
+        });
+    </script>
+{% endblock %}

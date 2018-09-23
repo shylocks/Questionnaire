@@ -60,7 +60,7 @@ class PatientModelForm(ModelForm):
             "age": wid.TextInput(attrs={"class": "form-control", "type": "number", "required": "true"}),
             "idcard": wid.TextInput(attrs={"class": "form-control", "required": "true"}),
             "nation": wid.Select(attrs={"class": "form-control", "required": "true"}),
-            "native_place": wid.TextInput(attrs={"class": "form-control", "required": "true"}),
+            "native_place": wid.TextInput(attrs={"class": "form-control", "type": "text","required": "true"}),
             "education": wid.Select(attrs={"class": "form-control", "required": "true"}),
             "marriage": wid.Select(attrs={"class": "form-control", "required": "true"}),
             "children": wid.Select(attrs={"class": "form-control", "required": "true"}),

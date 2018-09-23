@@ -22,7 +22,6 @@
                 <tr>
                     <th>问卷名称</th>
                     <th>问卷选项</th>
-                    <th>统计情况</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -33,7 +32,6 @@
                         <td><a href="/questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-primary">
                             {{ form.title }}{{ questionnaire.title }}</a></td>
                         <td><a href="/edit_questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-warning">旧版编辑问卷</a></td>
-                        <td><a href="/status/{{ questionnaire.id }}/" class="btn btn-outline-info">查看统计</a></td>
                         <td><a href="/ques/?method=delete&id={{ questionnaire.id }}" class="btn btn-outline-danger">删除</a></td>
                     </tr>
                 {% endfor %}

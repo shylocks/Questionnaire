@@ -16,10 +16,10 @@
         <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
              aria-hidden="true"></div>
         {% for Doctor in Doctor_list %}
-            {% if forloop.counter0|divisibleby:2 %}
+            {% if forloop.counter0|divisibleby:4 %}
                 <div class="row col-12">
             {% endif %}
-        <div class="col-sm-6" style="padding-bottom: 2rem;">
+        <div class="col-sm-3" style="padding-bottom: 2rem;">
             <div class="card">
                 <div class="card-header">医生编号:{{ Doctor.id }}</div>
                 <div class="card-body">
@@ -34,7 +34,7 @@
 
             </div>
         </div>
-        {% if forloop.counter|divisibleby:2 %}
+        {% if forloop.counter|divisibleby:4 %}
             </div>
         {% endif %}
         {% endfor %}

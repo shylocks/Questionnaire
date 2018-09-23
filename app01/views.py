@@ -5,6 +5,8 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.core.exceptions import ValidationError
 from django.forms import Form
 from django.db.models import Count
+from django.db.models import Avg
+from django.db.models import Sum
 from django.forms import fields
 from django.forms import widgets
 from urllib.parse import parse_qs
@@ -12,18 +14,61 @@ from . import models
 from .forms import QuestionnaireForm, QuestionModelForm, OptionModelForm, DoctorForm, PatientModelForm, HospitalForm
 import random
 import pandas as pd
+
 pd.options.display.max_colwidth = 100
 import re
 from wordcloud import WordCloud
 import jieba
 # Create your views here.
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
 def index(request):
+    #fake_patient_data()
     return render(request, 'index.html', )
 
 
-def status(request, questionnaire_id):
+def status(request):
+    questionnaire_list = models.Questionnaire.objects.all()
+    res_list = models.Res.objects.all()
+    for res in res_list:
+        if not res.questionnaire_id:
+            print(res.id)
+            if models.Answer.objects.filter(res_id=res.id).first() is None:
+                models.Res.objects.filter(id=res.id).delete()
+            else:
+                temp_question_id = models.Answer.objects.filter(res_id=res.id).first().question_id
+                temp_questionnaire_id = models.Question.objects.filter(id=temp_question_id).first().questionnaire_id
+                models.Res.objects.filter(id=res.id).update(questionnaire_id=temp_questionnaire_id)
+        if not res.score:
+            print(res.id)
+            this_score = 0
+            this_answer_list = models.Answer.objects.filter(res_id=res.id)
+            for answer in this_answer_list:
+                tmp = models.Question.objects.filter(id=answer.question_id).first()
+                if not tmp.ct == 3:
+                    this_score += models.Option.objects.filter(id=answer.option_id).first().score
+            models.Res.objects.filter(id=res.id).update(score=this_score)
+
+    def inner():
+        for questionnaire in questionnaire_list:
+            df = pd.DataFrame({'score': list(models.Res.objects.filter(questionnaire_id=questionnaire.id).values_list('score',flat=True))})
+            temp = {"obj": questionnaire,
+                    "status": {"mean": '%.2f' % float(df.mean()), "max": float(df.max()), "min": float(df.min()),
+                               "sum": int(df.count())}}
+            yield temp
+    return render(request, 'status.html', {"form_list": inner()})
+
+
+def analysis2(request, questionnaire_id):
+    res_list = models.Res.objects.filter(questionnaire_id=questionnaire_id)[:10]
+    return render(request, 'analysis2.html', locals())
+
+
+def analysis(request, questionnaire_id):
+    title = models.Questionnaire.objects.filter(id=questionnaire_id).first().title
     question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id).order_by('part_id')
 
     def inner():
@@ -44,23 +89,47 @@ def status(request, questionnaire_id):
                     temp = len(answer_list)
                     for i in range(0, len(OptionIDList)):
                         yield {"Option": models.Option.objects.filter(id=OptionIDList[i]).first().name,
-                               "Count": PatientIDList[i], "Proportion": '%.2f' % (PatientIDList[i]/temp * 100)}
+                               "Count": PatientIDList[i], "Proportion": '%.2f' % (PatientIDList[i] / temp * 100)}
+
                 temp["options"] = inner_lop(que.id)
             yield temp
-    return render(request, 'status.html', {"form_list": inner()})
+
+    return render(request, 'analysis.html', {"form_list": inner(), "title": title})
 
 
-def fake_data(questionnaire_id, patient_id, doctor_id):
+def fake_patient_data(num):
+    cites_df = pd.read_csv(os.path.join(PROJECT_ROOT, 'cities.csv'))
+    province_df = pd.read_csv(os.path.join(PROJECT_ROOT, 'provinces.csv'))
+    for i in range(num):
+        print(i)
+        ra = random.randint(0, len(cites_df) - 1)
+        native_place = province_df[province_df['code'] == cites_df.iloc[ra, 2]].iloc[0, 1] + cites_df.iloc[ra, 1]
+        name = "王" + str(i)
+        gender = random.randint(1, 2)
+        age = random.randint(18, 90)
+        idcard = str(random.randint(100000, 999999)) + str(random.randint(1900, 2018)) + str(
+            random.randint(10, 12)) + str(random.randint(10, 31)) + str(random.randint(1000, 9999))
+        nation = str(random.randint(1, 56))
+        education = str(random.randint(1, 6))
+        marriage = str(random.randint(1, 5))
+        children = str(random.randint(0, 7))
+        models.Patient.objects.create(name=name, gender=gender, age=age, idcard=idcard, nation=nation,
+                                      native_place=native_place, education=education, marriage=marriage,
+                                      children=children)
+
+
+def fake_res_data(questionnaire_id, patient_id, doctor_id):
     import time
     import datetime
     time_stamp = time.mktime(datetime.datetime.now().timetuple())
-    models.Res.objects.create(time_stamp=time_stamp,patient_id=patient_id, doctor_id=doctor_id)
+    models.Res.objects.create(time_stamp=time_stamp, patient_id=patient_id, doctor_id=doctor_id)
     res_id = models.Res.objects.filter(time_stamp=time_stamp).first().id
     question_list = models.Question.objects.filter(questionnaire_id=questionnaire_id)
     for question in question_list:
         option_list = models.Option.objects.filter(question_id=question.id)
         option_id_list = [w.id for w in option_list]
-        models.Answer.objects.create(option_id=option_id_list[random.randint(0, len(option_id_list)-1)], question_id=question.id, patient_id=patient_id, res_id=res_id)
+        models.Answer.objects.create(option_id=option_id_list[random.randint(0, len(option_id_list) - 1)],
+                                     question_id=question.id, patient_id=patient_id, res_id=res_id)
 
 
 def questionnaires(request):
@@ -71,40 +140,6 @@ def questionnaires(request):
                 models.Questionnaire.objects.filter(id=pars['id'][0]).delete()
             if pars['method'][0] == 'add':
                 return render(request, 'models/QuestionnaireModel.html', )
-            if pars['method'][0] == 'view_static':
-                ques = models.Questionnaire.objects.filter(id=pars['id'][0]).first()
-                question_list = models.Question.objects.filter(questionnaire_id=ques.id)
-                answer_list = models.Answer.objects.all()
-                question_id_list=[]
-                for question in question_list:
-                    question_id_list.append(question.id)
-                participant_id_list = []
-                for answer in answer_list:
-                    if answer.patient_id not in participant_id_list:
-                        participant_id_list.append(answer.patient_id)
-                score_list = []
-                for participant_id in participant_id_list:
-                    this_score = 0
-                    this_answer_list = models.Answer.objects.filter(patient_id=participant_id)
-                    for answer in this_answer_list:
-                        if answer.question_id in question_id_list:
-                            tmp = models.Question.objects.filter(id=answer.question_id).first()
-                            if tmp.ct == 2:
-                                this_score += models.Option.objects.filter(id=answer.option_id).first().score
-                    score_list.append(this_score)
-
-                class ipart:
-                    name = ""
-                    score = 0
-
-                participant_list = []
-                for i in range(0,len(participant_id_list)):
-                    tmp = ipart()
-                    tmp.name = models.Patient.objects.filter(id=participant_id_list[i]).first().name
-                    tmp.score = score_list[i]
-                    participant_list.append(tmp)
-
-                return render(request, 'status.html', locals())
     elif request.is_ajax():
         data = json.loads(request.body.decode("utf-8"))
         models.Questionnaire.objects.create(title=data.get("title"))
@@ -121,7 +156,6 @@ def doctor(request):
             if pars['method'][0] == 'reset':
                 models.Doctor.objects.filter(id=pars['id'][0]).update(pwd="123456")
             if pars['method'][0] == 'add':
-
                 form = DoctorForm()
                 return render(request, 'models/DoctorModel.html', {"form": form})
     else:
@@ -131,7 +165,7 @@ def doctor(request):
             id = 10001 + len(models.Doctor.objects.all())
             hospital = form.cleaned_data.get("hospital")
             position = form.cleaned_data.get("position")
-            models.Doctor.objects.create(id=id, name=name, pwd="123456", hospital_id=hospital,position=position)
+            models.Doctor.objects.create(id=id, name=name, pwd="123456", hospital_id=hospital, position=position)
             return redirect("/doctor/")
     Doctor_list = models.Doctor.objects.all()
     return render(request, 'doctor.html', locals())
@@ -159,49 +193,30 @@ def hospital(request):
 
 
 def patient(request):
+    import numpy as np
     if request.method == "GET":
         pars = parse_qs(request.GET.urlencode())
         if pars.get('method'):
             if pars['method'][0] == 'delete':
                 models.Patient.objects.filter(id=pars['id'][0]).delete()
             elif pars['method'][0] == 'further':
-                '''
-                questionnaire_list = models.Questionnaire.objects.all()
-                questionnaire_name_list=[]
-                score_list = []
-                for ques in questionnaire_list:
-                    questionnaire_name_list.append(ques.title)
-                    question_list = models.Question.objects.filter(questionnaire_id=ques.id)
-                    answer_list = models.Answer.objects.all()
-                    question_id_list = []
-                    for question in question_list:
-                        question_id_list.append(question.id)
-                    this_score = 0
-                    this_answer_list = models.Answer.objects.filter(patient_id=pars['id'][0])
-                    for answer in this_answer_list:
-                        if answer.question_id in question_id_list:
-                            tmp = models.Question.objects.filter(id=answer.question_id).first()
-                            if tmp.ct == 2:
-                                this_score += models.Option.objects.filter(id=answer.option_id).first().score
-                    score_list.append(this_score)
-
-                class ipart:
-                    name = ""
-                    score = 0
-
-                participant_list = []
-                for i in range(0, len(questionnaire_name_list)):
-                    tmp = ipart()
-                    tmp.name = questionnaire_name_list[i]
-                    tmp.score = score_list[i]
-                    participant_list.append(tmp)'''
                 form = PatientModelForm(instance=models.Patient.objects.filter(id=pars['id'][0]).first())
                 idd = pars['id'][0]
                 return render(request, 'models/PatientModel.html', locals())
             elif pars['method'][0] == 'add':
                 form = PatientModelForm()
-                #print(form)
-                return render(request, 'models/PatientModel.html',locals())
+                return render(request, 'models/PatientModel.html', locals())
+            elif pars['method'][0] == 'fake':
+                fake_patient_data(1)
+            elif pars['method'][0] == 'view':
+                view_page = int(pars['page'][0])
+                total_page = models.Patient.objects.all().count()/8
+                page_list = np.linspace(1, 2, 12)
+                if total_page == view_page:
+                    Patient_list = models.Patient.objects.all()[(total_page-1)*8:]
+                else:
+                    Patient_list = models.Patient.objects.all()[(view_page-1)*8:view_page*8]
+                return render(request, 'patient.html', locals())
     elif request.method == "POST":
         form = PatientModelForm(request.POST)
         if form.is_valid():
@@ -217,22 +232,26 @@ def patient(request):
             longest_job = form.cleaned_data.get("longest_job", "无")
             family_medical_history = form.cleaned_data.get("family_medical_history", "无")
             if request.POST.get("idd"):
-                models.Patient.objects.filter(id=request.POST.get("idd")).update(name=name, gender=gender, age=age, idcard=idcard,
+                models.Patient.objects.filter(id=request.POST.get("idd")).update(name=name, gender=gender, age=age,
+                                                                                 idcard=idcard,
+                                                                                 nation=nation,
+                                                                                 native_place=native_place,
+                                                                                 education=education, marriage=marriage,
+                                                                                 children=children,
+                                                                                 longest_job=longest_job,
+                                                                                 family_medical_history=family_medical_history)
+            else:
+                models.Patient.objects.create(name=name, gender=gender, age=age, idcard=idcard,
                                               nation=nation, native_place=native_place,
                                               education=education, marriage=marriage,
                                               children=children, longest_job=longest_job,
                                               family_medical_history=family_medical_history)
-            else:
-                models.Patient.objects.create(name=name, gender=gender, age=age, idcard=idcard,
-                                          nation=nation, native_place=native_place,
-                                          education=education, marriage=marriage,
-                                          children=children, longest_job=longest_job,
-                                          family_medical_history=family_medical_history)
         else:
             print(form.errors)
-
-
-    Patient_list = models.Patient.objects.all()
+    total_page = models.Patient.objects.all().count() / 8
+    page_list = np.linspace(1, 12, 12)
+    Patient_list = models.Patient.objects.all()[:8]
+    view_page = 1
     return render(request, 'patient.html', locals())
 
 
@@ -279,7 +298,8 @@ def view_questionnaire(request, pid):
                 return render(request, 'models/PartModel.html', locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
-        models.Part.objects.filter(part_id=item.get("id"), questionnaire_id=pid).update(description=item.get("description"))
+        models.Part.objects.filter(part_id=item.get("id"), questionnaire_id=pid).update(
+            description=item.get("description"))
     Questionnaire = models.Questionnaire.objects.filter(id=pid).first()
     question_list = models.Question.objects.filter(questionnaire_id=pid)
     parts = []
@@ -288,7 +308,7 @@ def view_questionnaire(request, pid):
         if ques.part_id not in parts:
             parts.append(ques.part_id)
     partTemp = models.Part.objects.filter(questionnaire_id=pid)
-    for part in partTemp: #防止出现新问卷没有问题的情况
+    for part in partTemp:  # 防止出现新问卷没有问题的情况
         if part.part_id not in parts:
             parts.append(part.part_id)
     parts.sort()
@@ -298,8 +318,8 @@ def view_questionnaire(request, pid):
         models.Part.objects.create(questionnaire_id=questionnaire_id, part_id=1)
         parts.append(1)
     for part in parts:
-        if not models.Part.objects.filter(questionnaire_id=questionnaire_id,part_id=part).first():
-            models.Part.objects.create(questionnaire_id=questionnaire_id,part_id=part)
+        if not models.Part.objects.filter(questionnaire_id=questionnaire_id, part_id=part).first():
+            models.Part.objects.create(questionnaire_id=questionnaire_id, part_id=part)
     part_list = models.Part.objects.all()
     return render(request, 'questionnaire.html', locals())
 
@@ -352,19 +372,22 @@ def edit_questionnaire(request, pid):
             part_id = item.get("part_id")
             # 如果用户传过来的id不在数据库原有id列表中的时候，表示要新增
             if qid not in question_id_list:
-                new_question_obj = models.Question.objects.create(caption=caption, ct=ct, questionnaire_id=pid, part_id=part_id)
+                new_question_obj = models.Question.objects.create(caption=caption, ct=ct, questionnaire_id=pid,
+                                                                  part_id=part_id)
                 if ct == 2:
                     for op in options:
                         models.Option.objects.create(question=new_question_obj, name=op.get("name"),
                                                      score=op.get("score"))
             # 否则表示要更新
             else:
-                models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, questionnaire_id=pid, part_id=part_id)
+                models.Question.objects.filter(id=qid).update(caption=caption, ct=ct, questionnaire_id=pid,
+                                                              part_id=part_id)
                 if not options:  # 如果没有选项表示要删除选项
                     models.Option.objects.filter(question_id=qid).delete()
                 else:
                     for op in options:
-                        models.Option.objects.filter(question_id=qid).update(name=op.get("name"), score=op.get("score"), question_id=qid)
+                        models.Option.objects.filter(question_id=qid).update(name=op.get("name"), score=op.get("score"),
+                                                                             question_id=qid)
         return HttpResponse("ok")
 
 
@@ -387,12 +410,14 @@ def question(request):
             item = {"form": form, "obj": que, "options": None}
             if que.ct == 2 or que.ct == 1:
                 item["options_cls"] = ""
+
                 # 获取当前问题的所有选项
 
                 def inner_lop(xxx):
                     option_list = models.Option.objects.filter(question=xxx)
                     for v in option_list:
                         yield {"form": OptionModelForm(instance=v), "obj": v}
+
                 item["options"] = inner_lop(que)
             print(item)
             return render(request, "models/QuestionModel.html", locals())
