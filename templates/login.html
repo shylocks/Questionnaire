@@ -1,68 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>
+        登陆
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+          name='viewport'/>
     <link href="/static/css/bootstrap.v4.css" rel="stylesheet"/>
-    <script src="/static/js/bootstrap.v4.js"></script>
-    <style>html,
-    body {
-        height: 100%;
-    }
-    body {
-        display: -ms-flexbox;
-        display: flex;
-        -ms-flex-align: center;
-        align-items: center;
-        padding-top: 40px;
-        padding-bottom: 40px;
-        background-color: #f5f5f5;
-    }
-    .form-signin {
-        width: 100%;
-        max-width: 330px;
-        padding: 15px;
-        margin: auto;
-    }
-    .form-signin .form-control {
-        position: relative;
-        box-sizing: border-box;
-        height: auto;
-        padding: 10px;
-        font-size: 16px;
-    }
-    .form-signin .form-control:focus {
-        z-index: 2;
-    }
-    .form-signin input[type="username"] {
-        margin-bottom: -1px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-    }
-    .form-signin input[type="password"] {
-        margin-bottom: 10px;
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-    }</style>
-</head>
-<body class="text-center">
-<form method="post" class="form-signin">
-    {% csrf_token %}
-    <h1 class="h3 mb-3 font-weight-normal">请登陆</h1>
-    <div class="form-group user">
+    <link href="/static/css/now-ui-kit.css?v=1.2.0" rel="stylesheet"/>
 
-        <input type="text" class="form-control" id="username" placeholder="用户名" aria-label="Username"
-               required>
+</head>
+
+<body class="login-page sidebar-collapse">
+<nav class="navbar navbar-expand-lg bg-primary fixed-top navbar-transparent " color-on-scroll="400">
+    <div class="container">
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/">管理员登陆</a>
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="form-group">
-        <input type="password" class="form-control" id="password" placeholder="密码"
-               aria-label="Password"
-               required>
+</nav>
+<!-- End Navbar -->
+<div class="page-header clear-filter" filter-color="orange">
+    <div class="page-header-image" style="background-image:url(../static/img/login.jpg)"></div>
+    <div class="content">
+        <div class="container">
+            <div class="col-md-4 ml-auto mr-auto">
+                <div class="card card-login card-plain">
+                    <form class="form" method="post">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="input-group no-border input-lg">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMS4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iQ2FwYV8xIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDQ4Mi45IDQ4Mi45IiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA0ODIuOSA0ODIuOTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIxNnB4IiBoZWlnaHQ9IjE2cHgiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0yMzkuNywyNjAuMmMwLjUsMCwxLDAsMS42LDBjMC4yLDAsMC40LDAsMC42LDBjMC4zLDAsMC43LDAsMSwwYzI5LjMtMC41LDUzLTEwLjgsNzAuNS0zMC41ICAgIGMzOC41LTQzLjQsMzIuMS0xMTcuOCwzMS40LTEyNC45Yy0yLjUtNTMuMy0yNy43LTc4LjgtNDguNS05MC43QzI4MC44LDUuMiwyNjIuNywwLjQsMjQyLjUsMGgtMC43Yy0wLjEsMC0wLjMsMC0wLjQsMGgtMC42ICAgIGMtMTEuMSwwLTMyLjksMS44LTUzLjgsMTMuN2MtMjEsMTEuOS00Ni42LDM3LjQtNDkuMSw5MS4xYy0wLjcsNy4xLTcuMSw4MS41LDMxLjQsMTI0LjlDMTg2LjcsMjQ5LjQsMjEwLjQsMjU5LjcsMjM5LjcsMjYwLjJ6ICAgICBNMTY0LjYsMTA3LjNjMC0wLjMsMC4xLTAuNiwwLjEtMC44YzMuMy03MS43LDU0LjItNzkuNCw3Ni03OS40aDAuNGMwLjIsMCwwLjUsMCwwLjgsMGMyNywwLjYsNzIuOSwxMS42LDc2LDc5LjQgICAgYzAsMC4zLDAsMC42LDAuMSwwLjhjMC4xLDAuNyw3LjEsNjguNy0yNC43LDEwNC41Yy0xMi42LDE0LjItMjkuNCwyMS4yLTUxLjUsMjEuNGMtMC4yLDAtMC4zLDAtMC41LDBsMCwwYy0wLjIsMC0wLjMsMC0wLjUsMCAgICBjLTIyLTAuMi0zOC45LTcuMi01MS40LTIxLjRDMTU3LjcsMTc2LjIsMTY0LjUsMTA3LjksMTY0LjYsMTA3LjN6IiBmaWxsPSIjMDAwMDAwIi8+CgkJPHBhdGggZD0iTTQ0Ni44LDM4My42YzAtMC4xLDAtMC4yLDAtMC4zYzAtMC44LTAuMS0xLjYtMC4xLTIuNWMtMC42LTE5LjgtMS45LTY2LjEtNDUuMy04MC45Yy0wLjMtMC4xLTAuNy0wLjItMS0wLjMgICAgYy00NS4xLTExLjUtODIuNi0zNy41LTgzLTM3LjhjLTYuMS00LjMtMTQuNS0yLjgtMTguOCwzLjNjLTQuMyw2LjEtMi44LDE0LjUsMy4zLDE4LjhjMS43LDEuMiw0MS41LDI4LjksOTEuMyw0MS43ICAgIGMyMy4zLDguMywyNS45LDMzLjIsMjYuNiw1NmMwLDAuOSwwLDEuNywwLjEsMi41YzAuMSw5LTAuNSwyMi45LTIuMSwzMC45Yy0xNi4yLDkuMi03OS43LDQxLTE3Ni4zLDQxICAgIGMtOTYuMiwwLTE2MC4xLTMxLjktMTc2LjQtNDEuMWMtMS42LTgtMi4zLTIxLjktMi4xLTMwLjljMC0wLjgsMC4xLTEuNiwwLjEtMi41YzAuNy0yMi44LDMuMy00Ny43LDI2LjYtNTYgICAgYzQ5LjgtMTIuOCw4OS42LTQwLjYsOTEuMy00MS43YzYuMS00LjMsNy42LTEyLjcsMy4zLTE4LjhjLTQuMy02LjEtMTIuNy03LjYtMTguOC0zLjNjLTAuNCwwLjMtMzcuNywyNi4zLTgzLDM3LjggICAgYy0wLjQsMC4xLTAuNywwLjItMSwwLjNjLTQzLjQsMTQuOS00NC43LDYxLjItNDUuMyw4MC45YzAsMC45LDAsMS43LTAuMSwyLjVjMCwwLjEsMCwwLjIsMCwwLjNjLTAuMSw1LjItMC4yLDMxLjksNS4xLDQ1LjMgICAgYzEsMi42LDIuOCw0LjgsNS4yLDYuM2MzLDIsNzQuOSw0Ny44LDE5NS4yLDQ3LjhzMTkyLjItNDUuOSwxOTUuMi00Ny44YzIuMy0xLjUsNC4yLTMuNyw1LjItNi4zICAgIEM0NDcsNDE1LjUsNDQ2LjksMzg4LjgsNDQ2LjgsMzgzLjZ6IiBmaWxsPSIjMDAwMDAwIi8+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="/>
+                                </span>
+                                </div>
+                                <input name="name" type="text" class="form-control" placeholder="用户名" required>
+                            </div>
+                            <div class="input-group no-border input-lg">
+                                <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <img src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIgd2lkdGg9IjE2cHgiIGhlaWdodD0iMTZweCI+CjxnPgoJPGc+CgkJPGc+CgkJCTxwYXRoIGQ9Ik0yMzAuNzkyLDM1NC4zMTNsLTYuNzI5LDYwLjUxYy0wLjMzMywzLjAxLDAuNjM1LDYuMDMxLDIuNjU2LDguMjkyYzIuMDIxLDIuMjYsNC45MTcsMy41NTIsNy45NDgsMy41NTJoNDIuNjY3ICAgICBjMy4wMzEsMCw1LjkyNy0xLjI5Miw3Ljk0OC0zLjU1MmMyLjAyMS0yLjI2LDIuOTktNS4yODEsMi42NTYtOC4yOTJsLTYuNzI5LTYwLjUxYzEwLjkyNy03Ljk0OCwxNy40NTgtMjAuNTIxLDE3LjQ1OC0zNC4zMTMgICAgIGMwLTIzLjUzMS0xOS4xMzUtNDIuNjY3LTQyLjY2Ny00Mi42NjdTMjEzLjMzMywyOTYuNDY5LDIxMy4zMzMsMzIwQzIxMy4zMzMsMzMzLjc5MiwyMTkuODY1LDM0Ni4zNjUsMjMwLjc5MiwzNTQuMzEzeiAgICAgIE0yNTYsMjk4LjY2N2MxMS43NiwwLDIxLjMzMyw5LjU3MywyMS4zMzMsMjEuMzMzYzAsOC4xNzctNC42NDYsMTUuNS0xMi4xMjUsMTkuMTI1Yy00LjA3MywxLjk3OS02LjQ1OCw2LjI5Mi01Ljk1OCwxMC43ODEgICAgIGw2LjE2Nyw1NS40MjdoLTE4LjgzM2w2LjE2Ny01NS40MjdjMC41LTQuNDktMS44ODUtOC44MDItNS45NTgtMTAuNzgxYy03LjQ3OS0zLjYyNS0xMi4xMjUtMTAuOTQ4LTEyLjEyNS0xOS4xMjUgICAgIEMyMzQuNjY3LDMwOC4yNCwyNDQuMjQsMjk4LjY2NywyNTYsMjk4LjY2N3oiIGZpbGw9IiMwMDAwMDAiLz4KCQkJPHBhdGggZD0iTTQzNy4zMzMsMTkyaC0zMnYtNDIuNjY3QzQwNS4zMzMsNjYuOTksMzM4LjM0NCwwLDI1NiwwUzEwNi42NjcsNjYuOTksMTA2LjY2NywxNDkuMzMzVjE5MmgtMzIgICAgIEM2OC43NzEsMTkyLDY0LDE5Ni43NzEsNjQsMjAyLjY2N3YyNjYuNjY3QzY0LDQ5Mi44NjUsODMuMTM1LDUxMiwxMDYuNjY3LDUxMmgyOTguNjY3QzQyOC44NjUsNTEyLDQ0OCw0OTIuODY1LDQ0OCw0NjkuMzMzICAgICBWMjAyLjY2N0M0NDgsMTk2Ljc3MSw0NDMuMjI5LDE5Miw0MzcuMzMzLDE5MnogTTEyOCwxNDkuMzMzYzAtNzAuNTgzLDU3LjQxNy0xMjgsMTI4LTEyOHMxMjgsNTcuNDE3LDEyOCwxMjhWMTkyaC0yMS4zMzMgICAgIHYtNDIuNjY3YzAtNTguODEzLTQ3Ljg1NC0xMDYuNjY3LTEwNi42NjctMTA2LjY2N1MxNDkuMzMzLDkwLjUyMSwxNDkuMzMzLDE0OS4zMzNWMTkySDEyOFYxNDkuMzMzeiBNMzQxLjMzMywxNDkuMzMzVjE5MiAgICAgSDE3MC42Njd2LTQyLjY2N0MxNzAuNjY3LDEwMi4yODEsMjA4Ljk0OCw2NCwyNTYsNjRTMzQxLjMzMywxMDIuMjgxLDM0MS4zMzMsMTQ5LjMzM3ogTTQyNi42NjcsNDY5LjMzMyAgICAgYzAsMTEuNzYtOS41NzMsMjEuMzMzLTIxLjMzMywyMS4zMzNIMTA2LjY2N2MtMTEuNzYsMC0yMS4zMzMtOS41NzMtMjEuMzMzLTIxLjMzM3YtMjU2aDM0MS4zMzNWNDY5LjMzM3oiIGZpbGw9IiMwMDAwMDAiLz4KCQk8L2c+Cgk8L2c+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPGc+CjwvZz4KPC9zdmc+Cg=="/>
+                    </span>
+                                </div>
+                                <input name="password" type="password" placeholder="密码" class="form-control" required/>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <button name="submit" class="btn btn-primary btn-round btn-lg btn-block">登陆</button>
+                            <div class="pull-left">
+                                <h6>
+                                    <a href="" class="link">注册账号</a>
+                                </h6>
+                            </div>
+                            <div class="pull-right">
+                                <h6>
+                                    <a href="" class="link">忘记密码?</a>
+                                </h6>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <input type="button" value="登&nbsp;&nbsp;录" class="btn btn-lg btn-success btn-block" id="subBtn">
-    <span class="error"></span>
-</form>
-<script src="/static/js/jquery-3.2.1.min.js"></script>
-<script src="/static/js/login.js"></script>
+</div>
+<footer class="footer">
+    <div class="container">
+
+        <div class="copyright" id="copyright">
+            &copy;
+            <script>
+                document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+            </script>
+
+        </div>
+    </div>
+</footer>
+</div>
+<script src="/static/js/jquery-3.2.1.min.js" type="text/javascript"></script>
+<script src="/static/js/popper.min.js" type="text/javascript"></script>
+<script src="/static/js/bootstrap.v4.js" type="text/javascript"></script>
+<script src="/static/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
 </body>
+
 </html>

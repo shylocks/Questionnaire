@@ -1,0 +1,79 @@
+<!--本页不能使用格式化代码，JS会出问题-->
+{% extends 'base.html' %}
+{% block page_title %}
+    <a href="/status/">统计分析</a>/ 完整统计
+{% endblock %}
+{% block content %}
+    <script>
+        function getTime() {
+            var ts = arguments[0] || 0;
+            var t, y, m, d, h, i, s;
+            t = ts ? new Date(ts * 1000) : new Date();
+            y = t.getFullYear();
+            m = t.getMonth() + 1;
+            d = t.getDate();
+            h = t.getHours();
+            i = t.getMinutes();
+            s = t.getSeconds();
+            return y + '-' + (m < 10 ? '0' + m : m) + '-' + (d < 10 ? '0' + d : d) + ' ' + (h < 10 ? '0' + h : h) + ':' + (i < 10 ? '0' + i : i) + ':' + (s < 10 ? '0' + s : s);
+        }
+    </script>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>病人姓名</th>
+                <th>医生姓名</th>
+                <th>问卷得分</th>
+                <th>提交时间</th>
+                <th>问卷选项</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for res in res_list %}
+                <tr>
+                    <td>{{ res.patient.name }}</td>
+                    <td>{{ res.doctor.name }}</td>
+                    <td>{{ res.score }}</td>
+                    <td id="td{{ forloop.counter }}"></td>
+                    <td>
+                        <div class="btn-group">
+                            <a href="" class="btn btn-info">查看详细</a>
+                            <a href="" class="btn btn-danger">删除记录</a>
+                        </div>
+                    </td>
+                <script>
+                    document.getElementById("td{{ forloop.counter }}").innerHTML=getTime({{ res.time_stamp }})
+                </script>
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    <div class="col-lg-12 offset-lg-4 py-4">
+        <ul class="pagination mx-auto text-center" id="pagination">
+            <li class="page-item" id="previous">
+                <a class="page-link" href="#" aria-label="Previous" id="previous-link">
+                    <span aria-hidden="true">«</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% for i in page.page_list %}
+                <li class="page-item" id="page{{ i }}"><a class="page-link" href="/summary/{{ qid }}/?method=view&page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            <li class="page-item" id="next">
+                <a class="page-link" href="#" aria-label="Next" id="next-link">
+                    <span aria-hidden="true">»</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#status").addClass("active");
+            pagination();
+        });
+    </script>
+{% endblock %}

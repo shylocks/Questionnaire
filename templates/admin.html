@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link href="/static/css/bootstrap.v4.css" rel="stylesheet"/>
+    <script src="/static/js/bootstrap.v4.js"></script>
+    <style>html,
+    body {
+        height: 100%;
+    }
+    body {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #f5f5f5;
+    }
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+    .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+    }
+    .form-signin .form-control:focus {
+        z-index: 2;
+    }
+    .form-signin input[type="username"] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }</style>
+</head>
+<body class="text-center">
+<form method="post" class="form-signin">
+    {% csrf_token %}
+    <h1 class="h3 mb-3 font-weight-normal">请登陆</h1>
+    <div class="form-group user">
+
+        <input type="text" class="form-control" id="username" placeholder="用户名" aria-label="Username"
+               required>
+    </div>
+    <div class="form-group">
+        <input type="password" class="form-control" id="password" placeholder="密码"
+               aria-label="Password"
+               required>
+    </div>
+    <input type="button" value="登&nbsp;&nbsp;录" class="btn btn-lg btn-success btn-block" id="subBtn">
+    <span class="error"></span>
+</form>
+<script src="/static/js/jquery-3.2.1.min.js"></script>
+<script src="/static/js/login.js"></script>
+</body>
+</html>

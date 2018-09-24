@@ -16,29 +16,24 @@
         <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
              aria-hidden="true">
         </div>
-        <div class="col-6">
-            <table class="table table-bordered table-hover">
-                <thead>
-                <tr>
-                    <th>问卷名称</th>
-                    <th>问卷选项</th>
-                    <th>操作</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for questionnaire in questionnaire_list %}
-                    <tr>
 
-                        <td><a href="/questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-primary">
-                            {{ form.title }}{{ questionnaire.title }}</a></td>
-                        <td><a href="/edit_questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-warning">旧版编辑问卷</a></td>
-                        <td><a href="/ques/?method=delete&id={{ questionnaire.id }}" class="btn btn-outline-danger">删除</a></td>
-                    </tr>
-                {% endfor %}
+        {% for questionnaire in questionnaire_list %}
+            <div class="card" style="width: 24rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ questionnaire.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">问卷ID：{{ questionnaire.id }}</h6>
+                    <p class="card-text">答卷：{{ questionnaire.finished_num }}</p>
+                    <div class="btn-group">
+                        <a href="/questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-primary">
+                            查看&编辑问卷</a>
+                        <a href="/edit_questionnaire/{{ questionnaire.id }}/" class="btn btn-outline-secondary">旧版编辑问卷</a>
+                        <a href="/ques/?method=delete&id={{ questionnaire.id }}" class="btn btn-outline-danger">删除问卷</a>
+                    </div>
+                </div>
+            </div>
 
-                </tbody>
-            </table>
-        </div>
+        {% endfor %}
+
     </div>
     <script>
         var showModal = function () {

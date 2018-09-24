@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.v4.css">
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js"></script>
+    <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="/static/js/highcharts.js"></script>
+    <style type="text/css">
+        body {
+            padding-top: 5rem;
+        }
+
+        .starter-template {
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+
+        .pagination {
+            justify-content: center;
+            padding: 3rem 1.5rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<main role="main" class="container">
+    <div class="starter-template">
+        <h1><a href="/status/"><img
+                src="data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8IS0tIEdlbmVyYXRvcjogQWRvYmUgSWxsdXN0cmF0b3IgMTkuMC4wLCBTVkcgRXhwb3J0IFBsdWctSW4gLiBTVkcgVmVyc2lvbjogNi4wMCBCdWlsZCAwKSAgLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCA1MTIuMDAxIDUxMi4wMDEiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDUxMi4wMDEgNTEyLjAwMTsiIHhtbDpzcGFjZT0icHJlc2VydmUiIHdpZHRoPSIzMnB4IiBoZWlnaHQ9IjMycHgiPgo8Zz4KCTxnPgoJCTxwYXRoIGQ9Ik0zODQuODM0LDE4MC42OTljLTAuNjk4LDAtMzQ4LjczMywwLTM0OC43MzMsMGw3My4zMjYtODIuMTg3YzQuNzU1LTUuMzMsNC4yODktMTMuNTA1LTEuMDQxLTE4LjI2ICAgIGMtNS4zMjgtNC43NTQtMTMuNTA1LTQuMjktMTguMjYsMS4wNDFsLTgyLjU4Miw5Mi41NmMtMTAuMDU5LDExLjI3OC0xMC4wNTgsMjguMjgyLDAuMDAxLDM5LjU1N2w4Mi41ODIsOTIuNTYxICAgIGMyLjU1NiwyLjg2NSw2LjA5Nyw0LjMyMyw5LjY1NCw0LjMyM2MzLjA2NCwwLDYuMTM5LTEuMDgzLDguNjA2LTMuMjgyYzUuMzMtNC43NTUsNS43OTUtMTIuOTMsMS4wNDEtMTguMjZsLTczLjMyNi04Mi4xODggICAgYzAsMCwzNDguMDM0LDAsMzQ4LjczMywwYzU1Ljg1OCwwLDEwMS4zLDQ1LjQ0NCwxMDEuMywxMDEuM3MtNDUuNDQzLDEwMS4zLTEwMS4zLDEwMS4zaC02MS41OCAgICBjLTcuMTQzLDAtMTIuOTMzLDUuNzkxLTEyLjkzMywxMi45MzNjMCw3LjE0Miw1Ljc5LDEyLjkzMywxMi45MzMsMTIuOTMzaDYxLjU4YzcwLjEyLDAsMTI3LjE2Ni01Ny4wNDYsMTI3LjE2Ni0xMjcuMTY2ICAgIEM1MTIsMjM3Ljc0NSw0NTQuOTU0LDE4MC42OTksMzg0LjgzNCwxODAuNjk5eiIgZmlsbD0iIzAwNkRGMCIvPgoJPC9nPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+CjxnPgo8L2c+Cjwvc3ZnPgo="/></a> {{ title }}
+        </h1>
+        <!--<p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a
+            mostly barebones HTML document.</p>-->
+        {% for form in form_list %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>{{ form.title }}</strong></h5>
+                    <!--<h6 class="card-subtitle mb-2 text-muted"></h6><!--
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>-->
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="TableShow{{ form.obj.id }}" role="tabpanel"
+                             aria-labelledby="Table-tab">
+                            <table class="table table-bordered" id="Table{{ form.obj.id }}">
+                                <thead class="thead-light">
+                                <tr>
+                                    <th>{{ form.title }}</th>
+                                    <th>小计</th>
+                                    <th>所占比率</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="PieChart{{ form.obj.id }}" role="tabpanel"
+                             aria-labelledby="PieChart-tab">
+                            <div id="PieChartShow{{ form.obj.id }}"
+                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <div class="tab-pane fade" id="RingChart{{ form.obj.id }}" role="tabpanel"
+                             aria-labelledby="RingChart-tab">
+                            <div id="RingChartShow{{ form.obj.id }}"
+                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <div class="tab-pane fade" id="Histogram{{ form.obj.id }}" role="tabpanel"
+                             aria-labelledby="Histogram-tab">
+                            <div id="HistogramChartShow{{ form.obj.id }}"
+                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <div class="tab-pane fade" id="BarChart{{ form.obj.id }}" role="tabpanel"
+                             aria-labelledby="BarChart-tab">
+                            <div id="BarChartShow{{ form.obj.id }}"
+                                 style="width: 550px; height: 400px; margin: 0 auto"></div>
+                        </div>
+                        <script language="JavaScript">
+                            $(document).ready(function () {
+                                /* 绘制表格 */
+                                var tableRef = document.getElementById('Table{{ form.obj.id }}').getElementsByTagName('tbody')[0];
+                                var arr = [
+                                    {% for v in form.options %}
+                                        [
+                                            '{{ v.Option }}', {{ v.Count }}, {{ v.Proportion }}
+                                        ],
+                                    {% endfor %}
+                                ];
+                                var arr2 = [];
+                                for (var i = 0; i < arr.length; ++i) {
+                                    arr2[i] = [arr[i][0], arr[i][2]];
+                                    var newRow = tableRef.insertRow(tableRef.rows.length);
+                                    for (var j = 0; j < 3; ++j) {
+                                        var newCell = newRow.insertCell(j);
+                                        var newText = document.createTextNode(arr[i][j]);
+                                        newCell.appendChild(newText);
+                                    }
+                                }
+                                /* 绘制表格结束 */
+
+                                /* 绘制饼状图 */
+                                var chart = {
+                                    plotBackgroundColor: null,
+                                    plotBorderWidth: null,
+                                    plotShadow: false
+                                };
+                                var title = {
+                                    text: '{{ form.obj.caption }}'
+                                };
+                                var tooltip = {
+                                    pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
+                                };
+                                var plotOptions = {
+                                    pie: {
+                                        allowPointSelect: true,
+                                        cursor: 'pointer',
+                                        dataLabels: {
+                                            enabled: true,
+                                            format: '<b>{point.name}%</b>: {point.percentage:.2f} %',
+                                            style: {
+                                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                            }
+                                        }
+                                    }
+                                };
+                                var series = [{
+                                    type: 'pie',
+                                    name: '比率',
+                                    data: arr2,
+                                }];
+                                var json = {};
+                                json.chart = chart;
+                                json.title = title;
+                                json.tooltip = tooltip;
+                                json.series = series;
+                                json.plotOptions = plotOptions;
+                                $('#PieChartShow{{ form.obj.id }}').highcharts(json);
+                                /* 绘制饼状图结束 */
+
+                                /* 绘制圆环图 */
+                                series = [{
+                                    type: 'pie',
+                                    name: '选择比率',
+                                    size: '80%',
+                                    innerSize: '60%',
+                                    data: arr2,
+                                }];
+                                json.series = series;
+                                $('#RingChartShow{{ form.obj.id }}').highcharts(json);
+                                /* 绘制圆环图结束 */
+
+                                /* 绘制柱状图 */
+                                json = {};
+                                chart = {
+                                    type: 'column'
+                                };
+                                var xAxis = {
+                                    categories: ['人数'],
+                                    crosshair: true
+                                };
+                                var yAxis = {
+                                    min: 0,
+                                    title: {
+                                        text: '人数'
+                                    }
+                                };
+                                series = [];
+                                for (i = 0; i < arr.length; ++i) {
+                                    series[i] = {
+                                        name: arr[i][0],
+                                        data: [arr[i][1]]
+                                    }
+                                }
+                                plotOptions = {
+                                    column: {
+                                        pointPadding: 0.2,
+                                        borderWidth: 0
+                                    }
+                                };
+                                json.chart = chart;
+                                json.title = title;
+                                json.plotOptions = plotOptions;
+                                json.yAxis = yAxis;
+                                json.series = series;
+                                json.xAxis = xAxis;
+                                $('#HistogramChartShow{{ form.obj.id }}').highcharts(json);
+                                /* 绘制柱状图结束 */
+
+                                /* 绘制条形图开始 */
+                                chart = {
+                                    type: 'bar'
+                                };
+                                tooltip = {
+                                    valueSuffix: ' 人'
+                                };
+                                yAxis = {
+                                    min: 0,
+                                    title: {
+                                        text: '人数',
+                                        align: 'high'
+                                    },
+                                    labels: {
+                                        overflow: 'justify'
+                                    }
+                                };
+                                plotOptions = {
+                                    bar: {
+                                        dataLabels: {
+                                            enabled: true
+                                        }
+                                    }
+                                };
+                                var legend = {
+                                    layout: 'vertical',
+                                    align: 'right',
+                                    verticalAlign: 'top',
+                                    x: -100,
+                                    y: 10,
+                                    floating: true,
+                                    borderWidth: 1,
+                                    backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+                                    shadow: true
+                                };
+                                json.chart = chart;
+                                json.tooltip = tooltip;
+                                json.xAxis = xAxis;
+                                json.yAxis = yAxis;
+                                json.series = series;
+                                json.plotOptions = plotOptions;
+                                json.legend = legend;
+                                $('#BarChartShow{{ form.obj.id }}').highcharts(json);
+                                /* 绘制条形图结束 */
+                            });
+
+                        </script>
+                    </div>
+                    <ul class="nav nav-pills mb-5 justify-content-end" id="pills-tab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-Table-tab{{ form.obj.id }}" data-toggle="pill"
+                               href="#TableShow{{ form.obj.id }}"
+                               role="tab"
+                               aria-controls="pills-Table" aria-selected="true">表格</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-PieChart-tab" data-toggle="pill"
+                               href="#PieChart{{ form.obj.id }}"
+                               role="tab"
+                               aria-controls="pills-PieChart" aria-selected="false">饼状图</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-contact-tab" data-toggle="pill"
+                               href="#RingChart{{ form.obj.id }}"
+                               role="tab"
+                               aria-controls="pills-contact" aria-selected="false">圆环图</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-Histogram-tab" data-toggle="pill"
+                               href="#Histogram{{ form.obj.id }}"
+                               role="tab"
+                               aria-controls="pills-Histogram" aria-selected="false">柱状图</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-BarChart-tab" data-toggle="pill"
+                               href="#BarChart{{ form.obj.id }}"
+                               role="tab"
+                               aria-controls="pills-BarChart" aria-selected="false">条形图</a>
+                        </li>
+                    </ul>
+                    <!--<a href="#" class="card-link">Card link</a>
+                    <a href="#" class="card-link">Another link</a>-->
+                </div>
+
+            </div>
+
+        {% endfor %}
+    </div>
+</main>
+</body>
+</html>
+
+

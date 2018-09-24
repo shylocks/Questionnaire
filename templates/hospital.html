@@ -16,7 +16,6 @@
         <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
              aria-hidden="true">
         </div>
-    <div class="col-6">
         <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -26,16 +25,35 @@
             </tr>
             </thead>
             <tbody>
-            {% for Hospital in Hospital_list %}
+            {% for Hospital in hospital_list %}
                 <tr>
                     <td>{{ Hospital.name }}</td>
                     <td>{{ Hospital.description }}</td>
-                    <td><a href="/hospital/?method=delete&id={{ Hospital.id }}" class="btn btn-outline-danger">删除</a></td>
+                    <td><a href="/hospital/?method=delete&id={{ Hospital.id }}" class="btn btn-outline-danger"><i class="fal fa-trash"></i></a></td>
                 </tr>
             {% endfor %}
 
             </tbody>
-        </table></div>
+        </table>
+    <div class="col-lg-12 offset-lg-4 py-4">
+        <ul class="pagination mx-auto text-center" id="pagination">
+            <li class="page-item" id="previous">
+                <a class="page-link" href="#" aria-label="Previous" id="previous-link">
+                    <span aria-hidden="true">«</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            {% for i in page.page_list %}
+                <li class="page-item" id="page{{ i }}"><a class="page-link" href="/hospital/?method=view&page={{ i }}">{{ i }}</a></li>
+            {% endfor %}
+            <li class="page-item" id="next">
+                <a class="page-link" href="#" aria-label="Next" id="next-link">
+                    <span aria-hidden="true">»</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </div>
     </div>
     <script>
         var showModal = function () {
@@ -45,6 +63,7 @@
         };
         $(document).ready(function () {
             $("#hospital").addClass("active");
+            pagination();
         });
     </script>
 {% endblock %}

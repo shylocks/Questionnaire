@@ -2,7 +2,7 @@ $("#subBtn").on("click", function () {
 
     $.ajax(
         {
-            url: "/login/",
+            url: "/admin/",
             type: "POST",
 
             data: {

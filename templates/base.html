@@ -5,6 +5,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/static/css/bootstrap.v4.css">
     <script src="/static/js/jquery-3.2.1.min.js"></script>
+    <link href="/static/css/font-awesome-pro.css" rel="stylesheet">
     <script src="/static/js/jquery.cookie.js"></script>
     <script src="/static/js/bootstrap.v4.js"></script>
     <style type="text/css">
@@ -26,7 +27,7 @@
             <div class="nav collapse flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
                 <a class="nav-link" id="welcome" href="/welcome/">欢迎界面</a>
                 <a class="nav-link" id="ques" href="/ques/">问卷管理</a>
-                <a class="nav-link" id="status" href="/status/">问卷分析</a>
+                <a class="nav-link" id="status" href="/status/">统计分析</a>
                 <a class="nav-link" id="doctor" href="/doctor/">医生管理</a>
                 <a class="nav-link" id="hospital" href="/hospital/">医院管理</a>
                 <a class="nav-link" id="patient" href="/patient/">病人管理</a>
@@ -42,4 +43,31 @@
     </div>
 </div>
 </body>
+<script>
+    $(function () {
+        $("[rel='tooltip']").tooltip();
+    });
+    function pagination() {
+        $("#page{{ now_page }}").addClass("active");
+            if({{ now_page }}<=12)
+            {
+                $("#previous").addClass("disabled");
+                if({{ now_page }}+12>{{ total_page }} && {{ total_page }}>12){
+                    $("#previous").after('<li class="page-item"><a class="page-link" href="'+location.pathname+'?method=view&page={{ page.previous_page }}">...</a></li>');
+                }
+            }else{
+                var a = {{ now_page }} - 12;
+                $("#previous-link").attr("href",location.pathname+"?method=view&page="+a);
+                $("#previous").after('<li class="page-item"><a class="page-link" href="'+location.pathname+'?method=view&page={{ page.previous_page }}">...</a></li>');
+            }
+
+            if({{ total_page }}-{{ now_page }}<=12){
+                $("#next").addClass("disabled");
+            }else{
+                $("#next").before('<li class="page-item"><a class="page-link" href="'+location.pathname+'?method=view&page={{ page.next_page }}">...</a></li>');
+                var a = {{ now_page }} + 12;
+                $("#next-link").attr("href",location.pathname+"?method=view&page="+a);
+            }
+    }
+</script>
 </html>

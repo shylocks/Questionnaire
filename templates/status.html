@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block page_title %}
-    问卷分析
+    统计分析
 {% endblock %}
 {% block content %}
     <div class="card-body">
@@ -35,10 +35,11 @@
                                 平均分: {{ form.status.mean }}
                             </div>
                             <div class="btn-group">
-                            <a href="/status/?method=fake&questionnaire_id={{ form.obj.id }}"
-                               class="btn btn-outline-primary">随机生成</a>
-                            <a href="/analysis/{{ form.obj.id }}/" class="btn btn-outline-success">各题统计</a>
-                            <a href="/analysis2/{{ form.obj.id }}/" class="btn btn-outline-danger">完整统计</a>
+                            <!--<a href="/status/?method=fake&questionnaire_id={{ form.obj.id }}"
+                               class="btn btn-outline-primary">随机生成</a>-->
+                            <a href="/analysis/{{ form.obj.id }}/" class="btn btn-outline-primary">各题统计</a>
+                            <a href="/classify/{{ form.obj.id }}/" class="btn btn-outline-success">分类统计</a>
+                            <a href="/summary/{{ form.obj.id }}/" class="btn btn-outline-info">完整统计</a>
                             </div>
                         </div>
                     </div>
