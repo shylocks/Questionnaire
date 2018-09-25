@@ -254,7 +254,6 @@ def doctor(request):
                     now_page = int(pars['page'][0])
             if pars['method'][0] == 'further':
                 form = DoctorForm(instance=models.Doctor.objects.filter(id=pars['id'][0]).first())
-                print(form)
                 return render(request, 'models/DoctorModel.html', {"form": form})
 
     else:
@@ -604,11 +603,9 @@ def question(request):
                         yield {"form": OptionModelForm(instance=v), "obj": v}
 
                 item["options"] = inner_lop(que)
-            print(item)
             return render(request, "models/QuestionModel.html", locals())
     elif request.is_ajax():
         item = json.loads(request.body.decode("utf-8"))
-        print(item)
         qid = item.get("id")
         caption = item.get("caption")
         ct = item.get("ct")
