@@ -164,11 +164,11 @@ def fake_name():
     def last_name():
         head = random.randint(0xb0, 0xf7)
         body = random.randint(0xa1, 0xfe)
-        val = f'{head:x}{body:x}'
-        str = bytes.fromhex(val).decode('gb2312')
-        return str
+        #val = f'{head:x}{body:x}'
+        #str = bytes.fromhex(val).decode('gb2312')
+        #return str
 
-    return random.choice(first_name) + last_name() + last_name()
+    return random.choice(first_name)
 
 
 def fake_patient_data(num):
