@@ -27,17 +27,24 @@ def index(request):
     for i in range(patient_sum):
         print(i+1)
         fake_res_data(1, i+1, 10000+random.randint(1, doctor_sum-10))'''
+    if request.GET.urlencode() == 'method=logout':
+        request.session['username'] = ""
+        return redirect("/login/")
     if request.session['admin'] == '0':
+        questionnaire_list = models.Questionnaire.objects.filter().all()
         user = models.Doctor.objects.filter(id=request.session['id']).first()
         patient_num = len(list(set(list(
             models.Res.objects.filter(doctor_id=request.session['id']).values_list("patient_id", flat=True)))))
         res_num = models.Res.objects.filter(doctor_id=request.session['id']).count()
         return render(request, 'doctor/index.html', locals())
+
     user = request.session["username"]
     return render(request, 'index.html', locals())
 
 
 def status(request):
+    if request.session['admin'] == '0':
+        return redirect("/index/")
     questionnaire_list = models.Questionnaire.objects.all()
     res_list = models.Res.objects.all()
     for res in res_list:
@@ -245,6 +252,10 @@ def doctor(request):
             if pars['method'][0] == 'view':
                 if pars.get('page'):
                     now_page = int(pars['page'][0])
+            if pars['method'][0] == 'further':
+                form = DoctorForm(instance=models.Doctor.objects.filter(id=pars['id'][0]).first())
+                print(form)
+                return render(request, 'models/DoctorModel.html', {"form": form})
 
     else:
         form = DoctorForm(request.POST)

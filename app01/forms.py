@@ -14,18 +14,16 @@ class QuestionnaireForm(Form):
                              widget=wid.TextInput(attrs={"class": "form-control"}))
 
 
-class DoctorForm(Form):
-    name = fields.CharField(required=True, error_messages={
-        "required": "姓名不能为空"
-    },
-                            widget=wid.TextInput(attrs={"class": "form-control"}))
-    hospital = fields.ChoiceField(required=True, error_messages={
-        "required": "医院不能为空"
-    },
-                                  choices=models.Hospital.objects.values_list("id", "name"),
-                                  widget=wid.Select(attrs={"class": "form-control"}))
-    position = fields.CharField(required=False,
-                                widget=wid.TextInput(attrs={"class": "form-control"}))
+class DoctorForm(ModelForm):
+    class Meta:
+        model = models.Doctor
+        fields = "__all__"
+        widgets = {
+            "name": wid.TextInput(attrs={"class": "form-control", 'type': "text", "required": "true"}),
+            "pwd": wid.TextInput(attrs={"class": "form-control", "type": "text", "required": "true"}),
+            "hospital": wid.Select(attrs={"class": "form-control", "required": "true"}),
+            "position": wid.TextInput(attrs={"class": "form-control", "required": "false"}),
+        }
 
 
 class HospitalForm(Form):

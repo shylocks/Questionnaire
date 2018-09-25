@@ -5,8 +5,7 @@
 {% block content %}
     <div class="card-body">
         <div class="card-title col-lg-6">
-            <a data-toggle="modal" data-target="#MyModal"
-               onclick="showModal()">
+            <a onclick="showModal()">
                 <button class="btn btn-success">添加</button>
             </a>
             <a href="" class="btn btn-primary">批量导入</a>
@@ -27,11 +26,19 @@
                     <p class="font-weight-light">{{ Doctor.position }}</p></p>
                 </div>
                 <div class="card-footer">
-                    <a href="/doctor/?method=reset&id={{ Doctor.id }}" class="btn btn-outline-info"  data-toggle="tooltip" data-placement="top" title="重置密码"><i class="fal fa-spinner"></i></a>
+                    <a onclick="showModal{{ Doctor.id }}()"><button class="btn btn-outline-info"><i class="fal fa-info-circle"></i></button>
+                    </a>
                     <a href="/doctor/?method=delete&id={{ Doctor.id }}" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></a>
-
+                    <script>
+                        var showModal{{ Doctor.id }} = function () {
+                            $("#MyModalBody").load("/doctor/?method=further&id={{ Doctor.id }}", function () {
+                                $("#MyModalBody").modal('show');
+                            })
+                        }
+                    </script>
                 </div>
-
+                <div class="modal fade" id="MyModalBody" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel"
+             aria-hidden="true"></div>
             </div>
         </div>
         {% if forloop.counter|divisibleby:4 %}
