@@ -40,7 +40,7 @@ pywin32==223
 query-string==1.0.2
 rango==0.0.2a0
 request==1.0.2
-requests==2.19.1
+requests==2.20.0
 scipy==1.1.0
 seaborn==0.9.0
 six==1.11.0
